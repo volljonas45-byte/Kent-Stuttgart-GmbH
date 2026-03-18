@@ -1,0 +1,1255 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Über uns — Kent Stuttgart GmbH</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700;800&family=Barlow:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ═══ TOKENS ═══ */
+    :root {
+      --blue:   #1058C0;
+      --blue2:  #1A76F0;
+      --blue3:  #0C469E;
+      --red:    #C8221C;
+      --red2:   #E03530;
+      --bg:     #04091A;
+      --bg1:    #070D20;
+      --bg2:    #0A1228;
+      --surface:#101C3A;
+      --muted:  #374F72;
+      --dim:    #6088B0;
+      --light:  #C2D4E8;
+      --white:  #FFFFFF;
+
+      --font-display: 'Barlow Condensed', sans-serif;
+      --font-body:    'Barlow', sans-serif;
+      --font-mono:    'Space Mono', monospace;
+      --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+    }
+
+    /* ═══ RESET ═══ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--light);
+      font-family: var(--font-body);
+      font-weight: 400;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* ═══ NOISE ═══ */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 200px;
+    }
+
+    /* ═══ NAV ═══ */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 500;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 4rem;
+      height: 72px;
+    }
+    nav::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(4,9,26,0.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(26,118,240,0.12);
+    }
+    .nav-logo {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .nav-logo-img {
+      height: 34px;
+      width: auto;
+      display: block;
+      mix-blend-mode: screen;
+    }
+    .nav-links {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: var(--font-display);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--dim);
+      transition: color 0.2s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0;
+      width: 0; height: 1px;
+      background: var(--blue2);
+      transition: width 0.3s var(--ease-out-expo);
+    }
+    .nav-links a:hover { color: var(--white); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-links a.active { color: var(--white); }
+    .nav-links a.active::after { width: 100%; background: var(--red); }
+    .nav-right {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-lang {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .nav-lang:hover { color: var(--dim); }
+    .nav-cta {
+      position: relative;
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--white);
+      padding: 0.6rem 1.6rem;
+      background: transparent;
+      border: 1px solid rgba(26,118,240,0.5);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .nav-cta:hover {
+      border-color: rgba(26,118,240,0.9);
+      box-shadow: 0 0 20px rgba(26,118,240,0.15);
+    }
+
+    /* ═══ HERO ═══ */
+    .page-hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      padding: 10rem 4rem 7rem;
+      text-align: center;
+    }
+    .page-hero-light {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse 70% 55% at 50% 40%, rgba(26,118,240,0.13) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 35% at 15% 80%, rgba(200,34,28,0.08) 0%, transparent 55%),
+        radial-gradient(ellipse 30% 30% at 85% 70%, rgba(16,88,192,0.06) 0%, transparent 50%);
+      animation: breath 9s ease-in-out infinite;
+    }
+    @keyframes breath {
+      0%, 100% { opacity: 0.8; }
+      50%       { opacity: 1; }
+    }
+    .page-hero-grid {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(26,118,240,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(26,118,240,0.02) 1px, transparent 1px);
+      background-size: 90px 90px;
+    }
+    .page-hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(ellipse 100% 100% at 50% 50%, transparent 40%, rgba(4,9,26,0.75) 100%);
+    }
+    .page-hero-content {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .page-hero-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: rgba(26,118,240,0.7);
+      margin-bottom: 4rem;
+      opacity: 0;
+      animation: fadeIn 1s ease 0.3s forwards;
+    }
+    .eyebrow-dot {
+      width: 3px; height: 3px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .eyebrow-dot:first-child { background: rgba(26,118,240,0.5); }
+    .eyebrow-dot:last-child  { background: rgba(200,34,28,0.65); }
+
+    .page-hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(5rem, 12vw, 13rem);
+      font-weight: 800;
+      line-height: 0.9;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      color: var(--white);
+      opacity: 0;
+      transform: translateY(40px);
+      animation: fadeUp 1.4s cubic-bezier(0.19,1,0.22,1) 0.5s forwards;
+    }
+    .page-hero-title .line-ghost {
+      display: block;
+      color: rgba(255,255,255,0.1);
+      font-weight: 300;
+      letter-spacing: 0.05em;
+      font-size: 0.65em;
+    }
+    .page-hero-title .line-solid {
+      display: block;
+      color: var(--white);
+    }
+    .page-hero-title .line-red {
+      display: block;
+      color: var(--red);
+      font-size: 0.5em;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+    }
+
+    .page-hero-divider {
+      margin: 4rem 0 3rem;
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(to bottom, rgba(26,118,240,0.6), rgba(200,34,28,0.3), transparent);
+      opacity: 0;
+      animation: fadeIn 0.8s ease 1.4s forwards;
+    }
+    .page-hero-sub {
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--dim);
+      max-width: 500px;
+      opacity: 0;
+      animation: fadeIn 0.8s ease 1.6s forwards;
+    }
+
+    /* ═══ SECTION HELPERS ═══ */
+    .section {
+      position: relative;
+      padding: 10rem 4rem;
+    }
+    .section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(26,118,240,0.65);
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 1rem;
+    }
+    .section-label::before {
+      content: '';
+      width: 20px; height: 1px;
+      background: var(--blue2);
+      opacity: 0.5;
+    }
+
+    /* ═══ REVEAL ANIMATION ═══ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.9s var(--ease-out-expo), transform 0.9s var(--ease-out-expo);
+    }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+
+    /* ═══ GESCHICHTE / TIMELINE ═══ */
+    .geschichte-section { background: var(--bg1); }
+    .geschichte-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8rem;
+      align-items: start;
+    }
+    .geschichte-left {}
+    .geschichte-heading {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 6vw, 6rem);
+      font-weight: 800;
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 2.5rem;
+    }
+    .geschichte-heading em {
+      font-style: normal;
+      color: var(--red);
+      display: block;
+    }
+    .geschichte-text {
+      font-size: 1rem;
+      line-height: 1.85;
+      color: var(--dim);
+      font-weight: 300;
+      max-width: 480px;
+    }
+    .geschichte-text + .geschichte-text {
+      margin-top: 1.2rem;
+    }
+
+    /* Timeline right side */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      padding-top: 0.5rem;
+    }
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: 2rem;
+      padding: 2.5rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      position: relative;
+    }
+    .timeline-item:first-child { padding-top: 0; }
+    .timeline-item:last-child { border-bottom: none; }
+    .timeline-year {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: rgba(255,255,255,0.12);
+      letter-spacing: -0.02em;
+      line-height: 1;
+      padding-top: 0.2rem;
+      transition: color 0.3s;
+    }
+    .timeline-item:hover .timeline-year { color: var(--blue2); }
+    .timeline-item:nth-child(even):hover .timeline-year { color: var(--red); }
+    .timeline-body {}
+    .timeline-event {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.01em;
+      margin-bottom: 0.4rem;
+    }
+    .timeline-detail {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    /* ═══ ZAHLEN / STATS ═══ */
+    .zahlen-section { background: var(--bg); }
+    .zahlen-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 16px;
+      overflow: hidden;
+      margin-top: 5rem;
+    }
+    .zahl-item {
+      background: var(--bg1);
+      padding: 3.5rem 2.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .zahl-item::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--blue2), transparent);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+    .zahl-item:nth-child(even)::before {
+      background: linear-gradient(90deg, var(--red), transparent);
+    }
+    .zahl-item:hover::before { opacity: 1; }
+    .zahl-num {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 5vw, 5rem);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      color: var(--white);
+    }
+    .zahl-num span { color: var(--blue2); }
+    .zahl-item:nth-child(even) .zahl-num span { color: var(--red); }
+    .zahl-unit {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(26,118,240,0.6);
+    }
+    .zahl-item:nth-child(even) .zahl-unit { color: rgba(200,34,28,0.6); }
+    .zahl-label {
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-weight: 300;
+      margin-top: 0.2rem;
+    }
+
+    /* ═══ PHILOSOPHIE / WERTE ═══ */
+    .philosophie-section { background: var(--bg2); overflow: hidden; }
+    .philosophie-intro {
+      max-width: 800px;
+      margin: 0 auto 8rem;
+      text-align: center;
+    }
+    .philosophie-statement {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 5vw, 5rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 2rem;
+    }
+    .philosophie-statement em {
+      font-style: normal;
+      color: var(--red);
+    }
+    .philosophie-body {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--dim);
+      font-weight: 300;
+    }
+    .werte-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .wert-item {
+      background: var(--bg1);
+      padding: 4rem 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .wert-item::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(26,118,240,0.3), transparent);
+    }
+    .wert-item:nth-child(2)::after {
+      background: linear-gradient(90deg, transparent, rgba(200,34,28,0.3), transparent);
+    }
+    .wert-num {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.22em;
+      color: rgba(26,118,240,0.45);
+      margin-bottom: 2.5rem;
+    }
+    .wert-item:nth-child(2) .wert-num { color: rgba(200,34,28,0.45); }
+    .wert-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 3vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      color: var(--white);
+      line-height: 1;
+      margin-bottom: 1.5rem;
+    }
+    .wert-desc {
+      font-size: 0.9rem;
+      line-height: 1.75;
+      color: var(--muted);
+      font-weight: 300;
+    }
+    /* Bg watermark per wert */
+    .wert-bg-text {
+      position: absolute;
+      bottom: -1rem;
+      right: -1rem;
+      font-family: var(--font-display);
+      font-size: 8rem;
+      font-weight: 800;
+      color: rgba(255,255,255,0.025);
+      letter-spacing: -0.05em;
+      pointer-events: none;
+      user-select: none;
+      line-height: 1;
+    }
+
+    /* ═══ STANDORT / FERTIGUNG ═══ */
+    .standort-section { background: var(--bg); }
+    .standort-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8rem;
+      align-items: center;
+    }
+    .standort-visual {
+      position: relative;
+    }
+    /* Minimal location card */
+    .location-card {
+      background: var(--surface);
+      border: 1px solid rgba(26,118,240,0.12);
+      border-radius: 16px;
+      padding: 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .location-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 80% 20%, rgba(26,118,240,0.06) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 20% 80%, rgba(200,34,28,0.04) 0%, transparent 55%);
+      pointer-events: none;
+    }
+    .location-marker {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 2.5rem;
+    }
+    .location-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--red);
+      box-shadow: 0 0 12px rgba(200,34,28,0.5);
+      animation: pulse 2.5s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 8px rgba(200,34,28,0.4); }
+      50%       { box-shadow: 0 0 20px rgba(200,34,28,0.7); }
+    }
+    .location-label {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--red);
+    }
+    .location-city {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 5vw, 5rem);
+      font-weight: 800;
+      line-height: 0.9;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+    }
+    .location-country {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 3rem;
+    }
+    .location-address {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    .location-address-line {
+      font-size: 0.88rem;
+      color: var(--dim);
+      font-weight: 300;
+    }
+    .location-contact {
+      margin-top: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+    .location-contact a {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.05em;
+      color: var(--blue2);
+      transition: color 0.2s;
+    }
+    .location-contact a:hover { color: var(--white); }
+
+    /* Standort text side */
+    .standort-content {}
+    .standort-heading {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 4.5vw, 5rem);
+      font-weight: 800;
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 2.5rem;
+    }
+    .standort-heading em {
+      font-style: normal;
+      color: var(--blue2);
+      display: block;
+    }
+    .standort-text {
+      font-size: 1rem;
+      line-height: 1.85;
+      color: var(--dim);
+      font-weight: 300;
+      margin-bottom: 1.2rem;
+    }
+    .cert-row {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 3rem;
+    }
+    .cert-tag {
+      font-family: var(--font-mono);
+      font-size: 0.52rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(26,118,240,0.6);
+      border: 1px solid rgba(26,118,240,0.18);
+      border-radius: 6px;
+      padding: 0.45rem 0.9rem;
+      transition: border-color 0.3s, color 0.3s;
+    }
+    .cert-tag:hover {
+      border-color: rgba(26,118,240,0.45);
+      color: var(--blue2);
+    }
+
+    /* ═══ CTA ═══ */
+    .cta-section {
+      background: var(--bg1);
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-section-bg {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse 70% 80% at 50% 50%, rgba(26,118,240,0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 30% 40% at 20% 80%, rgba(200,34,28,0.05) 0%, transparent 60%);
+      border-top: 1px solid rgba(26,118,240,0.1);
+    }
+    .cta-inner {
+      position: relative;
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .cta-label {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(26,118,240,0.6);
+      margin-bottom: 2rem;
+    }
+    .cta-title {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 6vw, 6rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.0;
+      color: var(--white);
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+    .cta-title em {
+      font-style: normal;
+      color: var(--red);
+      display: block;
+    }
+    .cta-sub {
+      font-size: 0.95rem;
+      color: var(--dim);
+      font-weight: 300;
+      line-height: 1.7;
+      margin-bottom: 3.5rem;
+    }
+    .cta-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: var(--font-display);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--white);
+      padding: 0.95rem 2.6rem;
+      background: transparent;
+      border: 1px solid rgba(26,118,240,0.5);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      position: relative;
+    }
+    .btn-primary:hover {
+      border-color: rgba(26,118,240,0.9);
+      box-shadow: 0 0 28px rgba(26,118,240,0.2), inset 0 0 20px rgba(26,118,240,0.04);
+    }
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-display);
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(96,136,176,0.7);
+      cursor: pointer;
+      transition: color 0.25s;
+    }
+    .btn-ghost:hover { color: var(--white); }
+    .btn-ghost svg { transition: transform 0.3s var(--ease-out-expo); }
+    .btn-ghost:hover svg { transform: translateX(5px); }
+
+    /* ═══ GRADIENT DIVIDER ═══ */
+    .gradient-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--blue2) 30%, var(--red) 70%, transparent);
+      opacity: 0.4;
+    }
+
+    /* ═══ FOOTER ═══ */
+    footer {
+      background: var(--bg);
+      border-top: 1px solid rgba(255,255,255,0.05);
+      padding: 4rem 4rem 2.5rem;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 4rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      margin-bottom: 2rem;
+    }
+    .footer-brand {}
+    .footer-logo-img {
+      height: 36px;
+      width: auto;
+      display: block;
+      margin-bottom: 1rem;
+      mix-blend-mode: screen;
+    }
+    .footer-tagline {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 260px;
+      margin-bottom: 1.2rem;
+    }
+    .footer-address-line {
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .footer-col-title {
+      font-family: var(--font-display);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--dim);
+      margin-bottom: 1.2rem;
+    }
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+    .footer-links a {
+      font-size: 0.85rem;
+      color: var(--muted);
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--light); }
+    .footer-certs {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+    .footer-cert {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-family: var(--font-mono);
+      font-size: 0.48rem;
+      letter-spacing: 0.15em;
+      color: rgba(255,255,255,0.16);
+      text-transform: uppercase;
+    }
+    .footer-cert::before {
+      content: '▸';
+      color: rgba(26,118,240,0.38);
+      font-size: 0.45rem;
+    }
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-copy {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+    }
+    .footer-legal {
+      display: flex;
+      gap: 2rem;
+    }
+    .footer-legal a {
+      font-size: 0.75rem;
+      color: var(--muted);
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .footer-legal a:hover { color: var(--dim); }
+
+    /* ═══ KEYFRAMES ═══ */
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    /* ═══ RESPONSIVE ═══ */
+    @media (max-width: 1024px) {
+      nav { padding: 0 2rem; }
+      .section { padding: 7rem 2rem; }
+      .geschichte-layout { grid-template-columns: 1fr; gap: 4rem; }
+      .zahlen-grid { grid-template-columns: repeat(2, 1fr); }
+      .werte-grid { grid-template-columns: 1fr; }
+      .standort-layout { grid-template-columns: 1fr; gap: 4rem; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    }
+    @media (max-width: 768px) {
+      nav { padding: 0 1.5rem; }
+      .nav-links { display: none; }
+      .page-hero { padding: 7rem 1.5rem 4rem; }
+      .page-hero-title { font-size: clamp(4rem, 18vw, 7rem); }
+      .zahlen-grid { grid-template-columns: 1fr 1fr; }
+      .cta-actions { flex-direction: column; }
+      .footer-top { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+
+    /* ═══ SCROLLBAR ═══ */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--surface); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+  </style>
+</head>
+<body>
+
+  <!-- ════ NAV ════ -->
+  <nav id="nav">
+    <a href="index.html" class="nav-logo">
+      <img src="Kent-Logo_.png" alt="Kent Stuttgart GmbH" class="nav-logo-img">
+    </a>
+    <ul class="nav-links">
+      <li><a href="maschinen/index.html">Maschinen</a></li>
+      <li><a href="klischees/index.html">Klischees</a></li>
+      <li><a href="ueber-uns.html" class="active">Unternehmen</a></li>
+    </ul>
+    <div class="nav-right">
+      <span class="nav-lang">DE · EN</span>
+      <a href="#kontakt" class="nav-cta">Anfrage</a>
+    </div>
+  </nav>
+
+  <!-- ════ HERO ════ -->
+  <section class="page-hero">
+    <div class="page-hero-light"></div>
+    <div class="page-hero-grid"></div>
+
+    <div class="page-hero-content">
+      <div class="page-hero-eyebrow">
+        <span class="eyebrow-dot"></span>
+        Kent Stuttgart GmbH · Über uns
+        <span class="eyebrow-dot"></span>
+      </div>
+
+      <h1 class="page-hero-title">
+        <span class="line-ghost">Präzision</span>
+        <span class="line-solid">Seit 1987.</span>
+        <span class="line-red">Ein Unternehmen. Ein Versprechen.</span>
+      </h1>
+
+      <div class="page-hero-divider"></div>
+
+      <p class="page-hero-sub">Familiengeführt. International. Stuttgart.</p>
+    </div>
+  </section>
+
+  <div class="gradient-divider"></div>
+
+  <!-- ════ GESCHICHTE ════ -->
+  <section class="section geschichte-section" id="geschichte">
+    <div class="section-inner">
+      <div class="geschichte-layout">
+
+        <div class="geschichte-left reveal">
+          <div class="section-label">Geschichte</div>
+          <h2 class="geschichte-heading">
+            Gegründet<br>
+            <em>aus Überzeugung.</em>
+          </h2>
+          <p class="geschichte-text">
+            1987 gründete Kent Stuttgart GmbH mit einer klaren Mission: Tampondruckmaschinen zu bauen, die nicht nur funktionieren, sondern überzeugen. Präzise. Robust. Zuverlässig.
+          </p>
+          <p class="geschichte-text">
+            Über drei Jahrzehnte später sind wir noch immer in Stuttgart verwurzelt — und beliefern über 500 Kunden in 40 Ländern. Nicht weil wir der Größte sind, sondern weil wir der Präziseste sind.
+          </p>
+          <p class="geschichte-text">
+            Konstruktion, Maschinenbau, Programmierung und Anwendungstechnik arbeiten bei uns unter einem Dach und Hand in Hand.
+          </p>
+        </div>
+
+        <div class="timeline reveal" style="transition-delay:0.15s">
+          <div class="timeline-item">
+            <div class="timeline-year">1987</div>
+            <div class="timeline-body">
+              <div class="timeline-event">Gründung</div>
+              <div class="timeline-detail">Kent Stuttgart GmbH wird in Stuttgart gegründet. Erste Tampondruckmaschinen verlassen das Werk.</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">1992</div>
+            <div class="timeline-body">
+              <div class="timeline-event">Internationale Expansion</div>
+              <div class="timeline-detail">Erste Exportlieferungen in europäische Märkte. Aufbau eines internationalen Händlernetzes.</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2000</div>
+            <div class="timeline-body">
+              <div class="timeline-event">ISO 9001 Zertifizierung</div>
+              <div class="timeline-detail">Formale Bestätigung dessen, was wir täglich leben: dokumentierte Qualität in jedem Prozessschritt.</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2008</div>
+            <div class="timeline-body">
+              <div class="timeline-event">500. Maschineninstallation</div>
+              <div class="timeline-detail">Die 500. Kent-Maschine geht in Betrieb — auf fünf Kontinenten im industriellen Dauereinsatz.</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">Heute</div>
+            <div class="timeline-body">
+              <div class="timeline-event">40 Länder. 35+ Jahre.</div>
+              <div class="timeline-detail">Tampondruckmaschinen und Klischees für die internationale Industrie. Entwickelt, gefertigt und gewartet in Stuttgart.</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="gradient-divider"></div>
+
+  <!-- ════ ZAHLEN ════ -->
+  <section class="section zahlen-section" id="zahlen">
+    <div class="section-inner">
+      <div class="section-label reveal">Kennzahlen</div>
+      <div class="zahlen-grid">
+        <div class="zahl-item reveal">
+          <div class="zahl-num"><span data-count="1987" data-suffix="">1987</span></div>
+          <div class="zahl-unit">Gegründet</div>
+          <div class="zahl-label">Stuttgart, Deutschland</div>
+        </div>
+        <div class="zahl-item reveal" style="transition-delay:0.1s">
+          <div class="zahl-num"><span data-count="35" data-suffix="+">35+</span></div>
+          <div class="zahl-unit">Jahre</div>
+          <div class="zahl-label">Branchenerfahrung</div>
+        </div>
+        <div class="zahl-item reveal" style="transition-delay:0.2s">
+          <div class="zahl-num"><span data-count="500" data-suffix="+">500+</span></div>
+          <div class="zahl-unit">Installationen</div>
+          <div class="zahl-label">Weltweit im Einsatz</div>
+        </div>
+        <div class="zahl-item reveal" style="transition-delay:0.3s">
+          <div class="zahl-num"><span>40</span></div>
+          <div class="zahl-unit">Länder</div>
+          <div class="zahl-label">Globale Präsenz</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="gradient-divider"></div>
+
+  <!-- ════ PHILOSOPHIE / WERTE ════ -->
+  <section class="section philosophie-section" id="philosophie">
+    <div class="section-inner">
+      <div class="philosophie-intro reveal">
+        <div class="section-label" style="justify-content:center">Unsere Werte</div>
+        <h2 class="philosophie-statement">
+          Wir glauben an<br><em>Präzision.</em>
+        </h2>
+        <p class="philosophie-body">
+          Nicht als Marketing-Versprechen — als Grundhaltung. Jede Maschine, die unser Werk verlässt, ist das Ergebnis dieser Überzeugung.
+        </p>
+      </div>
+
+      <div class="werte-grid">
+        <div class="wert-item reveal">
+          <div class="wert-bg-text">01</div>
+          <div class="wert-num">01 / PRÄZISION</div>
+          <h3 class="wert-title">Präzision</h3>
+          <p class="wert-desc">±0.01 mm ist nicht unsere Toleranz — es ist unser Standard. Jedes Bauteil, jede Maschine, jedes Klischee wird mit derselben Sorgfalt gefertigt.</p>
+        </div>
+        <div class="wert-item reveal" style="transition-delay:0.12s">
+          <div class="wert-bg-text">02</div>
+          <div class="wert-num">02 / QUALITÄT</div>
+          <h3 class="wert-title">Qualität</h3>
+          <p class="wert-desc">Made in Germany ist ein Versprechen, kein Label. Wir fertigen im eigenen Haus, kontrollieren jeden Schritt und stehen für das Ergebnis ein.</p>
+        </div>
+        <div class="wert-item reveal" style="transition-delay:0.24s">
+          <div class="wert-bg-text">03</div>
+          <div class="wert-num">03 / VERLÄSSLICHKEIT</div>
+          <h3 class="wert-title">Verlässlich&shy;keit</h3>
+          <p class="wert-desc">Unsere Kunden kommen wieder. Seit 35 Jahren. Weil wir das liefern, was wir versprechen — pünktlich, präzise, dauerhaft.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="gradient-divider"></div>
+
+  <!-- ════ STANDORT ════ -->
+  <section class="section standort-section" id="standort">
+    <div class="section-inner">
+      <div class="standort-layout">
+
+        <div class="standort-visual reveal">
+          <div class="location-card">
+            <div class="location-marker">
+              <div class="location-dot"></div>
+              <span class="location-label">Hauptsitz</span>
+            </div>
+            <div class="location-city">Stuttgart</div>
+            <div class="location-country">Deutschland</div>
+            <div class="location-address">
+              <div class="location-address-line">Kent Stuttgart GmbH</div>
+              <div class="location-address-line">Kesselstraße 46</div>
+              <div class="location-address-line">70327 Stuttgart</div>
+            </div>
+            <div class="location-contact">
+              <a href="tel:+4971140950">+49 (0)711 40950-0</a>
+              <a href="mailto:info@kent-stuttgart.de">info@kent-stuttgart.de</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="standort-content reveal" style="transition-delay:0.15s">
+          <div class="section-label">Fertigung & Standort</div>
+          <h2 class="standort-heading">
+            Gefertigt.
+            <em>In Stuttgart.</em>
+          </h2>
+          <p class="standort-text">
+            Nicht ausgelagert. Nicht optimiert für Marge. Gefertigt dort, wo Kent begann — in Stuttgart. Konstruktion, Maschinenbau und Qualitätskontrolle unter einem Dach.
+          </p>
+          <p class="standort-text">
+            Das bedeutet: kürzere Wege, schnellere Entscheidungen, und ein direkter Draht zwischen Ingenieur und Maschine. Kein Zulieferer kennt Ihre Anforderungen besser als unser eigenes Team.
+          </p>
+          <p class="standort-text">
+            Wenn eine Sonderlösung gefragt ist, sitzt der Konstrukteur im selben Gebäude wie die Fräse. Das ist kein Zufall — das ist Methode.
+          </p>
+          <div class="cert-row">
+            <span class="cert-tag">DIN EN ISO 9001</span>
+            <span class="cert-tag">CE-Kennzeichnung</span>
+            <span class="cert-tag">Made in Germany</span>
+            <span class="cert-tag">±0.01 mm</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="gradient-divider"></div>
+
+  <!-- ════ CTA ════ -->
+  <section class="section cta-section" id="kontakt">
+    <div class="cta-section-bg"></div>
+    <div class="section-inner">
+      <div class="cta-inner reveal">
+        <div class="cta-label">Kontakt</div>
+        <h2 class="cta-title">
+          Sprechen wir
+          <em>über Ihre Anlage.</em>
+        </h2>
+        <p class="cta-sub">
+          Ob Standardmaschine oder Sonderlösung — unser Team berät Sie persönlich, direkt aus Stuttgart.
+        </p>
+        <div class="cta-actions">
+          <a href="mailto:info@kent-stuttgart.de" class="btn-primary">
+            Anfrage stellen
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a href="maschinen/index.html" class="btn-ghost">
+            Maschinenübersicht
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ FOOTER ════ -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="Kent-Logo_.png" alt="Kent Stuttgart GmbH" class="footer-logo-img">
+        <p class="footer-tagline">Tampondruckmaschinen für die internationale Industrie. Entwickelt und gefertigt in Stuttgart seit 1987.</p>
+        <div class="footer-address">
+          <div class="footer-address-line">Kesselstraße 46 · 70327 Stuttgart</div>
+          <div class="footer-address-line">+49 (0)711 40950-0</div>
+          <div class="footer-address-line">info@kent-stuttgart.de</div>
+        </div>
+        <div class="footer-certs">
+          <span class="footer-cert">DIN EN ISO 9001</span>
+          <span class="footer-cert">CE-Kennzeichnung</span>
+          <span class="footer-cert">Made in Germany</span>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Maschinen</div>
+        <ul class="footer-links">
+          <li><a href="maschinen/standardmaschinen/index.html">Standardmaschinen</a></li>
+          <li><a href="maschinen/sondermaschinen/index.html">Sondermaschinen</a></li>
+          <li><a href="maschinen/siebdruck/index.html">Siebdruckmaschinen</a></li>
+          <li><a href="maschinen/zubehoer/index.html">Maschinenzubehör</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Klischees</div>
+        <ul class="footer-links">
+          <li><a href="klischees/stahlklischees.html">Stahlklischees</a></li>
+          <li><a href="klischees/bandstahlklischees.html">Bandstahlklischees</a></li>
+          <li><a href="klischees/kunststoffklischees.html">Kunststoffklischees</a></li>
+          <li><a href="klischees/aluminiumlaserklischee.html">Aluminiumlaserklischee</a></li>
+          <li><a href="klischees/laser-repro.html">Laser Repro</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Unternehmen</div>
+        <ul class="footer-links">
+          <li><a href="ueber-uns.html">Über uns</a></li>
+          <li><a href="maschinen/anwendungsbereiche/index.html">Anwendungsbereiche</a></li>
+          <li><a href="#kontakt">Kontakt</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 Kent Stuttgart GmbH · Alle Rechte vorbehalten</span>
+      <div class="footer-legal">
+        <a href="#">Impressum</a>
+        <a href="#">Datenschutzerklärung</a>
+        <a href="#">AGB</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ─── Reveal on scroll ───
+    const reveals = document.querySelectorAll('.reveal');
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    reveals.forEach(r => obs.observe(r));
+  </script>
+
+</body>
+</html>

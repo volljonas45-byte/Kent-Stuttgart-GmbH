@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Klischees — Kent Stuttgart GmbH</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800&family=Barlow:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ═══ TOKENS ═══ */
+    :root {
+      --blue:   #1058C0;
+      --blue2:  #1A76F0;
+      --blue3:  #0C469E;
+      --red:    #C8221C;
+      --red2:   #E03530;
+      --bg:     #04091A;
+      --bg1:    #070D20;
+      --bg2:    #0A1228;
+      --surface:#101C3A;
+      --muted:  #374F72;
+      --dim:    #6088B0;
+      --light:  #C2D4E8;
+      --white:  #FFFFFF;
+
+      --font-display: 'Barlow Condensed', sans-serif;
+      --font-body:    'Barlow', sans-serif;
+      --font-mono:    'Space Mono', monospace;
+
+      --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+    }
+
+    /* ═══ RESET ═══ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--light);
+      font-family: var(--font-body);
+      font-weight: 400;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* ═══ NOISE TEXTURE ═══ */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 200px;
+    }
+
+    /* ═══ NAV ═══ */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 500;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 4rem;
+      height: 72px;
+    }
+    nav::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: transparent;
+      backdrop-filter: blur(0px);
+      transition: backdrop-filter 0.4s, background 0.4s, border-color 0.4s;
+      border-bottom: 1px solid transparent;
+    }
+    nav.scrolled::before {
+      background: rgba(6,23,42,0.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(43,114,212,0.15);
+    }
+    .nav-logo {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .nav-logo-img {
+      height: 34px;
+      width: auto;
+      display: block;
+      mix-blend-mode: screen;
+    }
+    .nav-links {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: var(--font-display);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--dim);
+      transition: color 0.2s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0;
+      width: 0; height: 1px;
+      background: var(--blue2);
+      transition: width 0.3s var(--ease-out-expo);
+    }
+    .nav-links a:hover { color: var(--white); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-links a.active {
+      color: var(--white);
+    }
+    .nav-links a.active::after {
+      width: 100%;
+      background: var(--red);
+    }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-lang {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .nav-lang:hover { color: var(--dim); }
+    .nav-cta {
+      position: relative;
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--white);
+      padding: 0.6rem 1.6rem;
+      background: transparent;
+      border: 1px solid rgba(43,114,212,0.6);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+    }
+    .nav-cta:hover {
+      background: var(--blue2);
+      border-color: var(--blue2);
+    }
+
+    /* ═══ HERO ═══ */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      padding: 10rem 4rem 7rem;
+    }
+    .hero-light {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse 75% 55% at 65% 35%, rgba(26,118,240,0.16) 0%, transparent 60%),
+        radial-gradient(ellipse 55% 45% at 20% 75%, rgba(200,34,28,0.10) 0%, transparent 55%),
+        radial-gradient(ellipse 35% 30% at 80% 70%, rgba(16,88,192,0.06) 0%, transparent 50%);
+      animation: heroBreath 9s ease-in-out infinite;
+    }
+    @keyframes heroBreath {
+      0%, 100% { opacity: 0.75; transform: scale(1); }
+      50%       { opacity: 1;    transform: scale(1.04); }
+    }
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(43,114,212,0.022) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(43,114,212,0.022) 1px, transparent 1px);
+      background-size: 90px 90px;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(ellipse 100% 100% at 50% 50%, transparent 40%, rgba(6,23,42,0.7) 100%);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .hero-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: rgba(43,114,212,0.7);
+      margin-bottom: 5rem;
+      opacity: 0;
+      animation: fadeIn 1s ease 0.4s forwards;
+    }
+    .hero-eyebrow-dot {
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: rgba(26,118,240,0.5);
+      flex-shrink: 0;
+    }
+    .hero-eyebrow-dot:last-child {
+      background: rgba(200,34,28,0.65);
+    }
+    .hero-headline {
+      font-family: var(--font-display);
+      font-size: clamp(5.5rem, 13vw, 15rem);
+      font-weight: 800;
+      line-height: 0.9;
+      letter-spacing: -0.01em;
+      color: var(--white);
+      text-transform: uppercase;
+      opacity: 0;
+      transform: translateY(50px);
+      animation: fadeUp 1.4s cubic-bezier(0.19, 1, 0.22, 1) 0.6s forwards;
+    }
+    .hero-headline .hl-ghost {
+      display: block;
+      color: rgba(194,212,232,0.10);
+      font-weight: 300;
+      letter-spacing: 0.06em;
+      font-size: 0.7em;
+    }
+    .hero-headline .hl-solid {
+      display: block;
+      color: var(--white);
+    }
+    .hero-headline .hl-accent {
+      display: block;
+      color: var(--red);
+      font-size: 0.52em;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+    }
+    .hero-divider {
+      margin: 4rem 0 3rem;
+      width: 1px;
+      height: 64px;
+      background: linear-gradient(to bottom, rgba(26,118,240,0.7), rgba(200,34,28,0.4), transparent);
+      opacity: 0;
+      animation: fadeIn 0.8s ease 1.4s forwards;
+    }
+    .hero-sub {
+      font-family: var(--font-display);
+      font-size: 0.88rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--dim);
+      opacity: 0;
+      animation: fadeIn 0.8s ease 1.6s forwards;
+    }
+    .hero-scroll {
+      position: absolute;
+      bottom: 3.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.7rem;
+      opacity: 0;
+      animation: fadeIn 1s ease 2.4s forwards;
+    }
+    .hero-scroll span {
+      font-family: var(--font-mono);
+      font-size: 0.52rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(61,90,122,0.5);
+    }
+    .hero-scroll-line {
+      width: 1px;
+      height: 52px;
+      background: linear-gradient(to bottom, rgba(26,118,240,0.45), rgba(200,34,28,0.2), transparent);
+      animation: scrollPulse 3s ease-in-out 2.5s infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; transform: scaleY(0.9); }
+      50%       { opacity: 1;   transform: scaleY(1.1); }
+    }
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    /* ═══ SECTION HELPERS ═══ */
+    .section {
+      position: relative;
+      padding: 10rem 4rem;
+    }
+    .section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--blue2);
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 1.5rem;
+    }
+    .section-label::before {
+      content: '';
+      width: 24px; height: 1px;
+      background: var(--blue2);
+    }
+
+    /* Reveal animation */
+    .reveal {
+      transition: opacity 0.9s var(--ease-out-expo), transform 0.9s var(--ease-out-expo);
+    }
+    .reveal.animate-in {
+      animation: revealIn 0.9s var(--ease-out-expo) both;
+    }
+    @keyframes revealIn {
+      from { opacity: 0; transform: translateY(36px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ═══ GRADIENT DIVIDER ═══ */
+    .gradient-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--blue2) 30%, var(--red) 70%, transparent);
+      opacity: 0.4;
+    }
+
+    /* ═══ INTRO SECTION ═══ */
+    .intro-section {
+      background: var(--bg1);
+    }
+    .intro-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8rem;
+      align-items: start;
+    }
+    .intro-heading {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 5vw, 4.5rem);
+      font-weight: 800;
+      line-height: 1.0;
+      letter-spacing: -0.02em;
+      color: var(--white);
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+    .intro-heading .slash {
+      color: var(--blue2);
+    }
+    .intro-body {
+      font-size: 0.95rem;
+      line-height: 1.85;
+      color: var(--dim);
+      font-weight: 300;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Stats column */
+    .stats-column {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .stat-block {
+      padding: 2.5rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      position: relative;
+    }
+    .stat-block:first-child {
+      padding-top: 0;
+    }
+    .stat-block:last-child {
+      border-bottom: none;
+    }
+    .stat-block::before {
+      content: '';
+      position: absolute;
+      left: -2rem;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--blue2), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .stat-block:nth-child(even)::before {
+      background: linear-gradient(to bottom, var(--red), transparent);
+    }
+    .stat-block:hover::before { opacity: 1; }
+    .stat-num {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 5vw, 5rem);
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1;
+      letter-spacing: -0.03em;
+    }
+    .stat-num .stat-accent {
+      color: var(--blue2);
+    }
+    .stat-block:nth-child(even) .stat-num .stat-accent {
+      color: var(--red);
+    }
+    .stat-unit {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 0.4rem;
+      display: block;
+    }
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--dim);
+      margin-top: 0.3rem;
+    }
+
+    /* ═══ CATEGORIES SECTION ═══ */
+    .categories-section {
+      background: var(--bg);
+    }
+    .categories-header {
+      margin-bottom: 5rem;
+      text-align: center;
+    }
+    .categories-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-weight: 800;
+      line-height: 1.0;
+      letter-spacing: -0.02em;
+      color: var(--white);
+      text-transform: uppercase;
+    }
+    .categories-title .slash {
+      color: var(--blue2);
+    }
+
+    /* 2×3 grid */
+    .categories-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    .cat-card {
+      position: relative;
+      background: var(--surface);
+      padding: 3rem;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.06);
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color 0.4s, transform 0.4s cubic-bezier(0.19,1,0.22,1), box-shadow 0.4s;
+    }
+    .cat-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.5s;
+      border-radius: 16px;
+    }
+    .cat-card.blue::before {
+      background: linear-gradient(145deg, rgba(26,118,240,0.09) 0%, transparent 55%);
+    }
+    .cat-card.red::before {
+      background: linear-gradient(145deg, rgba(200,34,28,0.09) 0%, transparent 55%);
+    }
+    .cat-card:hover {
+      transform: translateY(-4px);
+    }
+    .cat-card.blue:hover {
+      border-color: rgba(26,118,240,0.3);
+      box-shadow: 0 20px 60px rgba(4,9,26,0.5), 0 0 0 1px rgba(26,118,240,0.14);
+    }
+    .cat-card.red:hover {
+      border-color: rgba(200,34,28,0.3);
+      box-shadow: 0 20px 60px rgba(4,9,26,0.5), 0 0 0 1px rgba(200,34,28,0.14);
+    }
+    .cat-card:hover::before { opacity: 1; }
+
+    /* CAD corner brackets */
+    .cat-card::after {
+      content: '';
+      position: absolute;
+      bottom: 10px; right: 10px;
+      width: 14px; height: 14px;
+      border-right: 1px solid rgba(43,114,212,0.18);
+      border-bottom: 1px solid rgba(43,114,212,0.18);
+      pointer-events: none;
+      transition: border-color 0.35s;
+    }
+    .cat-card.red::after {
+      border-color: rgba(200,34,28,0.18);
+    }
+    .cat-card.blue:hover::after { border-color: rgba(43,114,212,0.45); }
+    .cat-card.red:hover::after { border-color: rgba(200,34,28,0.45); }
+
+    .cat-num {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      margin-bottom: 1.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .cat-num::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(43,114,212,0.18), transparent);
+    }
+    .cat-card.red .cat-num::after {
+      background: linear-gradient(90deg, rgba(200,34,28,0.18), transparent);
+    }
+    .cat-name {
+      font-family: var(--font-display);
+      font-size: 1.9rem;
+      font-weight: 800;
+      color: var(--white);
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+    .cat-desc {
+      font-size: 0.88rem;
+      line-height: 1.75;
+      color: var(--dim);
+      font-weight: 300;
+      margin-bottom: 1.8rem;
+    }
+    .cat-badge {
+      display: inline-flex;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.8rem;
+      border-radius: 4px;
+      margin-bottom: 2rem;
+    }
+    .cat-card.blue .cat-badge {
+      color: var(--blue2);
+      background: rgba(26,118,240,0.1);
+      border: 1px solid rgba(26,118,240,0.2);
+    }
+    .cat-card.red .cat-badge {
+      color: var(--red2);
+      background: rgba(200,34,28,0.1);
+      border: 1px solid rgba(200,34,28,0.2);
+    }
+    .cat-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color 0.2s, gap 0.2s;
+    }
+    .cat-link:hover { gap: 0.8rem; }
+    .cat-card.blue .cat-link:hover { color: var(--blue2); }
+    .cat-card.red .cat-link:hover { color: var(--red2); }
+
+    /* CTA strip */
+    .cta-strip {
+      margin-top: 5rem;
+      text-align: center;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: var(--font-display);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--white);
+      padding: 0.85rem 2.4rem;
+      background: transparent;
+      border: 1px solid rgba(43,114,212,0.5);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      position: relative;
+    }
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(43,114,212,0.08);
+      opacity: 0;
+      transition: opacity 0.3s;
+      border-radius: 10px;
+    }
+    .btn-primary:hover {
+      border-color: rgba(26,118,240,0.9);
+      box-shadow: 0 0 28px rgba(26,118,240,0.22), 0 0 8px rgba(200,34,28,0.08), inset 0 0 20px rgba(26,118,240,0.05);
+    }
+    .btn-primary:hover::before { opacity: 1; }
+
+    /* ═══ FOOTER ═══ */
+    footer {
+      background: var(--bg);
+      border-top: 1px solid rgba(255,255,255,0.05);
+      padding: 4rem 4rem 2.5rem;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 4rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      margin-bottom: 2rem;
+    }
+    .footer-logo-img {
+      height: 36px;
+      width: auto;
+      display: block;
+      margin-bottom: 1rem;
+      mix-blend-mode: screen;
+    }
+    .footer-tagline {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 260px;
+      margin-bottom: 1.2rem;
+    }
+    .footer-address-line {
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .footer-certs {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+    .footer-cert {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-family: var(--font-mono);
+      font-size: 0.48rem;
+      letter-spacing: 0.15em;
+      color: rgba(255,255,255,0.16);
+      text-transform: uppercase;
+    }
+    .footer-cert::before {
+      content: '▸';
+      color: rgba(43,114,212,0.38);
+      font-size: 0.45rem;
+    }
+    .footer-col-title {
+      font-family: var(--font-display);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--dim);
+      margin-bottom: 1.2rem;
+    }
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+    .footer-links a {
+      font-size: 0.85rem;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--light); }
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-copy {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+    }
+    .footer-legal {
+      display: flex;
+      gap: 2rem;
+    }
+    .footer-legal a {
+      font-size: 0.75rem;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+    .footer-legal a:hover { color: var(--dim); }
+
+    /* ═══ SCROLLBAR ═══ */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--surface); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+
+    /* ═══ RESPONSIVE ═══ */
+    @media (max-width: 1024px) {
+      .intro-layout { grid-template-columns: 1fr; gap: 4rem; }
+      .categories-grid { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; }
+      .section { padding: 6rem 2rem; }
+    }
+    @media (max-width: 768px) {
+      nav { padding: 0 1.5rem; }
+      .nav-links { display: none; }
+      .hero { padding: 6rem 1.5rem 4rem; }
+      .hero-headline { font-size: clamp(4rem, 18vw, 7rem); }
+      .hero-eyebrow { margin-bottom: 3rem; }
+      .footer-top { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ════ NAV ════ -->
+  <nav id="nav">
+    <a href="../index.html" class="nav-logo">
+      <img src="../Kent-Logo_.png" alt="Kent Stuttgart GmbH" class="nav-logo-img">
+    </a>
+    <ul class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="../maschinen/index.html">Maschinen</a></li>
+      <li><a href="index.html" class="active">Klischees</a></li>
+      <li><a href="../ueber-uns.html">Unternehmen</a></li>
+    </ul>
+    <div class="nav-right">
+      <span class="nav-lang">DE · EN</span>
+      <a href="mailto:info@kent-stuttgart.de" class="nav-cta">Anfrage</a>
+    </div>
+  </nav>
+
+  <!-- ════ HERO ════ -->
+  <section class="hero" id="hero">
+    <div class="hero-light"></div>
+    <div class="hero-grid"></div>
+
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <span class="hero-eyebrow-dot"></span>
+        Klischees · Kent Stuttgart GmbH
+        <span class="hero-eyebrow-dot"></span>
+      </div>
+
+      <h1 class="hero-headline">
+        <span class="hl-ghost">KLISCHEES</span>
+        <span class="hl-solid">UNSER MATERIAL.</span>
+        <span class="hl-accent">Präzise Druckplatten seit der Firmengründung</span>
+      </h1>
+
+      <div class="hero-divider"></div>
+
+      <p class="hero-sub">Stahlklischees · Kunststoff · Aluminium · Laser Repro</p>
+    </div>
+
+    <div class="hero-scroll">
+      <span>Scroll</span>
+      <div class="hero-scroll-line"></div>
+    </div>
+  </section>
+
+  <div class="gradient-divider"></div>
+
+  <!-- ════ INTRO ════ -->
+  <section class="section intro-section" id="intro">
+    <div class="section-inner">
+      <div class="intro-layout">
+        <!-- Left: big statement -->
+        <div class="reveal">
+          <div class="section-label">Über unsere Klischees</div>
+          <h2 class="intro-heading">
+            IN LANGER <span class="slash">/</span><br>TRADITION.
+          </h2>
+          <p class="intro-body">
+            In langer Tradition fertigt Kent Klischees für das Tampondruckverfahren. Hochqualifizierte Fachkräfte sorgen für eine hervorragende Qualität der Druckplatten. Unsere Reproabteilung verfügt über jahrzehntelange Erfahrung bei der Herstellung von Farbsätzen und schwierigen Druckmotiven.
+          </p>
+          <p class="intro-body">
+            Auf modernen EDV-Anlagen verarbeiten wir Dateien in allen gängigen Grafikformaten für Mac und PC. Unsere Ätzerei verfügt über modernste Anlagen zur Herstellung von allen Arten von Stahlklischees. Kürzeste Liefertermine bei gleichbleibend hoher Qualität.
+          </p>
+        </div>
+
+        <!-- Right: 3 key stats -->
+        <div class="stats-column reveal" style="transition-delay:0.15s">
+          <div class="stat-block">
+            <div class="stat-num"><span class="stat-accent">30+</span></div>
+            <span class="stat-unit">Jahre</span>
+            <div class="stat-label">Klischee-Erfahrung</div>
+          </div>
+          <div class="stat-block">
+            <div class="stat-num"><span class="stat-accent">65 Rc</span></div>
+            <span class="stat-unit">Härte</span>
+            <div class="stat-label">Stahlklischee-Legierung</div>
+          </div>
+          <div class="stat-block">
+            <div class="stat-num"><span class="stat-accent">500k+</span></div>
+            <span class="stat-unit">Drucke</span>
+            <div class="stat-label">Haltbarkeit Stahlklischee</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="gradient-divider"></div>
+
+  <!-- ════ 6 CATEGORIES ════ -->
+  <section class="section categories-section" id="materialien">
+    <div class="section-inner">
+      <div class="categories-header reveal">
+        <div class="section-label" style="justify-content:center">Produktübersicht</div>
+        <h2 class="categories-title">
+          SECHS MATERIALIEN. <span class="slash">/</span><br>EINE QUALITÄT.
+        </h2>
+      </div>
+
+      <div class="categories-grid">
+
+        <!-- Card 1 — blue -->
+        <div class="cat-card blue reveal">
+          <div class="cat-num">01</div>
+          <div class="cat-name">Stahlklischees</div>
+          <p class="cat-desc">Erste Wahl für Top-Qualität und extrem lange Lebensdauer.</p>
+          <div class="cat-badge">bis 500.000 Drucke</div>
+          <a href="stahlklischees.html" class="cat-link">
+            Mehr erfahren
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+
+        <!-- Card 2 — red -->
+        <div class="cat-card red reveal" style="transition-delay:0.08s">
+          <div class="cat-num">02</div>
+          <div class="cat-name">Bandstahl-Klischees</div>
+          <p class="cat-desc">Hochwertig, flexibel — hergestellt nach dem gleichen Qualitätsverfahren.</p>
+          <div class="cat-badge">0,25–0,5 mm</div>
+          <a href="bandstahlklischees.html" class="cat-link">
+            Mehr erfahren
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+
+        <!-- Card 3 — blue -->
+        <div class="cat-card blue reveal" style="transition-delay:0.12s">
+          <div class="cat-num">03</div>
+          <div class="cat-name">Stahl-Walzen</div>
+          <p class="cat-desc">Im Rotationstampondruck — gleiche Qualitätsstandards wie Stahlklischees.</p>
+          <div class="cat-badge">Rotationsdruck</div>
+          <a href="stahlwalzen.html" class="cat-link">
+            Mehr erfahren
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+
+        <!-- Card 4 — red -->
+        <div class="cat-card red reveal" style="transition-delay:0.16s">
+          <div class="cat-num">04</div>
+          <div class="cat-name">Kunststoff-Klischees</div>
+          <p class="cat-desc">Für kleine Auflagen — ideal und unschlagbar im Preis-/Leistungsverhältnis.</p>
+          <div class="cat-badge">3 Qualitäten</div>
+          <a href="kunststoffklischees.html" class="cat-link">
+            Mehr erfahren
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+
+        <!-- Card 5 — blue -->
+        <div class="cat-card blue reveal" style="transition-delay:0.20s">
+          <div class="cat-num">05</div>
+          <div class="cat-name">Aluminium-Laser-Klischee</div>
+          <p class="cat-desc">Direkte Laserbearbeitung vom PC — keine Chemikalien, keine Wartezeiten.</p>
+          <div class="cat-badge">175 lpi · 5 µm</div>
+          <a href="aluminiumlaserklischee.html" class="cat-link">
+            Mehr erfahren
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+
+        <!-- Card 6 — red -->
+        <div class="cat-card red reveal" style="transition-delay:0.24s">
+          <div class="cat-num">06</div>
+          <div class="cat-name">Laser Repro</div>
+          <p class="cat-desc">Präzise Druckvorlagen — hochqualifizierte Fachleute, alle gängigen Formate.</p>
+          <div class="cat-badge">Mac & PC</div>
+          <a href="laser-repro.html" class="cat-link">
+            Mehr erfahren
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+
+      </div>
+
+      <!-- CTA -->
+      <div class="cta-strip reveal">
+        <a href="mailto:info@kent-stuttgart.de" class="btn-primary" style="font-size:0.88rem; padding:1.1rem 2.8rem;">
+          Klischee anfragen
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ════ FOOTER ════ -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="../Kent-Logo_.png" alt="Kent Stuttgart GmbH" class="footer-logo-img">
+        <p class="footer-tagline">Tampondruckmaschinen und Klischees für die internationale Industrie. Entwickelt und gefertigt in Stuttgart seit 1987.</p>
+        <div class="footer-address">
+          <div class="footer-address-line">Kent Stuttgart GmbH</div>
+          <div class="footer-address-line">Böblinger Straße, 70565 Stuttgart</div>
+          <div class="footer-address-line">Deutschland</div>
+          <div class="footer-address-line" style="margin-top:0.5rem">info@kent-stuttgart.de</div>
+          <div class="footer-address-line">+49 (0)711 — — —</div>
+        </div>
+        <div class="footer-certs">
+          <span class="footer-cert">DIN EN ISO 9001</span>
+          <span class="footer-cert">CE-Kennzeichnung</span>
+          <span class="footer-cert">Made in Germany</span>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Klischees</div>
+        <ul class="footer-links">
+          <li><a href="stahlklischees.html">Stahlklischees</a></li>
+          <li><a href="bandstahlklischees.html">Bandstahlklischees</a></li>
+          <li><a href="stahlwalzen.html">Stahl-Walzen</a></li>
+          <li><a href="kunststoffklischees.html">Kunststoffklischees</a></li>
+          <li><a href="aluminiumlaserklischee.html">Aluminium-Laser</a></li>
+          <li><a href="laser-repro.html">Laser Repro</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Unternehmen</div>
+        <ul class="footer-links">
+          <li><a href="../ueber-uns.html">Über Kent Stuttgart</a></li>
+          <li><a href="../maschinen/index.html">Maschinen</a></li>
+          <li><a href="../index.html">Startseite</a></li>
+          <li><a href="#">Karriere</a></li>
+          <li><a href="#">Presse &amp; News</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Service &amp; Kontakt</div>
+        <ul class="footer-links">
+          <li><a href="mailto:info@kent-stuttgart.de">Klischee anfragen</a></li>
+          <li><a href="#">After-Sales-Service</a></li>
+          <li><a href="#">Schulung &amp; Training</a></li>
+          <li><a href="#">Händlernetz weltweit</a></li>
+          <li><a href="#">Downloads &amp; Dokumentation</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 Kent Stuttgart GmbH · Alle Rechte vorbehalten · HRB 12345 Amtsgericht Stuttgart</span>
+      <div class="footer-legal">
+        <a href="#">Impressum</a>
+        <a href="#">Datenschutzerklärung</a>
+        <a href="#">AGB</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ─── Nav Scroll ───
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    // ─── Reveal on scroll ───
+    const reveals = document.querySelectorAll('.reveal');
+    const revealObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting && !e.target.classList.contains('animate-in')) {
+          e.target.classList.add('animate-in');
+          revealObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    reveals.forEach(r => revealObs.observe(r));
+  </script>
+</body>
+</html>

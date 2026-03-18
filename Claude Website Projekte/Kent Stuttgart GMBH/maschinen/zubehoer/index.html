@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maschinenzubehör — Kent Stuttgart GmbH</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700;800&family=Barlow:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ═══ TOKENS ═══ */
+    :root {
+      --blue:   #1058C0;
+      --blue2:  #1A76F0;
+      --blue3:  #0C469E;
+      --red:    #C8221C;
+      --red2:   #E03530;
+      --bg:     #04091A;
+      --bg1:    #070D20;
+      --bg2:    #0A1228;
+      --surface:#101C3A;
+      --muted:  #374F72;
+      --dim:    #6088B0;
+      --light:  #C2D4E8;
+      --white:  #FFFFFF;
+
+      --font-display: 'Barlow Condensed', sans-serif;
+      --font-body:    'Barlow', sans-serif;
+      --font-mono:    'Space Mono', monospace;
+      --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+    }
+
+    /* ═══ RESET ═══ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--light);
+      font-family: var(--font-body);
+      font-weight: 400;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* ═══ NOISE ═══ */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 200px;
+    }
+
+    /* ═══ NAV ═══ */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 500;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 4rem;
+      height: 72px;
+    }
+    nav::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: transparent;
+      backdrop-filter: blur(0px);
+      transition: backdrop-filter 0.4s, background 0.4s, border-color 0.4s;
+      border-bottom: 1px solid transparent;
+    }
+    nav.scrolled::before {
+      background: rgba(4,9,26,0.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(26,118,240,0.12);
+    }
+    .nav-logo {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .nav-logo-img {
+      height: 34px;
+      width: auto;
+      display: block;
+      mix-blend-mode: screen;
+    }
+    .nav-links {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: var(--font-display);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--dim);
+      transition: color 0.2s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0;
+      width: 0; height: 1px;
+      background: var(--blue2);
+      transition: width 0.3s var(--ease-out-expo);
+    }
+    .nav-links a:hover { color: var(--white); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-links a.active { color: var(--white); }
+    .nav-links a.active::after { width: 100%; background: var(--red); }
+    .nav-right {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-lang {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .nav-lang:hover { color: var(--dim); }
+    .nav-cta {
+      position: relative;
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--white);
+      padding: 0.6rem 1.6rem;
+      background: transparent;
+      border: 1px solid rgba(26,118,240,0.5);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .nav-cta:hover {
+      border-color: rgba(26,118,240,0.9);
+      box-shadow: 0 0 20px rgba(26,118,240,0.15);
+    }
+
+    /* ═══ BREADCRUMB ═══ */
+    .breadcrumb {
+      position: relative;
+      z-index: 10;
+      padding: 2rem 4rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+    .breadcrumb a { color: var(--muted); transition: color 0.2s; }
+    .breadcrumb a:hover { color: var(--dim); }
+    .breadcrumb-sep { color: rgba(255,255,255,0.1); }
+    .breadcrumb-current { color: var(--dim); }
+
+    /* ═══ HERO ═══ */
+    .page-hero {
+      position: relative;
+      min-height: 65vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      padding: 10rem 4rem 7rem;
+      text-align: center;
+    }
+    .page-hero-light {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse 70% 55% at 65% 25%, rgba(26,118,240,0.14) 0%, transparent 60%),
+        radial-gradient(ellipse 45% 40% at 20% 80%, rgba(200,34,28,0.08) 0%, transparent 55%),
+        radial-gradient(ellipse 40% 35% at 90% 70%, rgba(200,34,28,0.05) 0%, transparent 50%);
+      animation: breath 9s ease-in-out infinite;
+    }
+    @keyframes breath {
+      0%, 100% { opacity: 0.8; }
+      50%       { opacity: 1; }
+    }
+    .page-hero-grid {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(26,118,240,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(26,118,240,0.02) 1px, transparent 1px);
+      background-size: 90px 90px;
+    }
+    .page-hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(ellipse 100% 100% at 50% 50%, transparent 40%, rgba(4,9,26,0.75) 100%);
+    }
+    .page-hero-content {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .page-hero-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: rgba(26,118,240,0.7);
+      margin-bottom: 3rem;
+      opacity: 0;
+      animation: fadeIn 1s ease 0.3s forwards;
+    }
+    .eyebrow-dot {
+      width: 3px; height: 3px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .eyebrow-dot-blue { background: rgba(26,118,240,0.6); }
+    .eyebrow-dot-red  { background: rgba(200,34,28,0.7); }
+
+    .page-hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(4.5rem, 11vw, 11rem);
+      font-weight: 800;
+      line-height: 0.9;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      color: var(--white);
+      opacity: 0;
+      transform: translateY(40px);
+      animation: fadeUp 1.4s cubic-bezier(0.19,1,0.22,1) 0.5s forwards;
+    }
+    .page-hero-title .line-ghost {
+      display: block;
+      color: rgba(255,255,255,0.08);
+      font-weight: 300;
+      letter-spacing: 0.06em;
+      font-size: 0.65em;
+    }
+    .page-hero-title .line-solid {
+      display: block;
+      color: var(--white);
+    }
+    .page-hero-title .line-red {
+      display: block;
+      color: var(--red);
+      font-size: 0.3em;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      margin-top: 0.6rem;
+    }
+
+    .page-hero-divider {
+      margin: 3.5rem 0 2.5rem;
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(to bottom, rgba(26,118,240,0.6), rgba(200,34,28,0.3), transparent);
+      opacity: 0;
+      animation: fadeIn 0.8s ease 1.4s forwards;
+    }
+    .page-hero-sub {
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--dim);
+      max-width: 600px;
+      opacity: 0;
+      animation: fadeIn 0.8s ease 1.6s forwards;
+    }
+
+    /* ═══ GRADIENT DIVIDER ═══ */
+    .gradient-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--blue2) 30%, var(--red) 70%, transparent);
+      opacity: 0.4;
+    }
+
+    /* ═══ INTRO SECTION ═══ */
+    .intro-section {
+      padding: 7rem 4rem 6rem;
+      background: var(--bg1);
+    }
+    .intro-inner {
+      max-width: 1320px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: start;
+    }
+    .intro-left {}
+    .intro-heading {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 4vw, 3.8rem);
+      font-weight: 800;
+      text-transform: uppercase;
+      line-height: 1;
+      letter-spacing: -0.01em;
+      color: var(--white);
+      margin-bottom: 2rem;
+    }
+    .intro-heading .slash {
+      display: block;
+      color: rgba(255,255,255,0.15);
+      font-size: 0.6em;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.2em;
+    }
+    .intro-body {
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: var(--dim);
+      line-height: 1.85;
+    }
+    .intro-right {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      padding-top: 0.5rem;
+    }
+    .category-badge {
+      background: var(--surface);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      border: 1px solid rgba(255,255,255,0.06);
+      transition: border-color 0.3s, transform 0.4s var(--ease-out-expo);
+    }
+    .category-badge:hover {
+      border-color: rgba(26,118,240,0.2);
+      transform: translateX(6px);
+    }
+    .badge-title {
+      font-family: var(--font-mono);
+      font-size: 0.5rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(26,118,240,0.65);
+      margin-bottom: 0.5rem;
+    }
+    .badge-items {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--light);
+    }
+
+    /* ═══ PRODUCTS SECTION ═══ */
+    .products-section {
+      padding: 5rem 4rem 8rem;
+      background: var(--bg);
+    }
+    .products-inner {
+      max-width: 1320px;
+      margin: 0 auto;
+    }
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: rgba(26,118,240,0.55);
+      margin-bottom: 3rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 1px;
+      background: var(--blue2);
+      opacity: 0.6;
+    }
+
+    /* ═══ PRODUCTS GRID ═══ */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .product-card {
+      position: relative;
+      background: var(--surface);
+      border-radius: 16px;
+      padding: 2rem 1.75rem 2rem;
+      border: 1px solid rgba(255,255,255,0.06);
+      overflow: hidden;
+      transition: transform 0.5s var(--ease-out-expo), border-color 0.4s, box-shadow 0.5s;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .product-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 16px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s var(--ease-out-expo);
+    }
+    /* Alternating blue/red glow */
+    .product-card.blue-glow::before {
+      background: radial-gradient(ellipse 80% 60% at 30% 30%, rgba(26,118,240,0.1) 0%, transparent 70%);
+    }
+    .product-card.red-glow::before {
+      background: radial-gradient(ellipse 80% 60% at 30% 30%, rgba(200,34,28,0.08) 0%, transparent 70%);
+    }
+
+    .product-card.blue-glow:hover {
+      transform: translateY(-5px);
+      border-color: rgba(26,118,240,0.25);
+      box-shadow: 0 16px 48px rgba(26,118,240,0.1), 0 4px 16px rgba(0,0,0,0.35);
+    }
+    .product-card.red-glow:hover {
+      transform: translateY(-5px);
+      border-color: rgba(200,34,28,0.22);
+      box-shadow: 0 16px 48px rgba(200,34,28,0.08), 0 4px 16px rgba(0,0,0,0.35);
+    }
+    .product-card:hover::before { opacity: 1; }
+
+    .product-card-number {
+      font-family: var(--font-mono);
+      font-size: 0.5rem;
+      letter-spacing: 0.2em;
+      margin-bottom: 0.25rem;
+    }
+    .product-card.blue-glow .product-card-number { color: rgba(26,118,240,0.45); }
+    .product-card.red-glow .product-card-number { color: rgba(200,34,28,0.45); }
+
+    .product-card-name {
+      font-family: var(--font-display);
+      font-size: clamp(1.3rem, 2.2vw, 1.9rem);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.01em;
+      line-height: 1.05;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+      transition: color 0.3s;
+    }
+    .product-card-desc {
+      font-size: 0.8rem;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.65;
+      transition: color 0.3s;
+    }
+    .product-card:hover .product-card-desc { color: var(--dim); }
+
+    /* ═══ CTA SECTION ═══ */
+    .cta-section {
+      background: var(--bg1);
+      position: relative;
+      overflow: hidden;
+      padding: 10rem 4rem;
+    }
+    .cta-section-bg {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse 70% 80% at 50% 50%, rgba(26,118,240,0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 30% 40% at 20% 80%, rgba(200,34,28,0.05) 0%, transparent 60%);
+      border-top: 1px solid rgba(26,118,240,0.1);
+    }
+    .cta-inner {
+      position: relative;
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .cta-label {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(26,118,240,0.6);
+      margin-bottom: 2rem;
+    }
+    .cta-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 5vw, 5rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      color: var(--white);
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+    .cta-sub {
+      font-size: 0.95rem;
+      color: var(--dim);
+      font-weight: 300;
+      line-height: 1.7;
+      margin-bottom: 3.5rem;
+    }
+    .cta-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: var(--font-display);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--white);
+      padding: 0.95rem 2.6rem;
+      background: transparent;
+      border: 1px solid rgba(26,118,240,0.5);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .btn-primary:hover {
+      border-color: rgba(26,118,240,0.9);
+      box-shadow: 0 0 28px rgba(26,118,240,0.2), inset 0 0 20px rgba(26,118,240,0.04);
+    }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: var(--font-display);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--dim);
+      padding: 0.95rem 2.6rem;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: border-color 0.3s, color 0.3s;
+    }
+    .btn-secondary:hover {
+      border-color: rgba(255,255,255,0.25);
+      color: var(--light);
+    }
+
+    /* ═══ FOOTER ═══ */
+    footer {
+      background: var(--bg);
+      border-top: 1px solid rgba(255,255,255,0.05);
+      padding: 4rem 4rem 2.5rem;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 4rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      margin-bottom: 2rem;
+    }
+    .footer-logo-img {
+      height: 36px;
+      width: auto;
+      display: block;
+      margin-bottom: 1rem;
+      mix-blend-mode: screen;
+    }
+    .footer-tagline {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 260px;
+      margin-bottom: 1.2rem;
+    }
+    .footer-address-line {
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .footer-col-title {
+      font-family: var(--font-display);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--dim);
+      margin-bottom: 1.2rem;
+    }
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+    .footer-links a {
+      font-size: 0.85rem;
+      color: var(--muted);
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--light); }
+    .footer-certs {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+    .footer-cert {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-family: var(--font-mono);
+      font-size: 0.48rem;
+      letter-spacing: 0.15em;
+      color: rgba(255,255,255,0.16);
+      text-transform: uppercase;
+    }
+    .footer-cert::before {
+      content: '▸';
+      color: rgba(26,118,240,0.38);
+      font-size: 0.45rem;
+    }
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-copy {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+    }
+    .footer-legal {
+      display: flex;
+      gap: 2rem;
+    }
+    .footer-legal a {
+      font-size: 0.75rem;
+      color: var(--muted);
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .footer-legal a:hover { color: var(--dim); }
+
+    /* ═══ REVEAL ═══ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.9s var(--ease-out-expo), transform 0.9s var(--ease-out-expo);
+    }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+
+    /* ═══ KEYFRAMES ═══ */
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    /* ═══ SCROLLBAR ═══ */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--surface); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+
+    /* ═══ RESPONSIVE ═══ */
+    @media (max-width: 1024px) {
+      nav { padding: 0 2rem; }
+      .intro-section, .products-section { padding-left: 2rem; padding-right: 2rem; }
+      .intro-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .cta-section { padding: 7rem 2rem; }
+      footer { padding: 3rem 2rem 2rem; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; }
+      .products-grid { grid-template-columns: repeat(2, 1fr); }
+      .breadcrumb { padding: 2rem 2rem 0; }
+    }
+    @media (max-width: 768px) {
+      nav { padding: 0 1.5rem; }
+      .nav-links { display: none; }
+      .page-hero { padding: 7rem 1.5rem 4rem; min-height: 65vh; }
+      .intro-section { padding: 5rem 1.5rem 4rem; }
+      .products-section { padding: 4rem 1.5rem 5rem; }
+      .products-grid { grid-template-columns: 1fr; }
+      .cta-actions { flex-direction: column; }
+      .footer-top { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+      .breadcrumb { padding: 1.5rem 1.5rem 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ════ NAV ════ -->
+  <nav id="nav">
+    <a href="../../index.html" class="nav-logo">
+      <img src="../../Kent-Logo_.png" alt="Kent Stuttgart GmbH" class="nav-logo-img">
+    </a>
+    <ul class="nav-links">
+      <li><a href="../index.html" class="active">Maschinen</a></li>
+      <li><a href="../../klischees/index.html">Klischees</a></li>
+      <li><a href="../../ueber-uns.html">Unternehmen</a></li>
+    </ul>
+    <div class="nav-right">
+      <span class="nav-lang">DE · EN</span>
+      <a href="mailto:info@kent-stuttgart.de" class="nav-cta">Anfrage</a>
+    </div>
+  </nav>
+
+  <!-- ════ BREADCRUMB ════ -->
+  <div class="breadcrumb">
+    <a href="../../index.html">Kent Stuttgart GmbH</a>
+    <span class="breadcrumb-sep">/</span>
+    <a href="../index.html">Maschinen</a>
+    <span class="breadcrumb-sep">/</span>
+    <span class="breadcrumb-current">Maschinenzubehör</span>
+  </div>
+
+  <!-- ════ HERO ════ -->
+  <section class="page-hero">
+    <div class="page-hero-light"></div>
+    <div class="page-hero-grid"></div>
+
+    <div class="page-hero-content">
+      <div class="page-hero-eyebrow">
+        <span class="eyebrow-dot eyebrow-dot-blue"></span>
+        MASCHINENZUBEHÖR · KENT STUTTGART GMBH
+        <span class="eyebrow-dot eyebrow-dot-red"></span>
+      </div>
+
+      <h1 class="page-hero-title">
+        <span class="line-ghost">ZUBEHÖR</span>
+        <span class="line-solid">KOMPLETT GEDACHT.</span>
+        <span class="line-red">15 PRODUKTE FÜR PERFEKTE DRUCKERGEBNISSE</span>
+      </h1>
+
+      <div class="page-hero-divider"></div>
+
+      <p class="page-hero-sub">Ionisation · UV-Trockner · Farbnapfsysteme · Laser</p>
+    </div>
+  </section>
+
+  <div class="gradient-divider"></div>
+
+  <!-- ════ INTRO ════ -->
+  <section class="intro-section">
+    <div class="intro-inner reveal">
+      <div class="intro-left">
+        <h2 class="intro-heading">
+          <span class="slash">ERGÄNZUNGEN.</span>
+          DIE ÜBERZEUGEN.
+        </h2>
+        <p class="intro-body">
+          Als Ergänzungen oder Optionen zu den Tampondruckmaschinen steht eine ganze Reihe an Zubehör zur Verfügung. Ionisation und Vorbehandlung schaffen Abhilfe bei einem Problem mit statischer Aufladung oder der Oberflächenspannung des Bedruckmaterials. Viskositätsmessgerät und Kurbelwascher tragen bei zur wiederholgenauigen Produktionsstandards. Mikroskop zur Tiefenmessung bei Klischees hilft bei der Qualitätskontrolle.
+        </p>
+      </div>
+      <div class="intro-right">
+        <div class="category-badge">
+          <div class="badge-title">Vorbehandlung</div>
+          <div class="badge-items">Ionisation · Beflammung · Corona</div>
+        </div>
+        <div class="category-badge">
+          <div class="badge-title">Reinigung</div>
+          <div class="badge-items">Reinigungsautomat · Tauchtank</div>
+        </div>
+        <div class="category-badge">
+          <div class="badge-title">Messtechnik</div>
+          <div class="badge-items">Viskositätsmessung · Mikroskop</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ PRODUCTS GRID ════ -->
+  <section class="products-section">
+    <div class="products-inner">
+      <div class="section-label">15 Produkte</div>
+
+      <div class="products-grid">
+
+        <div class="product-card blue-glow reveal" style="transition-delay:0.00s">
+          <div class="product-card-number">01</div>
+          <div class="product-card-name">Carreetisch</div>
+          <p class="product-card-desc">Tisch-Transportsystem für automatisierte Produktionslinien.</p>
+        </div>
+
+        <div class="product-card red-glow reveal" style="transition-delay:0.04s">
+          <div class="product-card-number">02</div>
+          <div class="product-card-name">Beflammung</div>
+          <p class="product-card-desc">Vorbehandlung zur Oberflächenaktivierung bei schwierigen Substraten.</p>
+        </div>
+
+        <div class="product-card blue-glow reveal" style="transition-delay:0.08s">
+          <div class="product-card-number">03</div>
+          <div class="product-card-name">Corona</div>
+          <p class="product-card-desc">Elektrische Oberflächenbehandlung zur Haftungsverbesserung.</p>
+        </div>
+
+        <div class="product-card red-glow reveal" style="transition-delay:0.12s">
+          <div class="product-card-number">04</div>
+          <div class="product-card-name">Ionisation</div>
+          <p class="product-card-desc">Beseitigung statischer Aufladung für saubere Produktionsprozesse.</p>
+        </div>
+
+        <div class="product-card blue-glow reveal" style="transition-delay:0.16s">
+          <div class="product-card-number">05</div>
+          <div class="product-card-name">Reinigungsautomat M-Serie</div>
+          <p class="product-card-desc">Vollautomatische Tamponreinigung im Produktionszyklus.</p>
+        </div>
+
+        <div class="product-card red-glow reveal" style="transition-delay:0.20s">
+          <div class="product-card-number">06</div>
+          <div class="product-card-name">Reinigungsbehälter Tauchtank</div>
+          <p class="product-card-desc">Manuelle Reinigungslösung für Tampons und Werkzeuge.</p>
+        </div>
+
+        <div class="product-card blue-glow reveal" style="transition-delay:0.24s">
+          <div class="product-card-number">07</div>
+          <div class="product-card-name">Farbnapf LCIC Keramik</div>
+          <p class="product-card-desc">Keramik-Farbnapf für geschlossene Farbsysteme — maximale Haltbarkeit.</p>
+        </div>
+
+        <div class="product-card red-glow reveal" style="transition-delay:0.28s">
+          <div class="product-card-number">08</div>
+          <div class="product-card-name">Farbnapf TCIC Stahl</div>
+          <p class="product-card-desc">Stahl-Farbnapf für geschlossene Farbsysteme.</p>
+        </div>
+
+        <div class="product-card blue-glow reveal" style="transition-delay:0.32s">
+          <div class="product-card-number">09</div>
+          <div class="product-card-name">UV-Trockner mini</div>
+          <p class="product-card-desc">Kompakter UV-Trockner für schnelle Aushärtung.</p>
+        </div>
+
+        <div class="product-card red-glow reveal" style="transition-delay:0.36s">
+          <div class="product-card-number">10</div>
+          <div class="product-card-name">UV-Trockner</div>
+          <p class="product-card-desc">Standard UV-Trockner für industrielle Anwendungen.</p>
+        </div>
+
+        <div class="product-card blue-glow reveal" style="transition-delay:0.40s">
+          <div class="product-card-number">11</div>
+          <div class="product-card-name">Belichtungsgeräte</div>
+          <p class="product-card-desc">Für die Herstellung von Kunststoffklischees.</p>
+        </div>
+
+        <div class="product-card red-glow reveal" style="transition-delay:0.44s">
+          <div class="product-card-number">12</div>
+          <div class="product-card-name">Viskositätsmessgerät</div>
+          <p class="product-card-desc">Präzise Kontrolle der Druckfarben-Viskosität.</p>
+        </div>
+
+        <div class="product-card blue-glow reveal" style="transition-delay:0.48s">
+          <div class="product-card-number">13</div>
+          <div class="product-card-name">Verschiebetisch</div>
+          <p class="product-card-desc">Präziser X/Y-Positioniertisch für exakte Werkstückausrichtung.</p>
+        </div>
+
+        <div class="product-card red-glow reveal" style="transition-delay:0.52s">
+          <div class="product-card-number">14</div>
+          <div class="product-card-name">Laser</div>
+          <p class="product-card-desc">Laser-System für Klischeebearbeitung und Gravur.</p>
+        </div>
+
+        <div class="product-card blue-glow reveal" style="transition-delay:0.56s">
+          <div class="product-card-number">15</div>
+          <div class="product-card-name">Laser F-10</div>
+          <p class="product-card-desc">Hochleistungs-Laser-System F-10 für professionelle Klischeeherstellung.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="gradient-divider"></div>
+
+  <!-- ════ CTA ════ -->
+  <section class="cta-section" id="kontakt">
+    <div class="cta-section-bg"></div>
+    <div class="cta-inner reveal">
+      <div class="cta-label">Anfrage</div>
+      <h2 class="cta-title">Zubehör anfragen</h2>
+      <p class="cta-sub">
+        Das passende Zubehör für Ihre Tampondruckmaschine. Unser Team berät Sie — technisch fundiert und direkt aus Stuttgart.
+      </p>
+      <div class="cta-actions">
+        <a href="mailto:info@kent-stuttgart.de" class="btn-primary">
+          Zubehör anfragen
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="mailto:info@kent-stuttgart.de" class="btn-secondary">
+          Technische Beratung
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ FOOTER ════ -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="../../Kent-Logo_.png" alt="Kent Stuttgart GmbH" class="footer-logo-img">
+        <p class="footer-tagline">Tampondruckmaschinen für die internationale Industrie. Entwickelt und gefertigt in Stuttgart seit 1987.</p>
+        <div class="footer-address">
+          <div class="footer-address-line">Kesselstraße 46 · 70327 Stuttgart</div>
+          <div class="footer-address-line">+49 (0)711 40950-0</div>
+          <div class="footer-address-line">info@kent-stuttgart.de</div>
+        </div>
+        <div class="footer-certs">
+          <span class="footer-cert">DIN EN ISO 9001</span>
+          <span class="footer-cert">CE-Kennzeichnung</span>
+          <span class="footer-cert">Made in Germany</span>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Maschinen</div>
+        <ul class="footer-links">
+          <li><a href="../standardmaschinen/index.html">Standardmaschinen</a></li>
+          <li><a href="../sondermaschinen/index.html">Sondermaschinen</a></li>
+          <li><a href="../siebdruck/index.html">Siebdruckmaschinen</a></li>
+          <li><a href="../zubehoer/index.html">Maschinenzubehör</a></li>
+          <li><a href="../anwendungsbereiche/index.html">Anwendungsbereiche</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Klischees</div>
+        <ul class="footer-links">
+          <li><a href="../../klischees/stahlklischees.html">Stahlklischees</a></li>
+          <li><a href="../../klischees/bandstahlklischees.html">Bandstahlklischees</a></li>
+          <li><a href="../../klischees/kunststoffklischees.html">Kunststoffklischees</a></li>
+          <li><a href="../../klischees/aluminiumlaserklischee.html">Aluminiumlaserklischee</a></li>
+          <li><a href="../../klischees/laser-repro.html">Laser Repro</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Unternehmen</div>
+        <ul class="footer-links">
+          <li><a href="../../ueber-uns.html">Über uns</a></li>
+          <li><a href="#kontakt">Kontakt</a></li>
+          <li><a href="../../index.html">Startseite</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 Kent Stuttgart GmbH · Alle Rechte vorbehalten</span>
+      <div class="footer-legal">
+        <a href="#">Impressum</a>
+        <a href="#">Datenschutzerklärung</a>
+        <a href="#">AGB</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ─── Nav scroll state ───
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 30);
+    }, { passive: true });
+
+    // ─── Reveal on scroll ───
+    const reveals = document.querySelectorAll('.reveal');
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    reveals.forEach(r => obs.observe(r));
+  </script>
+
+</body>
+</html>

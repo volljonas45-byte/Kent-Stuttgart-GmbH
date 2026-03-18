@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IDS-Serie — Integrated Drive System — Kent Stuttgart GmbH</title>
+  <meta name="description" content="Die IDS-Serie: 3 Tampondruckmaschinen mit integriertem Servoantrieb — maximale Präzision durch direkt integrierten IDS-Antrieb. PP 150 IDS, 150 IDS-DRE, KIPP 200-IDS." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700;800&family=Barlow:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ══════════════════════════════════════════
+       DESIGN TOKENS
+    ══════════════════════════════════════════ */
+    :root {
+      --blue:   #1058C0;
+      --blue2:  #1A76F0;
+      --red:    #C8221C;
+      --red2:   #E03530;
+      --bg:     #04091A;
+      --bg1:    #070D20;
+      --bg2:    #0A1228;
+      --surface:#101C3A;
+      --muted:  #374F72;
+      --dim:    #6088B0;
+      --light:  #C2D4E8;
+      --white:  #FFFFFF;
+
+      --font-display: 'Barlow Condensed', sans-serif;
+      --font-body:    'Barlow', sans-serif;
+      --font-mono:    'Space Mono', monospace;
+      --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+    }
+
+    /* ══════════════════════════════════════════
+       RESET
+    ══════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--light);
+      font-family: var(--font-body);
+      font-weight: 300;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* Noise texture overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 200px;
+    }
+
+    /* ══════════════════════════════════════════
+       NAV
+    ══════════════════════════════════════════ */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 500;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 4rem;
+    }
+    nav::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: transparent;
+      backdrop-filter: blur(0px);
+      border-bottom: 1px solid transparent;
+      transition: backdrop-filter 0.4s, background 0.4s, border-color 0.4s;
+    }
+    nav.scrolled::before {
+      background: rgba(4,9,26,0.94);
+      backdrop-filter: blur(20px);
+      border-bottom-color: rgba(26,118,240,0.12);
+    }
+    .logo {
+      position: relative;
+      z-index: 1;
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--blue2);
+      text-transform: uppercase;
+    }
+    .logo span { color: var(--red); }
+    .nav-links {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+    }
+    .nav-links a {
+      font-family: var(--font-display);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--dim);
+      transition: color 0.2s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0;
+      width: 0; height: 1px;
+      background: var(--blue2);
+      transition: width 0.3s var(--ease-out-expo);
+    }
+    .nav-links a:hover { color: var(--white); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-links a.active { color: var(--white); }
+    .nav-links a.active::after {
+      width: 100%;
+      background: var(--red2);
+    }
+    .nav-cta {
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--white) !important;
+      padding: 0.55rem 1.5rem;
+      border: 1px solid rgba(26,118,240,0.55);
+      border-radius: 10px;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .nav-cta::after { display: none !important; }
+    .nav-cta:hover {
+      background: var(--blue2);
+      border-color: var(--blue2);
+    }
+
+    /* ══════════════════════════════════════════
+       BREADCRUMB
+    ══════════════════════════════════════════ */
+    .breadcrumb {
+      position: relative;
+      z-index: 10;
+      padding: 5.5rem 4rem 0;
+    }
+    .breadcrumb-inner {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+    }
+    .breadcrumb-inner a { color: var(--muted); transition: color 0.2s; }
+    .breadcrumb-inner a:hover { color: var(--dim); }
+    .breadcrumb-sep { color: rgba(55,79,114,0.45); }
+    .breadcrumb-current { color: var(--dim); }
+
+    /* ══════════════════════════════════════════
+       HERO
+    ══════════════════════════════════════════ */
+    .hero {
+      position: relative;
+      min-height: 65vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      padding: 6rem 4rem 6rem;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse 65% 60% at 10% 30%, rgba(26,118,240,0.17) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 50% at 90% 80%, rgba(200,34,28,0.10) 0%, transparent 55%),
+        radial-gradient(ellipse 40% 40% at 60% 10%, rgba(16,88,192,0.08) 0%, transparent 50%);
+      animation: bgBreath 10s ease-in-out infinite;
+    }
+    @keyframes bgBreath {
+      0%, 100% { opacity: 0.8; transform: scale(1); }
+      50%       { opacity: 1;   transform: scale(1.025); }
+    }
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(26,118,240,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(26,118,240,0.025) 1px, transparent 1px);
+      background-size: 88px 88px;
+    }
+    .hero-vignette {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(ellipse 110% 110% at 50% 50%, transparent 35%, rgba(4,9,26,0.7) 100%);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(26,118,240,0.65);
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeIn 0.9s ease 0.3s forwards;
+    }
+    .hero-headline {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(5rem, 10vw, 9rem);
+      line-height: 0.88;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      opacity: 0;
+      transform: translateY(44px);
+      animation: fadeUp 1.4s var(--ease-out-expo) 0.5s forwards;
+    }
+    .hero-headline .line1 {
+      display: block;
+      color: var(--white);
+    }
+    .hero-headline .line2 {
+      display: block;
+      color: var(--dim);
+      font-size: 0.62em;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      margin-top: 0.08em;
+    }
+    .hero-divider {
+      width: 1px;
+      height: 50px;
+      background: linear-gradient(to bottom, rgba(26,118,240,0.65), rgba(200,34,28,0.35), transparent);
+      margin: 3rem 0 2.5rem;
+      opacity: 0;
+      animation: fadeIn 0.8s ease 1.3s forwards;
+    }
+    .hero-sub {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--dim);
+      max-width: 520px;
+      line-height: 1.75;
+      margin-bottom: 2.8rem;
+      opacity: 0;
+      animation: fadeIn 0.8s ease 1.45s forwards;
+    }
+    .hero-ctas {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      opacity: 0;
+      animation: fadeIn 0.8s ease 1.65s forwards;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-family: var(--font-display);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: var(--white);
+      background: var(--blue2);
+      border: 1px solid var(--blue2);
+      border-radius: 10px;
+      padding: 0.9rem 2.1rem;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-primary:hover {
+      background: var(--blue);
+      border-color: var(--blue);
+      transform: translateY(-2px);
+      box-shadow: 0 14px 36px rgba(26,118,240,0.28);
+    }
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-family: var(--font-display);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: var(--dim);
+      border: 1px solid rgba(55,79,114,0.4);
+      border-radius: 10px;
+      padding: 0.9rem 2.1rem;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .btn-ghost:hover {
+      color: var(--light);
+      border-color: rgba(96,136,176,0.5);
+    }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    /* ══════════════════════════════════════════
+       MACHINES SECTION
+    ══════════════════════════════════════════ */
+    .machines-section {
+      position: relative;
+      padding: 7rem 4rem 8rem;
+      background: var(--bg1);
+    }
+    .machines-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--blue2);
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 1rem;
+    }
+    .section-label::before {
+      content: '';
+      width: 22px;
+      height: 1px;
+      background: var(--blue2);
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--white);
+      letter-spacing: -0.01em;
+      line-height: 1.05;
+      margin-bottom: 0.7rem;
+    }
+    .section-sub {
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: var(--dim);
+      line-height: 1.75;
+      max-width: 540px;
+      margin-bottom: 4rem;
+    }
+
+    /* ══════════════════════════════════════════
+       MACHINE CARDS GRID
+    ══════════════════════════════════════════ */
+    .machine-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .machine-card {
+      position: relative;
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition:
+        transform 0.4s var(--ease-out-expo),
+        border-color 0.4s,
+        box-shadow 0.4s;
+    }
+
+    /* Top accent bar */
+    .card-bar {
+      height: 3px;
+      width: 100%;
+      flex-shrink: 0;
+    }
+    .machine-card.blue-card .card-bar {
+      background: linear-gradient(90deg, var(--blue), var(--blue2));
+    }
+    .machine-card.red-card .card-bar {
+      background: linear-gradient(90deg, var(--red), var(--red2));
+    }
+
+    .card-body {
+      padding: 2.2rem 2.5rem 2.5rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .card-series {
+      font-family: var(--font-mono);
+      font-size: 0.52rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      margin-bottom: 0.9rem;
+    }
+    .machine-card.blue-card .card-series { color: rgba(26,118,240,0.6); }
+    .machine-card.red-card  .card-series { color: rgba(200,34,28,0.6); }
+    .card-name {
+      font-family: var(--font-display);
+      font-size: 2.3rem;
+      font-weight: 800;
+      color: var(--white);
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+    .card-desc {
+      font-size: 0.88rem;
+      font-weight: 300;
+      line-height: 1.78;
+      color: var(--dim);
+      flex: 1;
+      margin-bottom: 2rem;
+    }
+    .card-footer {
+      display: flex;
+      align-items: center;
+      padding-top: 1.4rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      margin-top: auto;
+    }
+    .card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.42rem;
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--dim);
+      transition: color 0.2s, gap 0.25s;
+    }
+    .card-link svg {
+      width: 14px; height: 14px;
+      transition: transform 0.3s var(--ease-out-expo);
+    }
+
+    /* Blue card hover */
+    .machine-card.blue-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(26,118,240,0.38);
+      box-shadow:
+        0 28px 70px rgba(4,9,26,0.55),
+        0 0 0 1px rgba(26,118,240,0.14),
+        inset 0 0 50px rgba(26,118,240,0.04);
+    }
+    .machine-card.blue-card:hover .card-link { color: var(--blue2); gap: 0.7rem; }
+    .machine-card.blue-card:hover .card-link svg { transform: translateX(3px); }
+
+    /* Red card hover */
+    .machine-card.red-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(200,34,28,0.32);
+      box-shadow:
+        0 28px 70px rgba(4,9,26,0.55),
+        0 0 0 1px rgba(200,34,28,0.11),
+        inset 0 0 50px rgba(200,34,28,0.03);
+    }
+    .machine-card.red-card:hover .card-link { color: var(--red2); gap: 0.7rem; }
+    .machine-card.red-card:hover .card-link svg { transform: translateX(3px); }
+
+    /* Inner glow pseudo-element */
+    .machine-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 16px;
+      opacity: 0;
+      transition: opacity 0.5s;
+      pointer-events: none;
+    }
+    .machine-card.blue-card::before {
+      background: linear-gradient(140deg, rgba(26,118,240,0.07) 0%, transparent 50%);
+    }
+    .machine-card.red-card::before {
+      background: linear-gradient(140deg, rgba(200,34,28,0.06) 0%, transparent 50%);
+    }
+    .machine-card:hover::before { opacity: 1; }
+
+    /* ══════════════════════════════════════════
+       STATS ROW
+    ══════════════════════════════════════════ */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      margin-top: 5rem;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 14px;
+      background: var(--bg2);
+      overflow: hidden;
+    }
+    .stat-item {
+      padding: 2.2rem 2rem;
+      text-align: center;
+      border-right: 1px solid rgba(255,255,255,0.06);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-value {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--white);
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+      line-height: 1;
+      margin-bottom: 0.45rem;
+    }
+    .stat-label {
+      font-family: var(--font-mono);
+      font-size: 0.52rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ══════════════════════════════════════════
+       BACK NAV
+    ══════════════════════════════════════════ */
+    .back-nav {
+      padding: 4rem 4rem;
+      background: var(--bg2);
+      border-top: 1px solid rgba(255,255,255,0.04);
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .back-nav-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-family: var(--font-display);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--dim);
+      transition: color 0.2s, gap 0.25s;
+    }
+    .back-link:hover { color: var(--white); gap: 0.38rem; }
+    .back-link svg {
+      width: 16px; height: 16px;
+      transition: transform 0.3s var(--ease-out-expo);
+    }
+    .back-link:hover svg { transform: translateX(-3px); }
+
+    /* ══════════════════════════════════════════
+       CTA SECTION
+    ══════════════════════════════════════════ */
+    .cta-section {
+      position: relative;
+      padding: 8rem 4rem;
+      background: var(--bg1);
+      overflow: hidden;
+      text-align: center;
+    }
+    .cta-glow {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(ellipse 60% 70% at 50% 50%, rgba(26,118,240,0.09) 0%, transparent 65%);
+    }
+    .cta-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    .cta-label {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(26,118,240,0.6);
+      margin-bottom: 1.8rem;
+    }
+    .cta-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--white);
+      line-height: 1;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.4rem;
+    }
+    .cta-text {
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: var(--dim);
+      line-height: 1.75;
+      margin-bottom: 3rem;
+    }
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--white);
+      background: var(--blue2);
+      border: 1px solid var(--blue2);
+      border-radius: 10px;
+      padding: 1rem 2.5rem;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    .cta-btn:hover {
+      background: var(--blue);
+      border-color: var(--blue);
+      transform: translateY(-2px);
+      box-shadow: 0 16px 40px rgba(26,118,240,0.25);
+    }
+    .cta-btn svg { width: 16px; height: 16px; }
+
+    /* ══════════════════════════════════════════
+       REVEAL ANIMATION
+    ══════════════════════════════════════════ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.9s var(--ease-out-expo), transform 0.9s var(--ease-out-expo);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ══════════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════════ */
+    footer {
+      background: var(--bg);
+      border-top: 1px solid rgba(255,255,255,0.05);
+      padding: 3.5rem 4rem 2rem;
+    }
+    .footer-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.8rem;
+    }
+    .footer-brand {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--white);
+    }
+    .footer-links {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .footer-links a {
+      font-family: var(--font-display);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--light); }
+    .footer-copy {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    /* ══════════════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════════════ */
+    @media (max-width: 1100px) {
+      .machine-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 1024px) {
+      nav { padding: 0 2rem; }
+      .breadcrumb { padding: 5.5rem 2rem 0; }
+      .machines-section { padding: 5rem 2rem 6rem; }
+      .back-nav { padding: 3rem 2rem; }
+      .cta-section { padding: 6rem 2rem; }
+      footer { padding: 3rem 2rem 1.5rem; }
+    }
+    @media (max-width: 768px) {
+      nav { padding: 0 1.5rem; }
+      .nav-links { display: none; }
+      .hero { padding: 4rem 1.5rem 5rem; }
+      .breadcrumb { padding: 5rem 1.5rem 0; }
+      .machines-section { padding: 4rem 1.5rem 5rem; }
+      .machine-grid { grid-template-columns: 1fr; gap: 1rem; }
+      .stats-row { grid-template-columns: 1fr; }
+      .stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
+      .stat-item:last-child { border-bottom: none; }
+      .back-nav { padding: 2.5rem 1.5rem; }
+      .cta-section { padding: 5rem 1.5rem; }
+      footer { padding: 3rem 1.5rem 1.5rem; }
+      .footer-links { gap: 1.5rem; }
+    }
+    @media (max-width: 480px) {
+      .hero-headline { font-size: clamp(3.8rem, 18vw, 6rem); }
+      .card-name { font-size: 1.9rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ════ NAV ════ -->
+  <nav id="nav">
+    <a href="../../../index.html" class="logo">KENT<span>.</span></a>
+    <div class="nav-links">
+      <a href="../../../maschinen/index.html" class="active">Maschinen</a>
+      <a href="../../../klischees/index.html">Klischees</a>
+      <a href="../../../ueber-uns.html">Unternehmen</a>
+      <a href="mailto:info@kent-stuttgart.de" class="nav-cta">Kontakt</a>
+    </div>
+  </nav>
+
+  <!-- ════ BREADCRUMB ════ -->
+  <div class="breadcrumb">
+    <div class="breadcrumb-inner">
+      <a href="../../index.html">Maschinen</a>
+      <span class="breadcrumb-sep">/</span>
+      <a href="../index.html">Standardmaschinen</a>
+      <span class="breadcrumb-sep">/</span>
+      <span class="breadcrumb-current">IDS-Serie</span>
+    </div>
+  </div>
+
+  <!-- ════ HERO ════ -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-vignette"></div>
+
+    <div class="hero-content">
+      <div class="hero-eyebrow">STANDARDMASCHINEN &nbsp;·&nbsp; KENT STUTTGART</div>
+
+      <h1 class="hero-headline">
+        <span class="line1">IDS-SERIE.</span>
+        <span class="line2">INTEGRIERTER ANTRIEB.</span>
+      </h1>
+
+      <div class="hero-divider"></div>
+
+      <p class="hero-sub">Drei Modelle mit Integrated Drive System — maximale Präzision durch direkt integrierten Servoantrieb.</p>
+
+      <div class="hero-ctas">
+        <a href="#modelle" class="btn-primary">
+          Alle Modelle
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7 2L7 12M3 8.5L7 12L11 8.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <a href="../index.html" class="btn-ghost">Zur Übersicht</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ MACHINES SECTION ════ -->
+  <section class="machines-section" id="modelle">
+    <div class="machines-inner">
+
+      <div class="section-label reveal">3 Modelle der IDS-Serie</div>
+      <h2 class="section-title reveal">Die IDS-Modelllinie</h2>
+      <p class="section-sub reveal">Integrierter Servoantrieb für höchste Wiederholgenauigkeit — vom kompakten Einzelfarbdruck bis zur vollautomatischen Linienlösung.</p>
+
+      <div class="machine-grid">
+
+        <!-- 01 — PP 150 IDS -->
+        <a href="pp-150-ids.html" class="machine-card blue-card reveal">
+          <div class="card-bar"></div>
+          <div class="card-body">
+            <div class="card-series">IDS-SERIE</div>
+            <div class="card-name">PP 150 IDS</div>
+            <p class="card-desc">PP 150 mit integriertem IDS-Servoantrieb. Direkt im Druckkopf verbauter Antrieb für präzise, reproduzierbare Druckergebnisse in jeder Seriengröße.</p>
+            <div class="card-footer">
+              <span class="card-link">
+                Mehr erfahren
+                <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M2 7H12M8 3L12 7L8 11" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </div>
+          </div>
+        </a>
+
+        <!-- 02 — 150 IDS-DRE -->
+        <a href="150-ids-dre.html" class="machine-card red-card reveal">
+          <div class="card-bar"></div>
+          <div class="card-body">
+            <div class="card-series">IDS-SERIE</div>
+            <div class="card-name">150 IDS-DRE</div>
+            <p class="card-desc">IDS mit Drehtisch-Integration für vollautomatische Linien. Optimiert für hohen Durchsatz und nahtlose Einbindung in bestehende Fertigungsanlagen.</p>
+            <div class="card-footer">
+              <span class="card-link">
+                Mehr erfahren
+                <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M2 7H12M8 3L12 7L8 11" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </div>
+          </div>
+        </a>
+
+        <!-- 03 — KIPP 200-IDS -->
+        <a href="kipp-200-ids.html" class="machine-card blue-card reveal">
+          <div class="card-bar"></div>
+          <div class="card-body">
+            <div class="card-series">IDS-SERIE</div>
+            <div class="card-name">KIPP 200-IDS</div>
+            <p class="card-desc">Kippkopfmaschine mit IDS-Antriebssystem. Der kippbare Druckkopf erschließt schwer zugängliche Druckflächen und komplexe Bauteilgeometrien.</p>
+            <div class="card-footer">
+              <span class="card-link">
+                Mehr erfahren
+                <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M2 7H12M8 3L12 7L8 11" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </div>
+          </div>
+        </a>
+
+      </div><!-- /machine-grid -->
+
+      <!-- STATS ROW -->
+      <div class="stats-row reveal">
+        <div class="stat-item">
+          <div class="stat-value">3</div>
+          <div class="stat-label">Modelle</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">IDS</div>
+          <div class="stat-label">Integrierter Servoantrieb</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">100%</div>
+          <div class="stat-label">Vollautomatisierbar</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ════ BACK NAV ════ -->
+  <div class="back-nav">
+    <div class="back-nav-inner">
+      <a href="../index.html" class="back-link reveal">
+        <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Zurück zu Standardmaschinen
+      </a>
+    </div>
+  </div>
+
+  <!-- ════ CTA ════ -->
+  <section class="cta-section">
+    <div class="cta-glow"></div>
+    <div class="cta-inner reveal">
+      <div class="cta-label">Kontakt &amp; Beratung</div>
+      <h2 class="cta-title">ANFRAGE STELLEN</h2>
+      <p class="cta-text">Kontaktieren Sie uns für individuelle Beratung — Modellauswahl, Systemkonfiguration und Integration der IDS-Serie in Ihre Fertigungslinie.</p>
+      <a href="mailto:info@kent-stuttgart.de" class="cta-btn">
+        Jetzt anfragen
+        <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 8H13M9 4L13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- ════ FOOTER ════ -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">KENT<span style="color:var(--red)">.</span></div>
+      <div class="footer-links">
+        <a href="../../../maschinen/index.html">Maschinen</a>
+        <a href="../../../klischees/index.html">Klischees</a>
+        <a href="../../../ueber-uns.html">Über uns</a>
+        <a href="mailto:info@kent-stuttgart.de">Kontakt</a>
+      </div>
+      <div class="footer-copy">© 2024 Kent Stuttgart GmbH · Tampondruckmaschinen seit 1987</div>
+    </div>
+  </footer>
+
+  <script>
+    // ─── Nav scroll state ───
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    // ─── IntersectionObserver reveal ───
+    const revealObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          revealObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal').forEach((el, i) => {
+      if (el.classList.contains('machine-card')) {
+        el.style.transitionDelay = (i * 0.1) + 's';
+      }
+      revealObs.observe(el);
+    });
+  </script>
+</body>
+</html>

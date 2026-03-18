@@ -1,0 +1,1386 @@
+<!-- TEMPLATE: Machine Detail Page — duplicate and update for each machine model -->
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HVA 150 — Tampondruckmaschine — Kent Stuttgart GmbH</title>
+  <meta name="description" content="HVA 150: Kompakte Einfarbmaschine für höchste Druckpräzision. 1.800 T/h, Tampon-Ø 100 mm. Entwickelt und gefertigt in Stuttgart.">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700;800&family=Barlow:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ══════════════════════════════════════════
+       DESIGN TOKENS
+    ══════════════════════════════════════════ */
+    :root {
+      --blue:   #1058C0;
+      --blue2:  #1A76F0;
+      --blue3:  #0C469E;
+      --red:    #C8221C;
+      --red2:   #E03530;
+      --bg:     #04091A;
+      --bg1:    #070D20;
+      --bg2:    #0A1228;
+      --surface:#101C3A;
+      --muted:  #374F72;
+      --dim:    #6088B0;
+      --light:  #C2D4E8;
+      --white:  #FFFFFF;
+
+      --font-display: 'Barlow Condensed', sans-serif;
+      --font-body:    'Barlow', sans-serif;
+      --font-mono:    'Space Mono', monospace;
+      --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+    }
+
+    /* ══════════════════════════════════════════
+       RESET
+    ══════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--light);
+      font-family: var(--font-body);
+      font-weight: 400;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* ══════════════════════════════════════════
+       NOISE OVERLAY
+    ══════════════════════════════════════════ */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 200px;
+    }
+
+    /* ══════════════════════════════════════════
+       KEYFRAMES
+    ══════════════════════════════════════════ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes breath {
+      0%, 100% { opacity: 0.7; }
+      50%       { opacity: 1; }
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 8px rgba(200,34,28,0.4); }
+      50%       { box-shadow: 0 0 20px rgba(200,34,28,0.7); }
+    }
+
+    /* ══════════════════════════════════════════
+       SCROLLBAR
+    ══════════════════════════════════════════ */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--surface); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+
+    /* ══════════════════════════════════════════
+       NAV
+    ══════════════════════════════════════════ */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 500;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 4rem;
+      height: 72px;
+    }
+    nav::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(4,9,26,0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(26,118,240,0.12);
+      transition: background 0.4s;
+    }
+    nav.scrolled::before {
+      background: rgba(4,9,26,0.98);
+    }
+    .nav-logo {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .nav-logo-img {
+      height: 34px;
+      width: auto;
+      display: block;
+      mix-blend-mode: screen;
+    }
+    .nav-links {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: var(--font-display);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--dim);
+      transition: color 0.2s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0;
+      width: 0; height: 1px;
+      background: var(--blue2);
+      transition: width 0.3s var(--ease-out-expo);
+    }
+    .nav-links a:hover { color: var(--white); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-links a.active { color: var(--white); }
+    .nav-links a.active::after { width: 100%; background: var(--red); }
+    .nav-right {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-lang {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .nav-lang:hover { color: var(--dim); }
+    .nav-cta {
+      position: relative;
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--white);
+      padding: 0.6rem 1.6rem;
+      background: transparent;
+      border: 1px solid rgba(26,118,240,0.5);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      display: inline-block;
+    }
+    .nav-cta:hover {
+      border-color: rgba(26,118,240,0.9);
+      box-shadow: 0 0 20px rgba(26,118,240,0.15);
+    }
+
+    /* ══════════════════════════════════════════
+       BREADCRUMB
+    ══════════════════════════════════════════ */
+    .breadcrumb-bar {
+      position: sticky;
+      top: 72px;
+      z-index: 400;
+      background: rgba(7,13,32,0.97);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(26,118,240,0.07);
+      padding: 0.55rem 4rem;
+    }
+    .breadcrumb-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 0;
+      flex-wrap: wrap;
+    }
+    .breadcrumb-item {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .breadcrumb-item a {
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+    .breadcrumb-item a:hover { color: var(--dim); }
+    .breadcrumb-sep {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      color: rgba(55,79,114,0.5);
+      padding: 0 0.55rem;
+    }
+    .breadcrumb-item.current {
+      color: rgba(26,118,240,0.7);
+    }
+
+    /* ══════════════════════════════════════════
+       SECTION HELPERS
+    ══════════════════════════════════════════ */
+    .section {
+      position: relative;
+      padding: 9rem 4rem;
+    }
+    .section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(26,118,240,0.65);
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 1rem;
+    }
+    .section-label::before {
+      content: '';
+      width: 20px; height: 1px;
+      background: var(--blue2);
+      opacity: 0.5;
+    }
+
+    /* ══════════════════════════════════════════
+       GRADIENT DIVIDER
+    ══════════════════════════════════════════ */
+    .gradient-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--blue2) 30%, var(--red) 70%, transparent);
+      opacity: 0.35;
+    }
+
+    /* ══════════════════════════════════════════
+       REVEAL ANIMATION
+    ══════════════════════════════════════════ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.9s var(--ease-out-expo), transform 0.9s var(--ease-out-expo);
+    }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+
+    /* ══════════════════════════════════════════
+       BUTTONS
+    ══════════════════════════════════════════ */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: var(--font-display);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--white);
+      padding: 0.95rem 2.6rem;
+      background: transparent;
+      border: 1px solid rgba(26,118,240,0.5);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      position: relative;
+    }
+    .btn-primary:hover {
+      border-color: rgba(26,118,240,0.9);
+      box-shadow: 0 0 28px rgba(26,118,240,0.2), inset 0 0 20px rgba(26,118,240,0.04);
+    }
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-display);
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(96,136,176,0.7);
+      cursor: pointer;
+      transition: color 0.25s;
+      background: none;
+      border: none;
+      padding: 0;
+    }
+    .btn-ghost:hover { color: var(--white); }
+    .btn-ghost svg { transition: transform 0.3s var(--ease-out-expo); }
+    .btn-ghost:hover svg { transform: translateX(5px); }
+
+    /* ══════════════════════════════════════════
+       MACHINE HERO — ~70vh, split layout
+    ══════════════════════════════════════════ */
+    .machine-hero {
+      min-height: 70vh;
+      display: flex;
+      align-items: center;
+      padding: 10rem 4rem 6rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .machine-hero-bg {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse 65% 70% at 20% 50%, rgba(26,118,240,0.09) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 60% at 80% 30%, rgba(16,88,192,0.06) 0%, transparent 55%),
+        radial-gradient(ellipse 30% 40% at 70% 90%, rgba(200,34,28,0.04) 0%, transparent 50%);
+      animation: breath 10s ease-in-out infinite;
+    }
+    .machine-hero-grid {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(26,118,240,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(26,118,240,0.025) 1px, transparent 1px);
+      background-size: 80px 80px;
+    }
+    .machine-hero-vignette {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(ellipse 110% 100% at 50% 50%, transparent 45%, rgba(4,9,26,0.8) 100%);
+    }
+    .machine-hero-inner {
+      position: relative;
+      z-index: 10;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 55fr 45fr;
+      gap: 6rem;
+      align-items: center;
+    }
+
+    /* Hero left */
+    .machine-hero-left {}
+    .machine-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(26,118,240,0.7);
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeIn 0.9s ease 0.3s forwards;
+    }
+    .machine-eyebrow-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--blue2);
+      flex-shrink: 0;
+      box-shadow: 0 0 8px rgba(26,118,240,0.6);
+    }
+    .machine-name {
+      font-family: var(--font-display);
+      font-size: clamp(5rem, 9vw, 10rem);
+      font-weight: 800;
+      line-height: 0.88;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      color: var(--white);
+      opacity: 0;
+      animation: fadeUp 1.4s var(--ease-out-expo) 0.5s forwards;
+    }
+    .machine-tagline {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--dim);
+      margin-top: 1.5rem;
+      opacity: 0;
+      animation: fadeIn 0.9s ease 1s forwards;
+    }
+    .machine-hero-divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, var(--blue2), var(--red), transparent);
+      margin: 2.5rem 0;
+      opacity: 0;
+      animation: fadeIn 0.8s ease 1.2s forwards;
+    }
+    .machine-description {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--dim);
+      font-weight: 300;
+      max-width: 480px;
+      opacity: 0;
+      animation: fadeIn 0.9s ease 1.4s forwards;
+    }
+    .machine-hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      margin-top: 3rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeIn 0.9s ease 1.6s forwards;
+    }
+
+    /* Hero right — image placeholder */
+    .machine-hero-right {
+      opacity: 0;
+      animation: fadeIn 1.2s ease 0.8s forwards;
+    }
+    .machine-image-frame {
+      position: relative;
+      aspect-ratio: 4 / 3;
+      background: var(--bg1);
+      border: 1px solid rgba(26,118,240,0.12);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .machine-image-frame::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 50% 40%, rgba(26,118,240,0.05) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 40% at 20% 80%, rgba(16,88,192,0.04) 0%, transparent 55%);
+      pointer-events: none;
+    }
+    .machine-image-frame::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(26,118,240,0.3), transparent);
+    }
+    .machine-blueprint-svg {
+      width: 75%;
+      height: 75%;
+      opacity: 0.12;
+    }
+    .machine-image-placeholder-label {
+      position: absolute;
+      bottom: 1.2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--font-mono);
+      font-size: 0.52rem;
+      letter-spacing: 0.15em;
+      color: rgba(96,136,176,0.35);
+      white-space: nowrap;
+    }
+    /* Corner accents on image frame */
+    .machine-image-frame .corner {
+      position: absolute;
+      width: 16px; height: 16px;
+      border-color: rgba(26,118,240,0.25);
+      border-style: solid;
+    }
+    .machine-image-frame .corner-tl { top: 12px; left: 12px; border-width: 1px 0 0 1px; }
+    .machine-image-frame .corner-tr { top: 12px; right: 12px; border-width: 1px 1px 0 0; }
+    .machine-image-frame .corner-bl { bottom: 12px; left: 12px; border-width: 0 0 1px 1px; }
+    .machine-image-frame .corner-br { bottom: 12px; right: 12px; border-width: 0 1px 1px 0; }
+
+    /* ══════════════════════════════════════════
+       TECH SPECS SECTION
+    ══════════════════════════════════════════ */
+    .specs-section {
+      background: var(--bg1);
+    }
+    .specs-layout {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 7rem;
+      align-items: start;
+    }
+    .specs-heading {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 5vw, 5.5rem);
+      font-weight: 800;
+      line-height: 0.92;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-top: 1.5rem;
+    }
+    .specs-heading em {
+      display: block;
+      font-style: normal;
+      color: var(--blue2);
+      font-size: 0.65em;
+      font-weight: 300;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.3rem;
+    }
+    .specs-intro {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.75;
+      font-weight: 300;
+      margin-top: 2rem;
+    }
+
+    /* Data panel */
+    .specs-panel {
+      background: var(--bg2);
+      border: 1px solid rgba(26,118,240,0.1);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .specs-panel-header {
+      padding: 1.2rem 2rem;
+      background: rgba(26,118,240,0.06);
+      border-bottom: 1px solid rgba(26,118,240,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .specs-panel-title {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(26,118,240,0.7);
+    }
+    .specs-panel-badge {
+      font-family: var(--font-mono);
+      font-size: 0.48rem;
+      letter-spacing: 0.18em;
+      color: rgba(96,136,176,0.4);
+    }
+    .specs-table {
+      width: 100%;
+    }
+    .specs-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      transition: background 0.2s;
+    }
+    .specs-row:last-child { border-bottom: none; }
+    .specs-row:hover { background: rgba(26,118,240,0.03); }
+    .specs-key {
+      padding: 1.1rem 2rem;
+      font-size: 0.85rem;
+      color: var(--muted);
+      font-weight: 400;
+      border-right: 1px solid rgba(255,255,255,0.04);
+      display: flex;
+      align-items: center;
+    }
+    .specs-val {
+      padding: 1.1rem 2rem;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--light);
+      letter-spacing: 0.04em;
+      display: flex;
+      align-items: center;
+    }
+    .specs-val.placeholder {
+      color: rgba(96,136,176,0.45);
+      font-style: italic;
+    }
+    .specs-val.highlight {
+      color: var(--blue2);
+    }
+    .specs-panel-footer {
+      padding: 1rem 2rem;
+      background: rgba(26,118,240,0.04);
+      border-top: 1px solid rgba(26,118,240,0.08);
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .specs-cert {
+      font-family: var(--font-mono);
+      font-size: 0.5rem;
+      letter-spacing: 0.18em;
+      color: rgba(96,136,176,0.5);
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .specs-cert::before {
+      content: '▸';
+      color: rgba(26,118,240,0.4);
+      font-size: 0.45rem;
+    }
+
+    /* ══════════════════════════════════════════
+       FEATURES SECTION
+    ══════════════════════════════════════════ */
+    .features-section {
+      background: var(--bg);
+    }
+    .features-header {
+      margin-bottom: 5rem;
+    }
+    .features-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 5vw, 5rem);
+      font-weight: 800;
+      line-height: 0.92;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-top: 0.8rem;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .feature-item {
+      background: var(--bg1);
+      padding: 4rem 3rem;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s;
+    }
+    .feature-item:hover { background: var(--bg2); }
+    .feature-item::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(26,118,240,0.25), transparent);
+    }
+    .feature-item:nth-child(2)::after {
+      background: linear-gradient(90deg, transparent, rgba(200,34,28,0.25), transparent);
+    }
+    .feature-item:nth-child(3)::after {
+      background: linear-gradient(90deg, transparent, rgba(26,118,240,0.15), transparent);
+    }
+    .feature-num {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.22em;
+      color: rgba(26,118,240,0.4);
+      margin-bottom: 2.5rem;
+    }
+    .feature-item:nth-child(2) .feature-num { color: rgba(200,34,28,0.4); }
+    .feature-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      color: var(--white);
+      line-height: 1.05;
+      margin-bottom: 1.5rem;
+    }
+    .feature-desc {
+      font-size: 0.88rem;
+      line-height: 1.78;
+      color: var(--muted);
+      font-weight: 300;
+    }
+    .feature-bg-num {
+      position: absolute;
+      bottom: -1.5rem;
+      right: -0.5rem;
+      font-family: var(--font-display);
+      font-size: 9rem;
+      font-weight: 800;
+      color: rgba(255,255,255,0.02);
+      letter-spacing: -0.05em;
+      pointer-events: none;
+      user-select: none;
+      line-height: 1;
+    }
+
+    /* ══════════════════════════════════════════
+       MACHINE NAVIGATION BLOCK
+    ══════════════════════════════════════════ */
+    .machine-nav-section {
+      background: var(--bg2);
+      padding: 4rem;
+    }
+    .machine-nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .machine-nav-divider {
+      height: 1px;
+      background: rgba(255,255,255,0.06);
+      margin-bottom: 3rem;
+    }
+    .machine-nav-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+    .machine-nav-link {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .machine-nav-label {
+      font-family: var(--font-mono);
+      font-size: 0.52rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(96,136,176,0.45);
+    }
+    .machine-nav-title {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--dim);
+      transition: color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .machine-nav-title:hover { color: var(--white); }
+    .machine-nav-title svg { flex-shrink: 0; transition: transform 0.3s var(--ease-out-expo); }
+    .machine-nav-link.next .machine-nav-title { flex-direction: row-reverse; }
+    .machine-nav-link.next .machine-nav-title:hover svg { transform: translateX(5px); }
+    .machine-nav-link.prev .machine-nav-title:hover svg { transform: translateX(-5px); }
+    .machine-nav-link.next { text-align: right; }
+    .machine-nav-link.next .machine-nav-label { text-align: right; }
+
+    /* ══════════════════════════════════════════
+       CTA SECTION
+    ══════════════════════════════════════════ */
+    .cta-section {
+      background: var(--bg1);
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-section-bg {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse 70% 80% at 50% 50%, rgba(26,118,240,0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 30% 40% at 20% 80%, rgba(200,34,28,0.05) 0%, transparent 60%);
+      border-top: 1px solid rgba(26,118,240,0.1);
+    }
+    .cta-inner {
+      position: relative;
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .cta-label {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(26,118,240,0.6);
+      margin-bottom: 2rem;
+    }
+    .cta-title {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 6vw, 6rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.0;
+      color: var(--white);
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+    .cta-sub {
+      font-size: 0.95rem;
+      color: var(--dim);
+      font-weight: 300;
+      line-height: 1.7;
+      margin-bottom: 3.5rem;
+    }
+    .cta-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+    }
+
+    /* ══════════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════════ */
+    footer {
+      background: var(--bg);
+      border-top: 1px solid rgba(255,255,255,0.05);
+      padding: 4rem 4rem 2.5rem;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 4rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      margin-bottom: 2rem;
+    }
+    .footer-brand {}
+    .footer-logo-img {
+      height: 36px;
+      width: auto;
+      display: block;
+      margin-bottom: 1rem;
+      mix-blend-mode: screen;
+    }
+    .footer-tagline {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 260px;
+      margin-bottom: 1.2rem;
+    }
+    .footer-address-line {
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .footer-col-title {
+      font-family: var(--font-display);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--dim);
+      margin-bottom: 1.2rem;
+    }
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+    .footer-links a {
+      font-size: 0.85rem;
+      color: var(--muted);
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--light); }
+    .footer-certs {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+    .footer-cert {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-family: var(--font-mono);
+      font-size: 0.48rem;
+      letter-spacing: 0.15em;
+      color: rgba(255,255,255,0.16);
+      text-transform: uppercase;
+    }
+    .footer-cert::before {
+      content: '▸';
+      color: rgba(26,118,240,0.38);
+      font-size: 0.45rem;
+    }
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-copy {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+    }
+    .footer-legal {
+      display: flex;
+      gap: 2rem;
+    }
+    .footer-legal a {
+      font-size: 0.75rem;
+      color: var(--muted);
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .footer-legal a:hover { color: var(--dim); }
+
+    /* ══════════════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════════════ */
+    @media (max-width: 1100px) {
+      .machine-hero-inner { grid-template-columns: 1fr; gap: 4rem; }
+      .machine-hero-right { max-width: 520px; }
+      .specs-layout { grid-template-columns: 1fr; gap: 4rem; }
+      .specs-heading { font-size: clamp(3rem, 8vw, 5rem); }
+    }
+    @media (max-width: 1024px) {
+      nav { padding: 0 2rem; }
+      .breadcrumb-bar { padding: 0.55rem 2rem; }
+      .section { padding: 6rem 2rem; }
+      .machine-hero { padding: 9rem 2rem 5rem; }
+      .machine-nav-section { padding: 3rem 2rem; }
+      .features-grid { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    }
+    @media (max-width: 768px) {
+      nav { padding: 0 1.5rem; }
+      .nav-links { display: none; }
+      .breadcrumb-bar { padding: 0.55rem 1.5rem; }
+      .machine-hero { padding: 8rem 1.5rem 4rem; }
+      .machine-name { font-size: clamp(4rem, 18vw, 7rem); }
+      .machine-hero-actions { flex-direction: column; align-items: flex-start; }
+      .specs-row { grid-template-columns: 1fr; }
+      .specs-val { border-top: 1px solid rgba(255,255,255,0.04); padding-top: 0.5rem; padding-bottom: 1.1rem; }
+      .specs-key { padding-bottom: 0.3rem; }
+      .machine-nav-row { flex-direction: column; align-items: flex-start; gap: 2.5rem; }
+      .machine-nav-link.next { text-align: left; }
+      .machine-nav-link.next .machine-nav-label { text-align: left; }
+      .machine-nav-link.next .machine-nav-title { flex-direction: row; }
+      .cta-actions { flex-direction: column; }
+      .footer-top { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ════════════════════════════════
+       NAV
+  ════════════════════════════════ -->
+  <nav id="nav">
+    <a href="../../../index.html" class="nav-logo">
+      <img src="../../../Kent-Logo_.png" alt="Kent Stuttgart GmbH" class="nav-logo-img">
+    </a>
+    <ul class="nav-links">
+      <li><a href="../../../index.html#maschinen" class="active">Maschinen</a></li>
+      <li><a href="../../../klischees/index.html">Klischees</a></li>
+      <li><a href="../../../ueber-uns.html">Unternehmen</a></li>
+    </ul>
+    <div class="nav-right">
+      <span class="nav-lang">DE · EN</span>
+      <a href="#anfrage" class="nav-cta">Anfrage</a>
+    </div>
+  </nav>
+
+  <!-- ════════════════════════════════
+       BREADCRUMB
+  ════════════════════════════════ -->
+  <div class="breadcrumb-bar">
+    <div class="breadcrumb-inner">
+      <span class="breadcrumb-item"><a href="../../../index.html">Kent Stuttgart GmbH</a></span>
+      <span class="breadcrumb-sep">·</span>
+      <span class="breadcrumb-item"><a href="../../../index.html#maschinen">Maschinen</a></span>
+      <span class="breadcrumb-sep">·</span>
+      <span class="breadcrumb-item"><a href="../index.html">Standardmaschinen</a></span>
+      <span class="breadcrumb-sep">·</span>
+      <span class="breadcrumb-item"><a href="index.html">HVA-Serie</a></span>
+      <span class="breadcrumb-sep">·</span>
+      <span class="breadcrumb-item current">HVA 150</span>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════
+       MACHINE HERO
+  ════════════════════════════════ -->
+  <section class="machine-hero">
+    <div class="machine-hero-bg"></div>
+    <div class="machine-hero-grid"></div>
+    <div class="machine-hero-vignette"></div>
+
+    <div class="machine-hero-inner">
+
+      <!-- LEFT -->
+      <div class="machine-hero-left">
+        <div class="machine-eyebrow">
+          <span class="machine-eyebrow-dot"></span>
+          HVA-Serie · Standardmaschinen
+        </div>
+
+        <h1 class="machine-name">HVA 150</h1>
+
+        <p class="machine-tagline">Kompakt. Präzise. Zuverlässig.</p>
+
+        <div class="machine-hero-divider"></div>
+
+        <p class="machine-description">
+          Die HVA 150 ist die kompakte Einfarbmaschine für höchste Druckpräzision auf kleinstem Raum. Entwickelt für kleine bis mittlere Serien mit reproduzierbarer Qualität.
+        </p>
+
+        <div class="machine-hero-actions">
+          <a href="#anfrage" class="btn-primary">
+            Anfrage stellen
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a href="mailto:info@kent-stuttgart.de?subject=Datenblatt%20HVA%20150" class="btn-ghost">
+            Datenblatt anfragen
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- RIGHT — image placeholder -->
+      <div class="machine-hero-right">
+        <div class="machine-image-frame">
+          <span class="corner corner-tl"></span>
+          <span class="corner corner-tr"></span>
+          <span class="corner corner-bl"></span>
+          <span class="corner corner-br"></span>
+
+          <!-- Minimalist blueprint SVG of a pad printing machine -->
+          <svg class="machine-blueprint-svg" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Base / frame -->
+            <rect x="40" y="220" width="320" height="18" rx="2" stroke="#1A76F0" stroke-width="1.2"/>
+            <!-- Left column -->
+            <rect x="60" y="80" width="18" height="142" rx="2" stroke="#1A76F0" stroke-width="1"/>
+            <!-- Right column -->
+            <rect x="322" y="80" width="18" height="142" rx="2" stroke="#1A76F0" stroke-width="1"/>
+            <!-- Crossbeam top -->
+            <rect x="55" y="72" width="290" height="14" rx="2" stroke="#1A76F0" stroke-width="1.2"/>
+            <!-- Cylinder / ram housing -->
+            <rect x="165" y="40" width="70" height="38" rx="3" stroke="#1A76F0" stroke-width="1"/>
+            <line x1="200" y1="40" x2="200" y2="78" stroke="#1A76F0" stroke-width="0.6" stroke-dasharray="4 3"/>
+            <!-- Ram / rod -->
+            <line x1="200" y1="86" x2="200" y2="140" stroke="#1A76F0" stroke-width="1.5"/>
+            <!-- Pad (tampon) -->
+            <ellipse cx="200" cy="148" rx="34" ry="14" stroke="#1A76F0" stroke-width="1"/>
+            <!-- Ink cup -->
+            <rect x="105" y="155" width="64" height="22" rx="4" stroke="#1A76F0" stroke-width="1"/>
+            <line x1="137" y1="155" x2="137" y2="177" stroke="#1A76F0" stroke-width="0.6" stroke-dasharray="3 2"/>
+            <!-- Cliché / plate -->
+            <rect x="95" y="185" width="84" height="10" rx="1" stroke="#1A76F0" stroke-width="0.8"/>
+            <!-- Print object -->
+            <rect x="240" y="178" width="58" height="32" rx="4" stroke="#1A76F0" stroke-width="1"/>
+            <line x1="248" y1="194" x2="290" y2="194" stroke="#1A76F0" stroke-width="0.5" stroke-dasharray="3 2"/>
+            <!-- Control panel box -->
+            <rect x="298" y="110" width="36" height="60" rx="3" stroke="#1A76F0" stroke-width="0.8"/>
+            <circle cx="316" cy="125" r="5" stroke="#1A76F0" stroke-width="0.7"/>
+            <rect x="307" y="136" width="18" height="3" rx="1" stroke="#1A76F0" stroke-width="0.5"/>
+            <rect x="307" y="143" width="18" height="3" rx="1" stroke="#1A76F0" stroke-width="0.5"/>
+            <rect x="307" y="150" width="12" height="3" rx="1" stroke="#1A76F0" stroke-width="0.5"/>
+            <!-- Dimension lines -->
+            <line x1="40" y1="256" x2="360" y2="256" stroke="#1A76F0" stroke-width="0.4" stroke-dasharray="6 4" opacity="0.5"/>
+            <line x1="40" y1="252" x2="40" y2="260" stroke="#1A76F0" stroke-width="0.6" opacity="0.5"/>
+            <line x1="360" y1="252" x2="360" y2="260" stroke="#1A76F0" stroke-width="0.6" opacity="0.5"/>
+            <!-- Cross-hairs -->
+            <line x1="200" y1="20" x2="200" y2="30" stroke="#1A76F0" stroke-width="0.5" opacity="0.4"/>
+            <line x1="195" y1="25" x2="205" y2="25" stroke="#1A76F0" stroke-width="0.5" opacity="0.4"/>
+          </svg>
+
+          <span class="machine-image-placeholder-label">[ Produktbild folgt ]</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="gradient-divider"></div>
+
+  <!-- ════════════════════════════════
+       TECH SPECS SECTION
+  ════════════════════════════════ -->
+  <section class="section specs-section" id="spezifikationen">
+    <div class="section-inner">
+      <div class="specs-layout">
+
+        <!-- Left: heading & intro -->
+        <div class="reveal">
+          <div class="section-label">Technische Daten</div>
+          <h2 class="specs-heading">
+            <em>HVA 150</em>
+            Spezifi&shy;kationen
+          </h2>
+          <p class="specs-intro">
+            Alle technischen Parameter auf einen Blick. Geprüft, dokumentiert, reproduzierbar — nach DIN EN ISO 9001.
+          </p>
+        </div>
+
+        <!-- Right: data panel -->
+        <div class="specs-panel reveal" style="transition-delay: 0.12s">
+          <div class="specs-panel-header">
+            <span class="specs-panel-title">HVA 150 · Technische Parameter</span>
+            <span class="specs-panel-badge">Rev. 2026</span>
+          </div>
+
+          <div class="specs-table" role="table" aria-label="Technische Spezifikationen HVA 150">
+
+            <div class="specs-row" role="row">
+              <span class="specs-key" role="cell">Druckfarben</span>
+              <span class="specs-val highlight" role="cell">1 Farbe</span>
+            </div>
+
+            <div class="specs-row" role="row">
+              <span class="specs-key" role="cell">Taktzeit max.</span>
+              <span class="specs-val highlight" role="cell">1.800 T/h</span>
+            </div>
+
+            <div class="specs-row" role="row">
+              <span class="specs-key" role="cell">Tampon-Ø max.</span>
+              <span class="specs-val highlight" role="cell">100 mm</span>
+            </div>
+
+            <div class="specs-row" role="row">
+              <span class="specs-key" role="cell">Hub</span>
+              <span class="specs-val placeholder" role="cell">[SPEC]</span>
+            </div>
+
+            <div class="specs-row" role="row">
+              <span class="specs-key" role="cell">Druckfläche</span>
+              <span class="specs-val placeholder" role="cell">[SPEC]</span>
+            </div>
+
+            <div class="specs-row" role="row">
+              <span class="specs-key" role="cell">Steuerung</span>
+              <span class="specs-val" role="cell">SPS</span>
+            </div>
+
+            <div class="specs-row" role="row">
+              <span class="specs-key" role="cell">Abmessungen (L×B×H)</span>
+              <span class="specs-val placeholder" role="cell">[SPEC] mm</span>
+            </div>
+
+            <div class="specs-row" role="row">
+              <span class="specs-key" role="cell">Gewicht</span>
+              <span class="specs-val placeholder" role="cell">[SPEC] kg</span>
+            </div>
+
+            <div class="specs-row" role="row">
+              <span class="specs-key" role="cell">Schutzklasse</span>
+              <span class="specs-val" role="cell">IP 54</span>
+            </div>
+
+            <div class="specs-row" role="row">
+              <span class="specs-key" role="cell">Anschlussspannung</span>
+              <span class="specs-val" role="cell">230V / 50Hz</span>
+            </div>
+
+            <div class="specs-row" role="row">
+              <span class="specs-key" role="cell">Luftdruck</span>
+              <span class="specs-val" role="cell">6 bar</span>
+            </div>
+
+          </div>
+
+          <div class="specs-panel-footer">
+            <span class="specs-cert">DIN EN ISO 9001</span>
+            <span class="specs-cert">CE</span>
+            <span class="specs-cert">Made in Germany</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="gradient-divider"></div>
+
+  <!-- ════════════════════════════════
+       FEATURES SECTION
+  ════════════════════════════════ -->
+  <section class="section features-section" id="merkmale">
+    <div class="section-inner">
+      <div class="features-header reveal">
+        <div class="section-label">Produktmerkmale</div>
+        <h2 class="features-title">Kernmerkmale</h2>
+      </div>
+
+      <div class="features-grid">
+
+        <div class="feature-item reveal">
+          <div class="feature-bg-num">01</div>
+          <div class="feature-num">01 / Design</div>
+          <h3 class="feature-title">Kompaktes Design</h3>
+          <p class="feature-desc">Minimaler Platzbedarf — maximale Präzision. Die HVA 150 passt in jede Produktionslinie, ohne Kompromisse beim Ergebnis.</p>
+        </div>
+
+        <div class="feature-item reveal" style="transition-delay: 0.12s">
+          <div class="feature-bg-num">02</div>
+          <div class="feature-num">02 / Qualität</div>
+          <h3 class="feature-title">Reproduzierbare Qualität</h3>
+          <p class="feature-desc">Jeder Druck wie der erste. ±0.01 mm Toleranz, Zyklus für Zyklus — ohne Nachjustierung, ohne Abweichung.</p>
+        </div>
+
+        <div class="feature-item reveal" style="transition-delay: 0.24s">
+          <div class="feature-bg-num">03</div>
+          <div class="feature-num">03 / Bedienung</div>
+          <h3 class="feature-title">Einfache Bedienung</h3>
+          <p class="feature-desc">Intuitive Steuerung, schneller Klischeewechsel, minimale Rüstzeiten. Weniger Einrichtaufwand. Mehr Produktionszeit.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="gradient-divider"></div>
+
+  <!-- ════════════════════════════════
+       MACHINE NAVIGATION BLOCK
+  ════════════════════════════════ -->
+  <div class="machine-nav-section">
+    <div class="machine-nav-inner">
+      <div class="machine-nav-divider"></div>
+      <div class="machine-nav-row">
+
+        <a href="index.html" class="machine-nav-link prev">
+          <span class="machine-nav-label">Zurück zur Serie</span>
+          <span class="machine-nav-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            HVA-Serie
+          </span>
+        </a>
+
+        <a href="kipp-200.html" class="machine-nav-link next">
+          <span class="machine-nav-label">Nächste Maschine</span>
+          <span class="machine-nav-title">
+            Kipp 200
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </span>
+        </a>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════
+       CTA SECTION
+  ════════════════════════════════ -->
+  <section class="section cta-section" id="anfrage">
+    <div class="cta-section-bg"></div>
+    <div class="section-inner">
+      <div class="cta-inner reveal">
+        <div class="cta-label">Kontakt &amp; Anfrage</div>
+        <h2 class="cta-title">Anfrage stellen.</h2>
+        <p class="cta-sub">
+          Interesse an der HVA 150? Unser Team berät Sie persönlich — direkt aus Stuttgart. Angebot, Datenblatt oder individuelle Konfiguration.
+        </p>
+        <div class="cta-actions">
+          <a href="mailto:info@kent-stuttgart.de?subject=Anfrage%20HVA%20150" class="btn-primary">
+            Anfrage senden
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a href="index.html" class="btn-ghost">
+            Weitere HVA-Maschinen
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════
+       FOOTER
+  ════════════════════════════════ -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="../../../Kent-Logo_.png" alt="Kent Stuttgart GmbH" class="footer-logo-img">
+        <p class="footer-tagline">Tampondruckmaschinen für die internationale Industrie. Entwickelt und gefertigt in Stuttgart seit 1987.</p>
+        <div class="footer-address">
+          <div class="footer-address-line">Kesselstraße 46 · 70327 Stuttgart</div>
+          <div class="footer-address-line">+49 (0)711 40950-0</div>
+          <div class="footer-address-line">info@kent-stuttgart.de</div>
+        </div>
+        <div class="footer-certs">
+          <span class="footer-cert">DIN EN ISO 9001</span>
+          <span class="footer-cert">CE-Kennzeichnung</span>
+          <span class="footer-cert">Made in Germany</span>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Maschinen</div>
+        <ul class="footer-links">
+          <li><a href="../index.html">Standardmaschinen</a></li>
+          <li><a href="../../../index.html#sondermaschinen">Sondermaschinen</a></li>
+          <li><a href="../../../index.html#siebdruck">Siebdruckmaschinen</a></li>
+          <li><a href="../../../index.html#zubehoer">Maschinenzubehör</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Klischees</div>
+        <ul class="footer-links">
+          <li><a href="../../../klischees/index.html">Klischee-Übersicht</a></li>
+          <li><a href="../../../klischees/index.html#stahl">Stahlklischees</a></li>
+          <li><a href="../../../klischees/index.html#bandstahl">Bandstahlklischees</a></li>
+          <li><a href="../../../klischees/index.html#laser">Aluminiumlaserklischee</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Unternehmen</div>
+        <ul class="footer-links">
+          <li><a href="../../../ueber-uns.html">Über uns</a></li>
+          <li><a href="../../../index.html#anwendungen">Anwendungsbereiche</a></li>
+          <li><a href="#anfrage">Kontakt</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 Kent Stuttgart GmbH · Alle Rechte vorbehalten</span>
+      <div class="footer-legal">
+        <a href="#">Impressum</a>
+        <a href="#">Datenschutzerklärung</a>
+        <a href="#">AGB</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ════════════════════════════════
+       JAVASCRIPT
+  ════════════════════════════════ -->
+  <script>
+    // ─── Nav: add scrolled class for stronger backdrop ───
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 20);
+    }, { passive: true });
+
+    // ─── Reveal on scroll ───
+    const reveals = document.querySelectorAll('.reveal');
+    const revealObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          revealObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    reveals.forEach(r => revealObs.observe(r));
+  </script>
+
+</body>
+</html>

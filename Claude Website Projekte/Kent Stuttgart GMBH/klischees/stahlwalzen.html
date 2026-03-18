@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stahlwalzen — Kent Stuttgart GmbH</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700;800&family=Barlow:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:     #04091A;
+      --bg1:    #070D20;
+      --bg2:    #0A1228;
+      --surface:#101C3A;
+      --blue2:  #1A76F0;
+      --red:    #C8221C;
+      --muted:  #374F72;
+      --dim:    #6088B0;
+      --light:  #C2D4E8;
+      --white:  #FFFFFF;
+      --font-display: 'Barlow Condensed', sans-serif;
+      --font-body:    'Barlow', sans-serif;
+      --font-mono:    'Space Mono', monospace;
+      --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--light);
+      font-family: var(--font-body);
+      font-weight: 400;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 200px;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 500;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 4rem;
+      height: 72px;
+    }
+    nav::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(6,23,42,0.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(43,114,212,0.15);
+    }
+    .nav-logo {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .nav-logo-img {
+      height: 34px; width: auto;
+      display: block; mix-blend-mode: screen;
+    }
+    .nav-links {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: var(--font-display);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--dim);
+      transition: color 0.2s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0;
+      width: 0; height: 1px;
+      background: var(--blue2);
+      transition: width 0.3s var(--ease-out-expo);
+    }
+    .nav-links a:hover { color: var(--white); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-links a.active { color: var(--white); }
+    .nav-links a.active::after { width: 100%; background: var(--red); }
+    .nav-right {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-lang {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+    }
+    .nav-cta {
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--white);
+      padding: 0.6rem 1.6rem;
+      border: 1px solid rgba(43,114,212,0.6);
+      border-radius: 10px;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .nav-cta:hover { background: var(--blue2); border-color: var(--blue2); }
+
+    .breadcrumb {
+      position: relative;
+      z-index: 10;
+      padding: 5.5rem 4rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .breadcrumb a { color: var(--muted); transition: color 0.2s; }
+    .breadcrumb a:hover { color: var(--dim); }
+    .breadcrumb-sep { color: rgba(43,114,212,0.4); }
+    .breadcrumb-current { color: var(--dim); }
+
+    .hero {
+      position: relative;
+      min-height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      padding: 4rem 4rem 6rem;
+    }
+    .hero-light {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse 70% 60% at 55% 40%, rgba(26,118,240,0.13) 0%, transparent 60%),
+        radial-gradient(ellipse 45% 35% at 80% 65%, rgba(200,34,28,0.07) 0%, transparent 55%);
+      animation: heroBreath 9s ease-in-out infinite;
+    }
+    @keyframes heroBreath {
+      0%, 100% { opacity: 0.75; transform: scale(1); }
+      50%       { opacity: 1;    transform: scale(1.03); }
+    }
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(43,114,212,0.022) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(43,114,212,0.022) 1px, transparent 1px);
+      background-size: 90px 90px;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(ellipse 100% 100% at 50% 50%, transparent 40%, rgba(4,9,26,0.75) 100%);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .hero-headline {
+      font-family: var(--font-display);
+      font-size: clamp(5rem, 12vw, 13rem);
+      font-weight: 800;
+      line-height: 0.88;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      opacity: 0;
+      transform: translateY(50px);
+      animation: fadeUp 1.4s cubic-bezier(0.19, 1, 0.22, 1) 0.4s forwards;
+    }
+    .hl-ghost {
+      display: block;
+      color: rgba(194,212,232,0.10);
+      font-weight: 300;
+      letter-spacing: 0.06em;
+      font-size: 0.7em;
+    }
+    .hl-solid { display: block; color: var(--white); }
+    .hl-accent {
+      display: block;
+      color: var(--red);
+      font-size: 0.48em;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+    }
+    .hero-divider {
+      margin: 3rem 0 2.5rem;
+      width: 1px; height: 56px;
+      background: linear-gradient(to bottom, rgba(26,118,240,0.7), rgba(200,34,28,0.4), transparent);
+      opacity: 0;
+      animation: fadeIn 0.8s ease 1.2s forwards;
+    }
+    .hero-sub {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--dim);
+      opacity: 0;
+      animation: fadeIn 0.8s ease 1.4s forwards;
+    }
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { to { opacity: 1; } }
+
+    .section { padding: 6rem 4rem; position: relative; }
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(26,118,240,0.6);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .section-label::before {
+      content: '';
+      width: 24px; height: 1px;
+      background: rgba(26,118,240,0.4);
+      flex-shrink: 0;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 5rem;
+      align-items: start;
+    }
+    .content-heading {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 5vw, 5rem);
+      font-weight: 800;
+      line-height: 0.92;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 2.5rem;
+    }
+    .content-heading span {
+      display: block;
+      color: rgba(194,212,232,0.25);
+      font-weight: 300;
+    }
+    .content-body {
+      font-size: 1rem;
+      line-height: 1.85;
+      color: var(--dim);
+      font-weight: 300;
+      max-width: 560px;
+    }
+
+    .specs-panel {
+      background: var(--surface);
+      border: 1px solid rgba(26,118,240,0.12);
+      border-radius: 16px;
+      overflow: hidden;
+      position: sticky;
+      top: 100px;
+    }
+    .specs-header {
+      padding: 1.4rem 1.8rem;
+      border-bottom: 1px solid rgba(26,118,240,0.1);
+      background: rgba(26,118,240,0.04);
+    }
+    .specs-header-title {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(26,118,240,0.7);
+    }
+    .specs-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 1rem 1.8rem;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      gap: 1rem;
+    }
+    .specs-row:last-child { border-bottom: none; }
+    .specs-key {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      flex-shrink: 0;
+    }
+    .specs-val {
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--light);
+      text-align: right;
+    }
+    .specs-val.highlight { color: var(--blue2); }
+
+    .einsatz-section { background: var(--bg1); padding: 6rem 4rem; }
+    .einsatz-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+    .einsatz-card {
+      background: var(--bg2);
+      border: 1px solid rgba(26,118,240,0.1);
+      border-radius: 16px;
+      padding: 2.4rem 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.35s, transform 0.35s var(--ease-out-expo);
+    }
+    .einsatz-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--blue2), transparent);
+      opacity: 0.5;
+    }
+    .einsatz-card:hover {
+      border-color: rgba(26,118,240,0.25);
+      transform: translateY(-3px);
+    }
+    .einsatz-num {
+      font-family: var(--font-mono);
+      font-size: 0.5rem;
+      letter-spacing: 0.2em;
+      color: rgba(26,118,240,0.4);
+      margin-bottom: 1.2rem;
+    }
+    .einsatz-title {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 0.6rem;
+    }
+    .einsatz-sub {
+      font-family: var(--font-display);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      color: var(--dim);
+    }
+
+    .page-nav { background: var(--bg); padding: 4rem; border-top: 1px solid rgba(26,118,240,0.08); }
+    .page-nav-inner { display: flex; justify-content: space-between; align-items: center; }
+    .page-nav-link {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-family: var(--font-display);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--dim);
+      padding: 1rem 1.6rem;
+      border: 1px solid rgba(43,114,212,0.15);
+      border-radius: 10px;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+    }
+    .page-nav-link:hover {
+      color: var(--white);
+      border-color: rgba(26,118,240,0.4);
+      background: rgba(26,118,240,0.05);
+    }
+    .page-nav-arrow { font-size: 1rem; color: rgba(26,118,240,0.5); }
+    .page-nav-label { display: flex; flex-direction: column; gap: 0.2rem; }
+    .page-nav-meta { font-size: 0.5rem; font-weight: 400; color: var(--muted); letter-spacing: 0.1em; }
+
+    .cta-section {
+      background: var(--bg2);
+      padding: 6rem 4rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-glow {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(ellipse 60% 80% at 50% 50%, rgba(26,118,240,0.07) 0%, transparent 70%);
+    }
+    .cta-label {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(26,118,240,0.6);
+      margin-bottom: 1.5rem;
+    }
+    .cta-heading {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 1rem;
+      letter-spacing: -0.01em;
+    }
+    .cta-sub { font-size: 0.95rem; color: var(--dim); font-weight: 300; margin-bottom: 2.5rem; }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: var(--font-display);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--white);
+      padding: 0.9rem 2.2rem;
+      background: var(--blue2);
+      border: 1px solid var(--blue2);
+      border-radius: 10px;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn-primary:hover { background: #1560D0; transform: translateY(-1px); }
+
+    footer { background: var(--bg1); border-top: 1px solid rgba(26,118,240,0.08); padding: 4rem; }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 3rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .footer-logo-img { height: 36px; width: auto; display: block; margin-bottom: 1rem; mix-blend-mode: screen; }
+    .footer-tagline { font-size: 0.82rem; color: var(--muted); line-height: 1.7; margin-bottom: 1.5rem; }
+    .footer-address { margin-bottom: 1.5rem; }
+    .footer-address-line { font-size: 0.78rem; color: var(--muted); line-height: 1.8; }
+    .footer-certs { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+    .footer-cert {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-family: var(--font-mono);
+      font-size: 0.48rem;
+      letter-spacing: 0.15em;
+      color: rgba(255,255,255,0.16);
+      text-transform: uppercase;
+    }
+    .footer-cert::before { content: '▸'; color: rgba(43,114,212,0.38); font-size: 0.45rem; }
+    .footer-col-title {
+      font-family: var(--font-display);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--light);
+      margin-bottom: 1.2rem;
+    }
+    .footer-links { list-style: none; }
+    .footer-links li { margin-bottom: 0.65rem; }
+    .footer-links a { font-size: 0.8rem; color: var(--muted); transition: color 0.2s; }
+    .footer-links a:hover { color: var(--light); }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; }
+    .footer-copy { font-family: var(--font-mono); font-size: 0.65rem; color: var(--muted); letter-spacing: 0.1em; }
+    .footer-legal { display: flex; gap: 2rem; }
+    .footer-legal a { font-size: 0.75rem; color: var(--muted); transition: color 0.2s; }
+    .footer-legal a:hover { color: var(--dim); }
+
+    .gradient-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--blue2) 30%, var(--red) 70%, transparent);
+      opacity: 0.35;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
+    }
+    .reveal.animate-in { opacity: 1; transform: translateY(0); }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--surface); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+
+    @media (max-width: 1024px) {
+      .content-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .specs-panel { position: static; }
+      .einsatz-grid { grid-template-columns: 1fr; }
+      nav { padding: 0 2rem; }
+      .breadcrumb { padding: 5.5rem 2rem 0; }
+      .section { padding: 5rem 2rem; }
+      .einsatz-section { padding: 5rem 2rem; }
+      .page-nav { padding: 3rem 2rem; }
+      .cta-section { padding: 5rem 2rem; }
+      footer { padding: 3rem 2rem; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hero { padding: 3rem 1.5rem 4rem; }
+      .hero-headline { font-size: clamp(3.5rem, 16vw, 6rem); }
+      .page-nav-inner { flex-direction: column; gap: 1rem; }
+      .footer-top { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="nav">
+    <a href="../index.html" class="nav-logo">
+      <img src="../Kent-Logo_.png" alt="Kent Stuttgart GmbH" class="nav-logo-img">
+    </a>
+    <ul class="nav-links">
+      <li><a href="../maschinen/index.html">Maschinen</a></li>
+      <li><a href="../klischees/index.html" class="active">Klischees</a></li>
+      <li><a href="../ueber-uns.html">Unternehmen</a></li>
+    </ul>
+    <div class="nav-right">
+      <span class="nav-lang">DE · EN</span>
+      <a href="../index.html#kontakt" class="nav-cta">Anfrage</a>
+    </div>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="../index.html">Kent Stuttgart GmbH</a>
+    <span class="breadcrumb-sep">/</span>
+    <a href="../klischees/index.html">Klischees</a>
+    <span class="breadcrumb-sep">/</span>
+    <span class="breadcrumb-current">Stahlwalzen</span>
+  </div>
+
+  <section class="hero">
+    <div class="hero-light"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-content">
+      <h1 class="hero-headline">
+        <span class="hl-ghost">STAHL</span>
+        <span class="hl-solid">WALZEN.</span>
+        <span class="hl-accent">Rotationstampondruck — höchste Lebensdauer</span>
+      </h1>
+      <div class="hero-divider"></div>
+      <p class="hero-sub">Präzise gefertigt · Hohe Auflagen · Rotationsdruck</p>
+    </div>
+  </section>
+
+  <div class="gradient-divider"></div>
+
+  <section class="section" style="background: var(--bg);">
+    <div class="content-grid">
+      <div class="reveal">
+        <div class="section-label">Produktdetail</div>
+        <h2 class="content-heading">
+          Rotation. /
+          <span>Präzise.</span>
+        </h2>
+        <p class="content-body">
+          Stahlwalzen werden im Rotationstampondruck eingesetzt. Qualität und Lebensdauer sind ähnlich wie bei Stahlklischees. Die Verarbeitung ist sehr aufwändig und wird bei uns im Haus mit größter Sorgfalt gefertigt.
+        </p>
+      </div>
+
+      <div class="reveal" style="transition-delay: 0.1s;">
+        <div class="specs-panel">
+          <div class="specs-header">
+            <div class="specs-header-title">Technische Spezifikationen</div>
+          </div>
+          <div class="specs-row">
+            <span class="specs-key">Qualität</span>
+            <span class="specs-val highlight">Wie Stahlklischees</span>
+          </div>
+          <div class="specs-row">
+            <span class="specs-key">Einsatz</span>
+            <span class="specs-val">Rotationstampondruck</span>
+          </div>
+          <div class="specs-row">
+            <span class="specs-key">Fertigung</span>
+            <span class="specs-val">Im eigenen Haus</span>
+          </div>
+          <div class="specs-row">
+            <span class="specs-key">Druckauflagen</span>
+            <span class="specs-val">Sehr hoch</span>
+          </div>
+          <div class="specs-row">
+            <span class="specs-key">Lieferprogramm</span>
+            <span class="specs-val">Alle gängigen Größen</span>
+          </div>
+          <div class="specs-row">
+            <span class="specs-key">Sondermaße</span>
+            <span class="specs-val">Auf Anfrage</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="gradient-divider"></div>
+
+  <section class="einsatz-section">
+    <div class="reveal">
+      <div class="section-label">Anwendung</div>
+      <h2 style="font-family: var(--font-display); font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 800; text-transform: uppercase; color: var(--white); letter-spacing: -0.01em;">
+        Einsatzgebiete
+      </h2>
+    </div>
+    <div class="einsatz-grid">
+      <div class="einsatz-card reveal" style="transition-delay:0.05s;">
+        <div class="einsatz-num">01 / 03</div>
+        <div class="einsatz-title">Industrie</div>
+        <div class="einsatz-sub">Serienfertigung</div>
+      </div>
+      <div class="einsatz-card reveal" style="transition-delay:0.1s;">
+        <div class="einsatz-num">02 / 03</div>
+        <div class="einsatz-title">Hohe Auflagen</div>
+        <div class="einsatz-sub">Maximale Haltbarkeit</div>
+      </div>
+      <div class="einsatz-card reveal" style="transition-delay:0.15s;">
+        <div class="einsatz-num">03 / 03</div>
+        <div class="einsatz-title">Rotation</div>
+        <div class="einsatz-sub">Schnell laufende Maschinen</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="gradient-divider"></div>
+
+  <section class="cta-section">
+    <div class="cta-glow"></div>
+    <div style="position:relative; z-index:2;">
+      <div class="cta-label reveal">Jetzt anfragen</div>
+      <h2 class="cta-heading reveal">Stahlwalzen<br>nach Maß</h2>
+      <p class="cta-sub reveal">Erhalten Sie ein unverbindliches Angebot für Ihre Rotationsdruckanwendungen.</p>
+      <a href="../index.html#kontakt" class="btn-primary reveal">Anfrage senden</a>
+    </div>
+  </section>
+
+  <nav class="page-nav">
+    <div class="page-nav-inner">
+      <a href="bandstahlklischees.html" class="page-nav-link">
+        <span class="page-nav-arrow">←</span>
+        <div class="page-nav-label">
+          <span class="page-nav-meta">Zurück</span>
+          Bandstahlklischees
+        </div>
+      </a>
+      <a href="kunststoffklischees.html" class="page-nav-link">
+        <div class="page-nav-label" style="text-align:right;">
+          <span class="page-nav-meta">Weiter</span>
+          Kunststoffklischees
+        </div>
+        <span class="page-nav-arrow">→</span>
+      </a>
+    </div>
+  </nav>
+
+  <div class="gradient-divider"></div>
+
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="../Kent-Logo_.png" alt="Kent Stuttgart GmbH" class="footer-logo-img">
+        <p class="footer-tagline">Tampondruckmaschinen für die internationale Industrie. Entwickelt und gefertigt in Stuttgart seit 1987.</p>
+        <div class="footer-address">
+          <div class="footer-address-line">Kent Stuttgart GmbH</div>
+          <div class="footer-address-line">Böblinger Straße, 70565 Stuttgart</div>
+          <div class="footer-address-line">Deutschland</div>
+          <div class="footer-address-line" style="margin-top:0.5rem">info@kent-stuttgart.de</div>
+          <div class="footer-address-line">+49 (0)711 — — —</div>
+        </div>
+        <div class="footer-certs">
+          <span class="footer-cert">DIN EN ISO 9001</span>
+          <span class="footer-cert">CE-Kennzeichnung</span>
+          <span class="footer-cert">Made in Germany</span>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Maschinen</div>
+        <ul class="footer-links">
+          <li><a href="../maschinen/index.html">Übersicht Maschinen</a></li>
+          <li><a href="#">KS-100 SE — Einfarbig</a></li>
+          <li><a href="#">KS-400 MC — Mehrfarbig</a></li>
+          <li><a href="#">Zubehör &amp; Verbrauchsmaterial</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Klischees</div>
+        <ul class="footer-links">
+          <li><a href="stahlklischees.html">Stahlklischees</a></li>
+          <li><a href="bandstahlklischees.html">Bandstahlklischees</a></li>
+          <li><a href="stahlwalzen.html">Stahlwalzen</a></li>
+          <li><a href="kunststoffklischees.html">Kunststoffklischees</a></li>
+          <li><a href="aluminiumlaserklischee.html">Aluminiumlaserklischee</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Unternehmen</div>
+        <ul class="footer-links">
+          <li><a href="../ueber-uns.html">Über Kent Stuttgart</a></li>
+          <li><a href="#">Technische Anfrage</a></li>
+          <li><a href="#">After-Sales-Service</a></li>
+          <li><a href="#">Downloads</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 Kent Stuttgart GmbH · Alle Rechte vorbehalten · HRB 12345 Amtsgericht Stuttgart</span>
+      <div class="footer-legal">
+        <a href="#">Impressum</a>
+        <a href="#">Datenschutzerklärung</a>
+        <a href="#">AGB</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    const reveals = document.querySelectorAll('.reveal');
+    const revealObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting && !e.target.classList.contains('animate-in')) {
+          e.target.classList.add('animate-in');
+          revealObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    reveals.forEach(r => revealObs.observe(r));
+  </script>
+</body>
+</html>
