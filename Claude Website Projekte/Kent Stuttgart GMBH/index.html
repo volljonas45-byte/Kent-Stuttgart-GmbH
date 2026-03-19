@@ -7,7 +7,7 @@
   <meta name="description" content="Kent Stuttgart GmbH fertigt präzise Tampondruckmaschinen seit 1987. 500+ Anlagen in 40 Ländern. Direkt vom Hersteller aus Stuttgart." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@400;500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@400;500;600;700;800;900&family=Oswald:wght@400;500;600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
 
   <style>
     /* ══════════════════════════════════════════
@@ -488,24 +488,38 @@
     }
     .intro-pillars {
       display:flex; flex-direction:column; gap:0;
+      border-left: 2px solid var(--border);
+      margin-top:.4rem;
     }
     .pillar {
-      display:flex; align-items:flex-start; gap:1.1rem;
-      padding: 1.1rem 0;
+      display:flex; align-items:flex-start; gap:1.4rem;
+      padding: 1.1rem 0 1.1rem 1.5rem;
       border-bottom: 1px solid var(--border);
+      position:relative;
     }
-    .pillar:first-child { border-top: 1px solid var(--border); }
-    .pillar-icon {
-      flex-shrink:0; width:38px; height:38px;
-      border-radius:8px;
-      background: var(--blue-soft); color: var(--blue2);
-      display:flex; align-items:center; justify-content:center;
+    .pillar::before {
+      content:''; position:absolute; left:-2px; top:0; bottom:0; width:2px;
+      background: var(--blue2); transform:scaleY(0); transform-origin:top;
+      transition: transform .35s cubic-bezier(.19,1,.22,1);
     }
+    .pillar:hover::before { transform:scaleY(1); }
+    .pillar-num {
+      font-family:var(--fm); font-size:.62rem; color:var(--text3);
+      padding-top:.35rem; flex-shrink:0; min-width:20px; letter-spacing:.06em;
+    }
+    .pillar-body { flex:1; }
     .pillar-title {
-      font-family:var(--fd); font-size:1rem; font-weight:700;
-      color: var(--text); letter-spacing:.01em; margin-bottom:.15rem;
+      font-family:'Oswald', sans-serif; font-size:.98rem; font-weight:500;
+      text-transform:uppercase; letter-spacing:.06em;
+      color: var(--text); margin-bottom:.25rem;
     }
-    .pillar-desc { font-size:.84rem; color: var(--text2); line-height:1.6; }
+    .pillar-desc { font-size:.82rem; color: var(--text2); line-height:1.6; }
+    .pillar-tag {
+      flex-shrink:0; align-self:center;
+      font-family:var(--fm); font-size:.6rem; letter-spacing:.05em;
+      color:var(--blue2); background:var(--blue-soft);
+      padding:.22rem .55rem; border-radius:3px;
+    }
 
     /* Machine image panel */
     .intro-visual {
@@ -1125,31 +1139,28 @@
         </p>
         <ul class="intro-pillars">
           <li class="pillar">
-            <div class="pillar-icon">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
-            </div>
-            <div>
+            <div class="pillar-num">01</div>
+            <div class="pillar-body">
               <div class="pillar-title">Präzision bis ±0.01 mm</div>
               <div class="pillar-desc">Reproduzierbare Druckergebnisse — Schicht für Schicht, Teil für Teil.</div>
             </div>
+            <div class="pillar-tag">±0.01 mm</div>
           </li>
           <li class="pillar">
-            <div class="pillar-icon">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-            </div>
-            <div>
+            <div class="pillar-num">02</div>
+            <div class="pillar-body">
               <div class="pillar-title">Standard bis Sonderlösung</div>
               <div class="pillar-desc">7 bewährte Serien und maßgeschneiderte Sondermaschinen aus einer Hand.</div>
             </div>
+            <div class="pillar-tag">7 Serien</div>
           </li>
           <li class="pillar">
-            <div class="pillar-icon">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            </div>
-            <div>
+            <div class="pillar-num">03</div>
+            <div class="pillar-body">
               <div class="pillar-title">ISO 9001 · CE · Made in Germany</div>
               <div class="pillar-desc">Jede Maschine nach deutschen Standards entwickelt, geprüft und ausgeliefert.</div>
             </div>
+            <div class="pillar-tag">ISO 9001</div>
           </li>
         </ul>
         <div style="margin-top:2rem;display:flex;gap:.9rem;flex-wrap:wrap;">
