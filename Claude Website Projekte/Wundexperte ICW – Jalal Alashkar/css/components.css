@@ -1474,3 +1474,305 @@ select.form-control {
     display: none !important;
   }
 }
+
+
+/* ── LEGAL PAGES (Impressum / Datenschutz) ── */
+
+.legal-hero {
+  padding: var(--space-6) 0 var(--space-5);
+  background: var(--color-primary);
+  text-align: center;
+}
+
+.legal-hero h1 {
+  color: var(--color-white);
+  margin: var(--space-2) 0 var(--space-1);
+}
+
+.legal-hero p {
+  color: rgba(255,255,255,0.70);
+  font-size: var(--font-size-sm);
+}
+
+.legal-content {
+  padding: var(--space-7) 0;
+  background: var(--color-bg);
+}
+
+.legal-card {
+  max-width: 760px;
+  margin: 0 auto;
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.legal-block h2 {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-primary);
+  margin-bottom: var(--space-2);
+  padding-bottom: var(--space-1);
+  border-bottom: 2px solid var(--color-accent);
+  display: inline-block;
+}
+
+.legal-block h3 {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+  margin: var(--space-3) 0 var(--space-1);
+}
+
+.legal-block p {
+  color: var(--color-text-muted);
+  line-height: 1.75;
+  margin-bottom: var(--space-2);
+}
+
+.legal-block p:last-child {
+  margin-bottom: 0;
+}
+
+.legal-block a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.legal-block a:hover {
+  color: var(--color-primary);
+}
+
+.legal-list {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-2) 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.legal-list li {
+  color: var(--color-text-muted);
+  padding-left: var(--space-3);
+  position: relative;
+}
+
+.legal-list li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--color-accent);
+  font-weight: var(--font-weight-bold);
+}
+
+@media (max-width: 640px) {
+  .legal-card {
+    padding: var(--space-4);
+    border-radius: var(--radius-lg);
+  }
+}
+
+
+/* ── WHATSAPP BUTTON ── */
+.btn--whatsapp {
+  background: #25D366;
+  color: #fff;
+  border: 2px solid #25D366;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+.btn--whatsapp:hover {
+  background: #1ebe5c;
+  border-color: #1ebe5c;
+  color: #fff;
+}
+
+/* ── KONTAKT CARDS ── */
+.kontakt-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+  margin-top: var(--space-5);
+}
+
+.kontakt-card {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  transition: box-shadow var(--transition-fast), transform var(--transition-fast);
+}
+
+.kontakt-card:hover {
+  box-shadow: 0 8px 32px rgba(0,0,0,0.10);
+  transform: translateY(-3px);
+}
+
+.kontakt-card--phone { border-top: 4px solid var(--color-primary); }
+.kontakt-card--whatsapp { border-top: 4px solid #25D366; }
+.kontakt-card--info { border-top: 4px solid var(--color-accent); }
+
+.kontakt-card-icon {
+  width: 56px; height: 56px;
+  border-radius: var(--radius-lg);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--color-white);
+  flex-shrink: 0;
+}
+.kontakt-card--phone .kontakt-card-icon { background: var(--color-primary); }
+.kontakt-card--whatsapp .kontakt-card-icon { background: #25D366; }
+.kontakt-card--info .kontakt-card-icon { background: var(--color-accent); }
+
+.kontakt-card h3 {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-primary);
+  margin: 0;
+}
+
+.kontakt-card > p {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  line-height: 1.6;
+  flex: 1;
+}
+
+.kontakt-card-info {
+  background: var(--color-bg);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.kontakt-card-info strong {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+}
+
+.kontakt-card-info span {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+.kontakt-card-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  justify-content: center;
+}
+
+@media (max-width: 900px) {
+  .kontakt-cards {
+    grid-template-columns: 1fr;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* ── COOKIE BANNER ── */
+.cookie-banner {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  z-index: 9999;
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-primary);
+  border-top: 3px solid var(--color-accent);
+  transform: translateY(110%);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 -4px 24px rgba(0,0,0,0.18);
+}
+
+.cookie-banner--visible {
+  transform: translateY(0);
+}
+
+.cookie-banner--hiding {
+  transform: translateY(110%);
+  transition: transform 0.35s ease-in;
+}
+
+.cookie-banner-inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.cookie-banner-icon {
+  color: var(--color-accent);
+  flex-shrink: 0;
+}
+
+.cookie-banner-text {
+  flex: 1;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cookie-banner-text strong {
+  color: var(--color-white);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+}
+
+.cookie-banner-text span {
+  color: rgba(255,255,255,0.75);
+  font-size: 13px;
+}
+
+.cookie-banner-text a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.cookie-banner-btn {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.cookie-banner-close {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.60);
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  transition: color var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.cookie-banner-close:hover {
+  color: var(--color-white);
+}
+
+@media (max-width: 600px) {
+  .cookie-banner-inner {
+    gap: var(--space-2);
+  }
+  .cookie-banner-btn {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+}

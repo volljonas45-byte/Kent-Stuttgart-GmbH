@@ -3,13 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Kontakt – Wundexperte ICW Jalal Alashkar. Termin vereinbaren, Fragen stellen oder Kooperation anfragen. Kontaktformular, Telefon und Adresse.">
+  <meta name="description" content="Kontakt – Wundexperte ICW Jalal Alashkar. Termin vereinbaren per Telefon oder WhatsApp. Schnell, unkompliziert und persönlich.">
   <title>Kontakt – Wundexperte ICW | Jalal Alashkar</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <script src="https://unpkg.com/lucide@0.525.0/dist/umd/lucide.min.js"></script>
+  <link rel="stylesheet" href="css/fonts.css">
+  <script src="js/lucide.min.js"></script>
 
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/variables.css">
@@ -21,7 +19,6 @@
 <body>
 
   <a href="#main-content" class="skip-link">Zum Hauptinhalt springen</a>
-  <div id="form-live-region" class="sr-only" aria-live="polite" aria-atomic="true"></div>
 
   <!-- ── HEADER ── -->
   <header class="site-header" role="banner">
@@ -30,7 +27,7 @@
         <p class="header-bar-phone">
           <i data-lucide="phone" aria-hidden="true" class="icon icon--sm"></i>
           Fragen? Rufen Sie uns an:
-          <a href="tel:+49000000000">[TELEFONNUMMER PLATZHALTER]</a>
+          <a href="tel:+4917655708631">0176 55708631</a>
         </p>
         <p>Mo–Fr 08:00–18:00 Uhr &nbsp;|&nbsp; Sa nach Vereinbarung</p>
       </div>
@@ -47,7 +44,7 @@
           <li><a href="leistungen.html">Leistungen</a></li>
           <li><a href="kontakt.html" aria-current="page">Kontakt</a></li>
         </ul>
-        <a href="kontakt.html#termin" class="btn btn--accent btn--sm nav-cta">Termin vereinbaren</a>
+        <a href="tel:+4917655708631" class="btn btn--accent btn--sm nav-cta">Jetzt anrufen</a>
         <button class="nav-hamburger" aria-expanded="false" aria-controls="nav-drawer" aria-label="Menü öffnen">
           <span></span><span></span><span></span>
         </button>
@@ -59,7 +56,7 @@
       <a href="leistungen.html">Leistungen</a>
       <a href="kontakt.html" aria-current="page">Kontakt</a>
       <div class="nav-drawer-cta">
-        <a href="kontakt.html#termin" class="btn btn--accent">Termin vereinbaren</a>
+        <a href="tel:+4917655708631" class="btn btn--accent">Jetzt anrufen</a>
       </div>
     </div>
   </header>
@@ -75,235 +72,87 @@
           <span aria-current="page">Kontakt</span>
         </nav>
         <h1>Kontakt – Wir sind für Sie da</h1>
-        <p>Sprechen Sie uns an – persönlich, telefonisch oder per Formular.</p>
+        <p>Rufen Sie uns an oder schreiben Sie uns direkt über WhatsApp – unkompliziert und persönlich.</p>
       </div>
     </div>
 
-    <!-- ── CONTACT INFO + MAP ── -->
-    <section class="section contact-info-section" aria-labelledby="kontakt-info-heading">
+    <!-- ── CONTACT CARDS ── -->
+    <section class="section" id="termin" aria-labelledby="kontakt-heading">
       <div class="container">
         <div class="section-header" data-fade>
           <span class="eyebrow">So erreichen Sie uns</span>
-          <h2 id="kontakt-info-heading">Erreichbarkeit &amp; Anfahrt</h2>
+          <h2 id="kontakt-heading">Direkter Kontakt</h2>
+          <p>Kein Formular, keine Wartezeit – sprechen Sie uns einfach direkt an.</p>
         </div>
 
-        <div class="split">
-          <!-- Contact details -->
-          <div data-fade>
-            <div class="contact-item">
-              <div class="contact-item-icon" aria-hidden="true">
-                <i data-lucide="phone" class="icon icon--lg"></i>
-              </div>
-              <div class="contact-item-text">
-                <strong>Telefon</strong>
-                <a href="tel:+49000000000">[TELEFONNUMMER PLATZHALTER]</a>
-              </div>
-            </div>
+        <div class="kontakt-cards" data-fade>
 
-            <div class="contact-item">
-              <div class="contact-item-icon" aria-hidden="true">
-                <i data-lucide="mail" class="icon icon--lg"></i>
-              </div>
-              <div class="contact-item-text">
-                <strong>E-Mail</strong>
-                <a href="mailto:info@wundexperte-platzhalter.de">[E-MAIL PLATZHALTER]</a>
-              </div>
+          <!-- Telefon -->
+          <div class="kontakt-card kontakt-card--phone">
+            <div class="kontakt-card-icon">
+              <i data-lucide="phone" aria-hidden="true" class="icon icon--xl"></i>
             </div>
-
-            <div class="contact-item">
-              <div class="contact-item-icon" aria-hidden="true">
-                <i data-lucide="map-pin" class="icon icon--lg"></i>
-              </div>
-              <div class="contact-item-text">
-                <strong>Adresse</strong>
-                <p>[ADRESSE PLATZHALTER]<br>[PLZ STADT PLATZHALTER]</p>
-              </div>
+            <h3>Telefonisch</h3>
+            <p>Rufen Sie uns direkt an – wir sind für Sie da und vereinbaren sofort einen Termin.</p>
+            <div class="kontakt-card-info">
+              <strong>0176 55708631</strong>
+              <span>Mo–Fr: 08:00–18:00 Uhr<br>Sa: Nach Vereinbarung</span>
             </div>
-
-            <div class="contact-item">
-              <div class="contact-item-icon" aria-hidden="true">
-                <i data-lucide="clock" class="icon icon--lg"></i>
-              </div>
-              <div class="contact-item-text">
-                <strong>Öffnungszeiten</strong>
-                <p>Montag – Freitag: 08:00 – 18:00 Uhr<br>Samstag: Nach Vereinbarung<br>Hausbesuche: Täglich nach Absprache</p>
-              </div>
-            </div>
-
-            <div style="margin-top: var(--space-4);">
-              <a href="#termin" class="btn btn--primary">Direkt zum Kontaktformular ↓</a>
-            </div>
+            <a href="tel:+4917655708631" class="btn btn--primary btn--lg kontakt-card-btn">
+              <i data-lucide="phone" aria-hidden="true" class="icon icon--sm"></i>
+              Jetzt anrufen
+            </a>
           </div>
 
-          <!-- Map placeholder -->
-          <div data-fade="delay-1">
-            <div class="map-placeholder" role="img" aria-label="Kartenansicht – Google Maps wird hier eingebettet">
-              <div class="map-placeholder-icon" aria-hidden="true">
-                <i data-lucide="map-pin" class="icon icon--2xl"></i>
-              </div>
-              <p>Kartenansicht</p>
-              <small>Google Maps Einbettung folgt nach Adressangabe</small>
+          <!-- WhatsApp -->
+          <div class="kontakt-card kontakt-card--whatsapp">
+            <div class="kontakt-card-icon">
+              <i data-lucide="message-circle" aria-hidden="true" class="icon icon--xl"></i>
             </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ── CONTACT FORM ── -->
-    <section class="section" id="termin" aria-labelledby="form-heading">
-      <div class="container">
-        <div class="section-header" data-fade>
-          <span class="eyebrow">Schreiben Sie uns</span>
-          <h2 id="form-heading">Termin vereinbaren oder Nachricht senden</h2>
-          <p>Füllen Sie das Formular aus – wir melden uns so schnell wie möglich bei Ihnen.</p>
-        </div>
-
-        <div class="form-card" data-fade>
-
-          <!-- Success message (hidden initially) -->
-          <div class="form-success" id="form-success" tabindex="-1" role="status" aria-label="Nachricht erfolgreich gesendet">
-            <div class="form-success-icon" aria-hidden="true">
-              <i data-lucide="check-circle" class="icon icon--xl"></i>
+            <h3>WhatsApp</h3>
+            <p>Schreiben Sie uns eine kurze Nachricht – wir antworten schnell und vereinbaren alles Weitere.</p>
+            <div class="kontakt-card-info">
+              <strong>0176 55708631</strong>
+              <span>Antwort meist innerhalb weniger Stunden</span>
             </div>
-            <h3>Vielen Dank für Ihre Nachricht!</h3>
-            <p>Wir haben Ihre Anfrage erhalten und melden uns so schnell wie möglich – in der Regel innerhalb von 24 Stunden.</p>
-          </div>
-
-          <!-- Form -->
-          <div id="form-wrapper">
-            <form
-              id="contact-form"
-              novalidate
-              aria-label="Kontakt- und Terminanfrage"
+            <a
+              href="https://wa.me/4917655708631?text=Hallo%20Herr%20Al%20Ashkar%2C%20ich%20w%C3%BCrde%20gerne%20einen%20Termin%20vereinbaren."
+              class="btn btn--whatsapp btn--lg kontakt-card-btn"
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              <div class="grid grid--2" style="gap: var(--space-3);">
-
-                <div class="form-group">
-                  <label class="form-label" for="name">
-                    Ihr Name <span class="required" aria-hidden="true">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    class="form-control"
-                    placeholder="Vor- und Nachname"
-                    required
-                    aria-required="true"
-                    autocomplete="name"
-                  >
-                  <span class="form-error" id="name-error" role="alert"></span>
-                </div>
-
-                <div class="form-group">
-                  <label class="form-label" for="telefon">
-                    Telefonnummer
-                  </label>
-                  <input
-                    type="tel"
-                    id="telefon"
-                    name="telefon"
-                    class="form-control"
-                    placeholder="+49 ..."
-                    autocomplete="tel"
-                  >
-                  <span class="form-error" id="telefon-error" role="alert"></span>
-                </div>
-
-              </div>
-
-              <div class="form-group">
-                <label class="form-label" for="email">
-                  E-Mail-Adresse <span class="required" aria-hidden="true">*</span>
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  class="form-control"
-                  placeholder="ihre@email.de"
-                  required
-                  aria-required="true"
-                  autocomplete="email"
-                >
-                <span class="form-error" id="email-error" role="alert"></span>
-              </div>
-
-              <div class="form-group">
-                <label class="form-label" for="anliegen">
-                  Art des Anliegens <span class="required" aria-hidden="true">*</span>
-                </label>
-                <select
-                  id="anliegen"
-                  name="anliegen"
-                  class="form-control"
-                  required
-                  aria-required="true"
-                >
-                  <option value="" disabled selected>Bitte wählen Sie...</option>
-                  <option value="Terminanfrage">Terminanfrage</option>
-                  <option value="Erstberatung">Erstberatung</option>
-                  <option value="Kooperationsanfrage">Kooperationsanfrage (Arzt / Pflegedienst)</option>
-                  <option value="Frage zur Behandlung">Frage zur Behandlung</option>
-                  <option value="Sonstiges">Sonstiges</option>
-                </select>
-                <span class="form-error" id="anliegen-error" role="alert"></span>
-              </div>
-
-              <div class="form-group">
-                <label class="form-label" for="nachricht">
-                  Ihre Nachricht
-                </label>
-                <textarea
-                  id="nachricht"
-                  name="nachricht"
-                  class="form-control"
-                  placeholder="Beschreiben Sie kurz Ihr Anliegen, die betroffene Stelle oder weitere Informationen, die uns helfen können..."
-                  rows="5"
-                ></textarea>
-                <span class="form-error" id="nachricht-error" role="alert"></span>
-              </div>
-
-              <div class="form-group form-check-group">
-                <label class="form-checkbox">
-                  <input
-                    type="checkbox"
-                    name="datenschutz"
-                    id="datenschutz"
-                    required
-                    aria-required="true"
-                  >
-                  <span class="form-checkbox-label">
-                    Ich habe die <a href="datenschutz.html">Datenschutzerklärung</a> gelesen
-                    und stimme der Verarbeitung meiner Daten zur Bearbeitung meiner Anfrage zu.
-                    <span class="required" aria-hidden="true"> *</span>
-                  </span>
-                </label>
-                <span class="form-error" id="datenschutz-error" role="alert"></span>
-              </div>
-
-              <p style="font-size: var(--font-size-sm); color: var(--color-text-muted); margin-bottom: var(--space-3);">
-                <span aria-hidden="true">*</span> Pflichtfelder
-              </p>
-
-              <div class="form-submit">
-                <button
-                  type="submit"
-                  class="btn btn--primary btn--lg"
-                  id="form-submit-btn"
-                  disabled
-                >
-                  Nachricht absenden
-                </button>
-              </div>
-
-            </form>
+              <i data-lucide="message-circle" aria-hidden="true" class="icon icon--sm"></i>
+              WhatsApp schreiben
+            </a>
           </div>
+
+          <!-- Adresse -->
+          <div class="kontakt-card kontakt-card--info">
+            <div class="kontakt-card-icon">
+              <i data-lucide="map-pin" aria-hidden="true" class="icon icon--xl"></i>
+            </div>
+            <h3>Adresse &amp; Zeiten</h3>
+            <p>Hausbesuche sind täglich nach Absprache möglich – auch außerhalb der regulären Sprechzeiten.</p>
+            <div class="kontakt-card-info">
+              <strong>Mühlgasse 6, 74219 Möckmühl</strong>
+              <span>Mo–Fr: 08:00–18:00 Uhr<br>Sa: Nach Vereinbarung<br>Hausbesuche: Täglich nach Absprache</span>
+            </div>
+            <a
+              href="https://maps.google.com/?q=M%C3%BChlgasse+6,+74219+M%C3%B6ckm%C3%BChl"
+              class="btn btn--outline btn--lg kontakt-card-btn"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i data-lucide="navigation" aria-hidden="true" class="icon icon--sm"></i>
+              Route planen
+            </a>
+          </div>
+
         </div>
       </div>
     </section>
 
-    <!-- ── MEDICAL PARTNERS ── -->
+    <!-- ── PARTNER SECTION ── -->
     <section class="section partner-section" aria-labelledby="partner-heading">
       <div class="container">
         <div class="section-header" data-fade>
@@ -313,7 +162,6 @@
         </div>
 
         <div class="grid grid--2" style="gap: var(--space-4);">
-
           <div class="partner-card" data-fade="delay-1">
             <div class="partner-card-icon" aria-hidden="true">
               <i data-lucide="stethoscope" class="icon icon--xl"></i>
@@ -321,11 +169,15 @@
             <h3>Für Ärzte &amp; Praxen</h3>
             <p>
               Sie möchten Ihren Patienten an uns überweisen oder eine langfristige Kooperation besprechen?
-              Wir antworten schnell und dokumentieren sorgfältig. Unsere Befundberichte sind klar
-              strukturiert und lassen sich nahtlos in Ihre Praxisunterlagen integrieren.
+              Wir antworten schnell und dokumentieren sorgfältig.
             </p>
-            <a href="kontakt.html?anliegen=Kooperationsanfrage#termin" class="btn btn--primary">
-              Kooperation anfragen
+            <a
+              href="https://wa.me/4917655708631?text=Hallo%20Herr%20Al%20Ashkar%2C%20ich%20m%C3%B6chte%20eine%20Kooperation%20besprechen."
+              class="btn btn--whatsapp"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Kooperation via WhatsApp
             </a>
           </div>
 
@@ -336,14 +188,12 @@
             <h3>Für Pflegedienste</h3>
             <p>
               Für ambulante Pflegedienste bieten wir enge Zusammenarbeit, Fallbesprechungen und
-              Schulungen vor Ort. Gemeinsam sorgen wir für eine professionelle und lückenlose
-              Wundversorgung Ihrer Pflegebedürftigen.
+              Schulungen vor Ort.
             </p>
-            <a href="kontakt.html?anliegen=Kooperationsanfrage#termin" class="btn btn--primary">
-              Kontakt aufnehmen
+            <a href="tel:+4917655708631" class="btn btn--primary">
+              Jetzt anrufen
             </a>
           </div>
-
         </div>
       </div>
     </section>
@@ -378,15 +228,15 @@
             <ul class="footer-contact-list" role="list">
               <li class="footer-contact-item">
                 <span class="f-icon" aria-hidden="true"><i data-lucide="phone" class="icon icon--sm"></i></span>
-                <a href="tel:+49000000000">[TELEFONNUMMER PLATZHALTER]</a>
+                <a href="tel:+4917655708631">0176 55708631</a>
               </li>
               <li class="footer-contact-item">
                 <span class="f-icon" aria-hidden="true"><i data-lucide="mail" class="icon icon--sm"></i></span>
-                <a href="mailto:info@wundexperte-platzhalter.de">[E-MAIL PLATZHALTER]</a>
+                <a href="mailto:Jalalalashkar653@gmail.com">Jalalalashkar653@gmail.com</a>
               </li>
               <li class="footer-contact-item">
                 <span class="f-icon" aria-hidden="true"><i data-lucide="map-pin" class="icon icon--sm"></i></span>
-                <p>[ADRESSE PLATZHALTER]<br>[PLZ STADT PLATZHALTER]</p>
+                <p>Mühlgasse 6<br>74219 Möckmühl</p>
               </li>
             </ul>
           </div>
@@ -395,7 +245,7 @@
     </div>
     <div class="footer-bottom">
       <div class="container">
-        <p>© 2024 Wundexperte ICW – Jalal Alashkar. Alle Rechte vorbehalten.</p>
+        <p>© 2025 Wundexperte ICW – Jalal Alashkar. Alle Rechte vorbehalten.</p>
         <div class="footer-legal-links">
           <a href="datenschutz.html">Datenschutz</a>
           <a href="impressum.html">Impressum</a>
@@ -404,9 +254,26 @@
     </div>
   </footer>
 
+  <!-- ── COOKIE BANNER ── -->
+  <div class="cookie-banner" id="cookie-banner" role="dialog" aria-labelledby="cookie-title" aria-describedby="cookie-desc">
+    <div class="cookie-banner-inner">
+      <div class="cookie-banner-icon" aria-hidden="true">
+        <i data-lucide="shield-check" class="icon icon--md"></i>
+      </div>
+      <div class="cookie-banner-text">
+        <strong id="cookie-title">Kein Tracking, keine Cookies.</strong>
+        <span id="cookie-desc">Diese Website verwendet keine Cookies und keine Tracking-Tools. <a href="datenschutz.html">Datenschutzerklärung</a></span>
+      </div>
+      <button class="btn btn--white btn--sm cookie-banner-btn" id="cookie-accept">Verstanden</button>
+      <button class="cookie-banner-close" id="cookie-close" aria-label="Schließen">
+        <i data-lucide="x" class="icon icon--sm" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+
   <script src="js/nav.js"></script>
   <script src="js/scroll.js"></script>
-  <script src="js/form.js"></script>
+  <script src="js/cookie-banner.js"></script>
   <script>lucide.createIcons();</script>
 </body>
 </html>
