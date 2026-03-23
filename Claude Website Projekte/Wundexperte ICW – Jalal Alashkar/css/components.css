@@ -72,14 +72,20 @@
 }
 
 .nav-logo-img {
-  height: 44px;
+  height: 64px;
   width: auto;
   display: block;
 }
 
+@media (max-width: 768px) {
+  .nav-logo-img {
+    height: 52px;
+  }
+}
+
 @media (max-width: 480px) {
   .nav-logo-img {
-    height: 36px;
+    height: 46px;
   }
 }
 
