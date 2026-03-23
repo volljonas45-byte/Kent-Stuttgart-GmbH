@@ -4,22 +4,22 @@
 
 :root {
   /* ── Colors ── */
-  --color-primary:       #1B4F72;   /* Navy */
-  --color-primary-dark:  #154360;   /* Navy dark (hover) */
-  --color-accent:        #2E86AB;   /* Teal */
-  --color-accent-dark:   #2471A3;   /* Teal dark (hover) */
-  --color-accent-light:  #D6EAF8;   /* Pale teal (badges, bg) */
+  --color-primary:       #1A5C52;   /* Dark teal-green (logo) */
+  --color-primary-dark:  #134840;   /* Dark teal-green hover */
+  --color-accent:        #2E9B85;   /* Medium teal-green */
+  --color-accent-dark:   #268A75;   /* Medium teal-green hover */
+  --color-accent-light:  #D0EDE8;   /* Pale teal-green (badges, bg) */
   --color-bg:            #FFFFFF;
-  --color-bg-soft:       #F8FAFB;
-  --color-text:          #1A1A2E;   /* Near-black */
-  --color-text-muted:    #5A6070;
-  --color-border:        #D0DAE6;
+  --color-bg-soft:       #F4FAF9;
+  --color-text:          #1A2E2B;   /* Near-black with green tint */
+  --color-text-muted:    #5A6F6C;
+  --color-border:        #C8DDD9;
   --color-success:       #1E8449;
   --color-success-light: #D5F5E3;
   --color-error:         #B03A2E;
   --color-error-light:   #FADBD8;
   --color-white:         #FFFFFF;
-  --color-footer-bg:     #1A1A2E;
+  --color-footer-bg:     #112E29;
 
   /* ── Typography ── */
   --font-family: 'Inter', -apple-system, 'Segoe UI', Arial, Helvetica, sans-serif;
