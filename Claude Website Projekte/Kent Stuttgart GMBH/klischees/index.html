@@ -76,28 +76,7 @@
     /* ════════════════════════════════════════
        TOPBAR
     ════════════════════════════════════════ */
-    #topbar {
-      background: var(--blue); padding: .45rem 2rem;
-      position: relative; z-index: 600;
-    }
-    .topbar-inner {
-      max-width: 1200px; margin: 0 auto;
-      display: flex; justify-content: space-between; align-items: center;
-    }
-    .topbar-left {
-      font-family: var(--fm); font-size: .52rem;
-      letter-spacing: .16em; text-transform: uppercase;
-      color: rgba(255,255,255,.6);
-    }
-    .topbar-phone {
-      display: inline-flex; align-items: center; gap: .45rem;
-      font-family: var(--fd); font-size: .95rem; font-weight: 700;
-      color: #fff; background: var(--red);
-      padding: .28rem .95rem; border-radius: 5px;
-      transition: background .18s;
-    }
-    .topbar-phone:hover { background: var(--red2); }
-    @media (max-width:768px) { #topbar { padding:.4rem 1.25rem; } .topbar-left { display:none; } }
+    @media (max-width:768px) { }
 
     /* ════════════════════════════════════════
        NAV
@@ -510,17 +489,7 @@
   </style>
 </head>
 <body>
-
-  <!-- TOPBAR -->
-  <div id="topbar">
-    <div class="topbar-inner">
-      <span class="topbar-left">Tampondruck · Seit 1987 · Stuttgart</span>
-      <a href="tel:+49711000000" class="topbar-phone">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.01 1.18 2 2 0 012 .01h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/></svg>
-        +49 (0)711 ———
-      </a>
-    </div>
-  </div>
+</div>
 
   <!-- NAV -->
   <nav id="nav">
@@ -801,9 +770,8 @@
 
   <script>
     // Topbar + nav scroll
-    const topbar = document.getElementById('topbar');
     const nav = document.getElementById('nav');
-    let barH = topbar.offsetHeight;
+    let barH =
     window.addEventListener('scroll', () => {
       const y = window.scrollY;
       nav.classList.toggle('scrolled', y > 40);
