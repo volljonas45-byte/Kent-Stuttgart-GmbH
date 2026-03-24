@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anfrage stellen — Kent Stuttgart GmbH</title>
+  <meta name="description" content="Stellen Sie Ihre Anfrage für Tampondruckmaschinen, Klischees oder Zubehör. Unsere Ingenieure antworten innerhalb von 24 Stunden." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@400;500;600;700;800;900&family=Oswald:wght@400;500;600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ══ TOKENS ══════════════════════════════ */
+    :root {
+      --ink:      #0B1526;
+      --ink2:     #1C2E45;
+      --paper:    #FFFFFF;
+      --paper2:   #F5F7FA;
+      --paper3:   #EEF1F6;
+      --blue:     #1058C0;
+      --blue2:    #1A76F0;
+      --blue-soft:#EBF2FF;
+      --red:      #C8221C;
+      --red2:     #E03530;
+      --text:     #0B1526;
+      --text2:    #3A526B;
+      --text3:    #6B8299;
+      --border:   #DDE4EE;
+      --border2:  #C8D5E8;
+      --fd: 'Big Shoulders Display', sans-serif;
+      --fo: 'Oswald', sans-serif;
+      --fb: 'DM Sans', sans-serif;
+      --fm: 'JetBrains Mono', monospace;
+      --ease: cubic-bezier(0.19,1,0.22,1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--paper);
+      color: var(--text2);
+      font-family: var(--fb);
+      font-weight: 400;
+      line-height: 1.7;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--paper2); }
+    ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+    /* ══ ANIMATIONS ══ */
+    @keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:none; } }
+    .reveal { opacity:0; transform:translateY(20px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
+    .reveal.visible { opacity:1; transform:none; }
+    .reveal-delay-1 { transition-delay:.1s; }
+    .reveal-delay-2 { transition-delay:.2s; }
+
+    /* ══ NAV ══ */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 500; height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2.5rem;
+    }
+    nav::before {
+      content: ''; position: absolute; inset: 0;
+      background: transparent; backdrop-filter: blur(0);
+      border-bottom: 1px solid transparent;
+      transition: all .35s var(--ease);
+    }
+    nav.scrolled::before {
+      background: rgba(255,255,255,.96);
+      backdrop-filter: blur(20px);
+      border-bottom-color: var(--border);
+      box-shadow: 0 1px 20px rgba(0,0,0,.06);
+    }
+    .nav-logo { position:relative; z-index:1; }
+    .nav-logo-img { height: 30px; width: auto; }
+    .nav-logo-img.invert-on-scroll { mix-blend-mode: screen; transition: filter .3s; }
+    nav.scrolled .nav-logo-img.invert-on-scroll { mix-blend-mode: normal; filter: none; }
+    .nav-links {
+      position:relative; z-index:1;
+      display:flex; align-items:center; gap:1.5rem; list-style:none;
+    }
+    .nav-links a {
+      font-family: var(--fd); font-size: .73rem; font-weight: 600;
+      letter-spacing: .09em; text-transform: uppercase;
+      color: rgba(255,255,255,.6); transition: color .2s; position: relative;
+    }
+    nav.scrolled .nav-links a { color: var(--text2); }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -3px; left: 0;
+      width: 0; height: 2px; background: var(--blue2);
+      transition: width .25s var(--ease);
+    }
+    .nav-links a:hover { color: #fff; }
+    nav.scrolled .nav-links a:hover { color: var(--text); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-right { position:relative; z-index:1; display:flex; align-items:center; gap:1.2rem; }
+    .nav-tel {
+      font-family: var(--fd); font-size: .9rem; font-weight: 700;
+      color: rgba(255,255,255,.7); transition: color .2s;
+    }
+    nav.scrolled .nav-tel { color: var(--text2); }
+    .nav-tel:hover { color: #fff; }
+    nav.scrolled .nav-tel:hover { color: var(--text); }
+    .nav-cta {
+      font-family: var(--fd); font-size: .75rem; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase;
+      color: var(--blue2); padding: .5rem 1.35rem;
+      border: 1.5px solid var(--blue2); border-radius: 7px;
+      background: rgba(26,118,240,.08);
+      transition: all .2s;
+    }
+    nav.scrolled .nav-cta { color: var(--blue2); border-color: var(--blue2); background: rgba(26,118,240,.06); }
+    .nav-cta:hover { background: var(--blue2); color: #fff !important; border-color: var(--blue2); }
+    @media (max-width:1024px) { .nav-tel { display:none; } }
+    @media (max-width:768px) { nav { padding:0 1.25rem; } .nav-links { display:none; } }
+
+    /* ══ HERO ══ */
+    .hero {
+      position: relative;
+      height: 50vh; min-height: 380px;
+      background: var(--ink);
+      display: flex; align-items: flex-end;
+      overflow: hidden;
+    }
+    .hero-grid {
+      position:absolute; inset:0; pointer-events:none;
+      background-image:
+        linear-gradient(rgba(26,118,240,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(26,118,240,.025) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .hero-glow {
+      position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 55% 80% at 10% 60%, rgba(16,88,192,.15) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 60% at 90% 40%, rgba(200,34,28,.06) 0%, transparent 60%);
+    }
+    .hero-fade {
+      position:absolute; bottom:0; left:0; right:0; height:50%;
+      background: linear-gradient(to bottom, transparent, var(--ink));
+      pointer-events:none;
+    }
+    .hero-content {
+      position:relative; z-index:2;
+      max-width:1200px; width:100%;
+      margin:0 auto; padding:0 2.5rem 3.5rem;
+    }
+    .hero-eyebrow {
+      font-family: var(--fm); font-size: .55rem;
+      letter-spacing: .28em; text-transform: uppercase;
+      color: rgba(26,118,240,.75);
+      display: inline-flex; align-items: center; gap: .6rem;
+      margin-bottom: 1.1rem;
+    }
+    .hero-eyebrow::before {
+      content: ''; width: 18px; height: 1px;
+      background: rgba(26,118,240,.75); flex-shrink: 0;
+    }
+    .hero-h1 {
+      font-family: var(--fd); font-weight: 900;
+      font-size: clamp(3.5rem,7vw,7.5rem);
+      line-height: .9; letter-spacing: -.01em;
+      text-transform: uppercase; color: #fff;
+    }
+    .hero-h1 span { color: rgba(255,255,255,.18); }
+
+    /* Machine tag — pure typography, no box */
+    .machine-tag {
+      display: none;
+      align-items: baseline; gap: 1rem;
+      margin-top: 1.6rem;
+    }
+    .machine-tag.visible { display: flex; }
+    .machine-tag-slash {
+      font-family: var(--fd); font-size: clamp(1.8rem,3vw,3rem);
+      font-weight: 900; color: rgba(255,255,255,.12);
+      line-height: 1; letter-spacing: -.01em;
+    }
+    .machine-tag-name {
+      font-family: var(--fd); font-size: clamp(1.8rem,3vw,3rem);
+      font-weight: 900; color: var(--blue2);
+      text-transform: uppercase; line-height: 1; letter-spacing: -.01em;
+    }
+
+    /* ══ FORM SECTION ══ */
+    .form-section {
+      background: var(--paper);
+      padding: 6rem 2rem 7rem;
+    }
+    .form-inner { max-width: 1200px; margin: 0 auto; }
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .eyebrow {
+      font-family: var(--fm); font-size: .55rem;
+      letter-spacing: .28em; text-transform: uppercase;
+      color: var(--blue2);
+      display: inline-flex; align-items: center; gap: .65rem;
+      margin-bottom: 1rem;
+    }
+    .eyebrow::before {
+      content: ''; width: 18px; height: 1px;
+      background: var(--blue2); flex-shrink: 0;
+    }
+    .form-lead {
+      font-family: var(--fd); font-weight: 800;
+      font-size: clamp(2rem,3.5vw,3.2rem);
+      line-height: .92; text-transform: uppercase;
+      color: var(--text); margin-bottom: 1rem;
+      letter-spacing: -.01em;
+    }
+    .form-sub {
+      font-size: .9rem; color: var(--text3);
+      line-height: 1.75; margin-bottom: 2.5rem;
+      max-width: 520px;
+    }
+
+    /* ── Machine row — dark editorial strip above form ── */
+    .machine-row {
+      display: none;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      background: var(--ink);
+      border-left: 3px solid var(--blue2);
+      border-radius: 10px;
+      padding: 1rem 1.4rem;
+      margin-bottom: 2rem;
+    }
+    .machine-row.visible { display: grid; }
+    .machine-row-lbl {
+      display: block;
+      font-family: var(--fm); font-size: .42rem;
+      letter-spacing: .22em; text-transform: uppercase;
+      color: rgba(255,255,255,.28); margin-bottom: .3rem;
+    }
+    .machine-row-name {
+      font-family: var(--fd); font-size: 1.45rem; font-weight: 900;
+      text-transform: uppercase; color: #fff;
+      letter-spacing: -.01em; line-height: 1;
+    }
+    .machine-row-change {
+      font-family: var(--fm); font-size: .42rem;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: rgba(255,255,255,.85); cursor: pointer;
+      border-bottom: 1px solid rgba(255,255,255,.35);
+      padding-bottom: 1px;
+      transition: color .2s, border-color .2s;
+      flex-shrink: 0;
+    }
+    .machine-row-change:hover { color: #fff; border-color: #fff; }
+
+    /* ── Form fields ── */
+    form { display: flex; flex-direction: column; gap: 0; }
+    .form-row { display: flex; gap: 1rem; margin-bottom: 1rem; }
+    .form-row > .form-group { flex: 1; }
+    .form-group { margin-bottom: 1rem; }
+    .form-label {
+      display: block;
+      font-family: var(--fm); font-size: .46rem;
+      letter-spacing: .16em; text-transform: uppercase;
+      color: var(--text3); margin-bottom: .45rem;
+    }
+    .form-input {
+      width: 100%; display: block;
+      background: var(--paper2);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: .75rem 1rem;
+      font-family: var(--fb); font-size: .9rem; color: var(--text);
+      line-height: 1.5; outline: none;
+      transition: border-color .2s, background .2s;
+    }
+    .form-input:focus { border-color: var(--blue2); background: var(--paper); }
+    .form-input::placeholder { color: var(--text3); }
+    .form-textarea { min-height: 130px; resize: vertical; }
+    .form-select {
+      cursor: pointer; -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236B8299' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 1rem center;
+      padding-right: 2.4rem;
+    }
+
+    /* Machine field — highlighted when pre-filled */
+    .form-input.prefilled {
+      border-color: var(--blue2);
+      background: var(--blue-soft);
+      color: var(--blue);
+      font-weight: 500;
+    }
+
+    .form-check {
+      display: flex; align-items: flex-start; gap: .65rem;
+      font-size: .82rem; color: var(--text2); line-height: 1.55;
+      margin-bottom: 1.3rem;
+    }
+    .form-check input { width: 15px; height: 15px; margin-top: 2px; flex-shrink: 0; accent-color: var(--blue2); }
+    .form-check a { color: var(--blue2); text-decoration: underline; }
+    .form-submit {
+      width: 100%; display: flex; align-items: center; justify-content: center; gap: .6rem;
+      background: var(--blue2); color: #fff;
+      font-family: var(--fd); font-size: .92rem; font-weight: 700;
+      letter-spacing: .07em; text-transform: uppercase;
+      padding: 1rem 2rem; border: none; border-radius: 8px;
+      cursor: pointer; transition: all .2s var(--ease);
+      box-shadow: 0 4px 16px rgba(26,118,240,.28);
+    }
+    .form-submit:hover { background: var(--blue); transform: translateY(-1px); box-shadow: 0 8px 28px rgba(26,118,240,.35); }
+
+    /* ══ SIDEBAR ══ */
+    .contact-sidebar { display: flex; flex-direction: column; gap: 2.5rem; }
+    .cbox-head {
+      font-family: var(--fo); font-size: .52rem; font-weight: 700;
+      letter-spacing: .22em; text-transform: uppercase; color: var(--blue2);
+      padding-bottom: .65rem; margin-bottom: 1.3rem;
+      border-bottom: 2px solid var(--border);
+    }
+    .cphone {
+      display: block;
+      background: var(--ink); border-left: 3px solid var(--red);
+      border-radius: 14px;
+      padding: 1.25rem 1.5rem; margin-bottom: 1.5rem;
+      text-decoration: none; transition: border-color .2s;
+    }
+    .cphone:hover { border-color: var(--blue2); }
+    .cphone-lbl {
+      display: block; font-family: var(--fo); font-size: .48rem; font-weight: 600;
+      letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.4);
+      margin-bottom: .5rem;
+    }
+    .cphone-num {
+      display: block; font-family: var(--fd); font-size: 1.85rem; font-weight: 800;
+      color: #fff; line-height: 1.1; letter-spacing: -.01em; margin-bottom: .35rem;
+    }
+    .cphone-hrs { display: block; font-size: .75rem; color: rgba(255,255,255,.35); }
+    .cdetail { display: flex; align-items: flex-start; gap: .85rem; padding: .7rem 0; border-bottom: 1px solid var(--border); }
+    .cdetail:last-child { border-bottom: none; }
+    .cdetail svg { flex-shrink: 0; margin-top: 3px; }
+    .cdetail-lbl { display: block; font-family: var(--fo); font-size: .44rem; letter-spacing: .18em; text-transform: uppercase; color: var(--text3); margin-bottom: .15rem; }
+    .cdetail-val { display: block; font-size: .88rem; font-weight: 500; color: var(--text); }
+    .ctrust { display: flex; align-items: center; gap: .9rem; padding: .6rem 0; border-bottom: 1px solid var(--border); font-size: .85rem; color: var(--text2); }
+    .ctrust:last-child { border-bottom: none; }
+    .ctrust-num { flex-shrink: 0; font-family: var(--fo); font-size: .8rem; font-weight: 700; color: var(--blue2); min-width: 1.5rem; }
+
+    @media (max-width:1024px) { .form-grid { grid-template-columns: 1fr; gap: 3.5rem; } .form-row { flex-direction: column; } }
+    @media (max-width:768px) { .form-section { padding: 4rem 1.25rem 5rem; } .hero-content { padding: 0 1.25rem 2.5rem; } }
+
+    /* ══ FOOTER ══ */
+    footer {
+      background: var(--ink);
+      border-top: 1px solid rgba(255,255,255,.06);
+      padding: 5rem 2rem 2.5rem;
+    }
+    .footer-inner { max-width: 1200px; margin: 0 auto; }
+    .footer-top {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3.5rem; padding-bottom: 3.5rem;
+      border-bottom: 1px solid rgba(255,255,255,.06); margin-bottom: 2.5rem;
+    }
+    .footer-logo { height: 28px; width: auto; mix-blend-mode: screen; margin-bottom: 1rem; }
+    .footer-tagline { font-size: .84rem; color: rgba(255,255,255,.3); line-height: 1.75; max-width: 260px; margin-bottom: 1.3rem; }
+    .footer-address { font-size: .8rem; color: rgba(255,255,255,.3); line-height: 1.9; font-style: normal; }
+    .footer-address a { color: rgba(255,255,255,.55); transition: color .2s; }
+    .footer-address a:hover { color: #fff; }
+    .footer-certs { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: 1.1rem; }
+    .footer-cert {
+      font-family: var(--fm); font-size: .4rem; letter-spacing: .14em; text-transform: uppercase;
+      color: rgba(255,255,255,.35); background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.07); padding: .27rem .65rem; border-radius: 3px;
+    }
+    .footer-col-title {
+      font-family: var(--fd); font-size: .78rem; font-weight: 700;
+      letter-spacing: .09em; text-transform: uppercase;
+      color: rgba(255,255,255,.65); margin-bottom: 1.2rem;
+    }
+    .footer-nav { list-style: none; display: flex; flex-direction: column; gap: .5rem; }
+    .footer-nav a { font-size: .82rem; color: rgba(255,255,255,.3); transition: color .2s; }
+    .footer-nav a:hover { color: rgba(255,255,255,.75); }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .footer-copy { font-family: var(--fm); font-size: .44rem; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.25); }
+    .footer-legal { display: flex; gap: 1.4rem; }
+    .footer-legal a { font-size: .8rem; color: rgba(255,255,255,.3); transition: color .2s; }
+    .footer-legal a:hover { color: rgba(255,255,255,.65); }
+    @media (max-width:900px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 2.5rem; } }
+    @media (max-width:540px) { .footer-top { grid-template-columns: 1fr; } footer { padding: 4rem 1.25rem 2rem; } }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <a href="index.html" class="nav-logo">
+      <img src="Kent-Logo_.png" alt="Kent Stuttgart GmbH" class="nav-logo-img invert-on-scroll">
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Startseite</a></li>
+      <li><a href="maschinen/index.html">Maschinen</a></li>
+      <li><a href="klischees/index.html">Klischees</a></li>
+      <li><a href="farben.html">Farben</a></li>
+      <li><a href="tampons.html">Tampons</a></li>
+      <li><a href="schulungen.html">Schulungen</a></li>
+      <li><a href="unternehmen.html">Unternehmen</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="tel:+4971140950-0" class="nav-tel">+49 711 40950-0</a>
+      <a href="anfrage.html" class="nav-cta">Anfrage</a>
+    </div>
+  </nav>
+
+  <!-- ═══ HERO ═══ -->
+  <section class="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-fade"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">Kontakt &amp; Beratung · Antwort in 24 Stunden</div>
+      <h1 class="hero-h1">Anfrage <span>stellen.</span></h1>
+      <div class="machine-tag" id="heroBadge">
+        <span class="machine-tag-slash">/</span>
+        <span class="machine-tag-name" id="heroBadgeName"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FORM SECTION ═══ -->
+  <section class="form-section">
+    <div class="form-inner">
+      <div class="form-grid">
+
+        <!-- LEFT: Form -->
+        <div class="reveal">
+          <div class="eyebrow">Anfrage stellen</div>
+          <h2 class="form-lead">Stellen Sie uns<br>Ihr Projekt vor.</h2>
+          <p class="form-sub">Schildern Sie uns Ihre Anforderungen. Unsere Ingenieure melden sich innerhalb von 24 Stunden mit konkreten Lösungsvorschlägen zurück.</p>
+
+          <!-- Machine row — shown when ?maschine= is set -->
+          <div class="machine-row" id="machineStrip">
+            <div>
+              <span class="machine-row-lbl">Anfrage für Maschine</span>
+              <span class="machine-row-name" id="stripName"></span>
+            </div>
+            <span class="machine-row-change" id="stripChange">Ändern</span>
+          </div>
+
+          <form name="anfrage" method="POST" action="mailto:info@kent-stuttgart.de" enctype="text/plain">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="cf-name">Name *</label>
+                <input class="form-input" type="text" id="cf-name" name="name" placeholder="Max Mustermann" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="cf-co">Unternehmen</label>
+                <input class="form-input" type="text" id="cf-co" name="unternehmen" placeholder="Mustermann GmbH">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="cf-mail">E-Mail *</label>
+                <input class="form-input" type="email" id="cf-mail" name="email" placeholder="max@mustermann.de" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="cf-tel">Telefon</label>
+                <input class="form-input" type="tel" id="cf-tel" name="telefon" placeholder="+49 711 ...">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="cf-maschine">Maschine / Modell</label>
+              <input class="form-input" type="text" id="cf-maschine" name="maschine" placeholder="z. B. HVA 150, Turbo 90, Alien 100 …">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="cf-int">Bereich</label>
+              <select class="form-input form-select" id="cf-int" name="interesse">
+                <option value="">Bitte wählen…</option>
+                <option value="Standardmaschinen">Standardmaschinen — HVA / Turbo / PP / IDS / Alien</option>
+                <option value="ALPS">ALPS-Automatiklinien</option>
+                <option value="Sondermaschinen">Sondermaschinen / Roboterintegration</option>
+                <option value="Siebdruck">Siebdruckmaschinen</option>
+                <option value="Klischees">Klischees &amp; Zubehör</option>
+                <option value="Service">Service &amp; Wartung</option>
+                <option value="Allgemein">Allgemeine Anfrage</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="cf-msg">Ihre Anfrage *</label>
+              <textarea class="form-input form-textarea" id="cf-msg" name="nachricht" placeholder="Beschreiben Sie Ihre Anwendung, das zu bedruckende Material, gewünschte Taktzeiten oder weitere Anforderungen…" required></textarea>
+            </div>
+            <div class="form-check">
+              <input type="checkbox" id="cf-prv" required>
+              <label for="cf-prv">Ich stimme der Verarbeitung meiner Daten gemäß der <a href="#">Datenschutzerklärung</a> zu.</label>
+            </div>
+            <button type="submit" class="form-submit">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2 11 13M22 2 15 22 11 13 2 9l20-7z"/></svg>
+              Anfrage senden
+            </button>
+          </form>
+        </div>
+
+        <!-- RIGHT: Sidebar -->
+        <div class="contact-sidebar reveal reveal-delay-1">
+          <div>
+            <div class="cbox-head">Direktkontakt</div>
+            <a href="tel:+4971140950-0" class="cphone">
+              <span class="cphone-lbl">Rufen Sie uns an</span>
+              <span class="cphone-num">+49 (0)711 40950-0</span>
+              <span class="cphone-hrs">Mo–Fr, 8:00–17:00 Uhr</span>
+            </a>
+            <div class="cdetail">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              <div><span class="cdetail-lbl">E-Mail</span><span class="cdetail-val">info@kent-stuttgart.de</span></div>
+            </div>
+            <div class="cdetail">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <div><span class="cdetail-lbl">Adresse</span><span class="cdetail-val">Benzstraße 2, 71254 Ditzingen</span></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="cbox-head">Warum Kent?</div>
+            <div class="ctrust"><span class="ctrust-num">01</span>Antwort innerhalb 24 Stunden</div>
+            <div class="ctrust"><span class="ctrust-num">02</span>Persönliche Fachberatung durch Ingenieure</div>
+            <div class="ctrust"><span class="ctrust-num">03</span>35+ Jahre Erfahrung im Tampondruck</div>
+            <div class="ctrust"><span class="ctrust-num">04</span>ISO 9001 zertifiziert</div>
+            <div class="ctrust"><span class="ctrust-num">05</span>500+ Anlagen in 40+ Ländern</div>
+            <div class="ctrust"><span class="ctrust-num">06</span>Entwicklung &amp; Fertigung in Stuttgart</div>
+          </div>
+
+          <div>
+            <div class="cbox-head">Antwortzeit</div>
+            <p style="font-size:.84rem; color:var(--text3); line-height:1.75;">
+              Anfragen bis <strong style="color:var(--text)">14:00 Uhr</strong> werden noch am selben Tag beantwortet. Komplexe technische Anfragen innerhalb von <strong style="color:var(--text)">24 Stunden</strong>.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div>
+          <img src="Kent-Logo_.png" alt="Kent Stuttgart GmbH" class="footer-logo">
+          <p class="footer-tagline">Tampondruckmaschinen und Klischees — entwickelt, gefertigt und gewartet in Stuttgart seit 1987.</p>
+          <address class="footer-address">
+            Benzstraße 2 · 71254 Ditzingen<br>
+            <a href="tel:+4971140950-0">+49 (0)711 40950-0</a><br>
+            <a href="mailto:info@kent-stuttgart.de">info@kent-stuttgart.de</a>
+          </address>
+          <div class="footer-certs">
+            <span class="footer-cert">ISO 9001</span>
+            <span class="footer-cert">CE</span>
+            <span class="footer-cert">Made in Germany</span>
+            <span class="footer-cert">Seit 1987</span>
+          </div>
+        </div>
+        <div>
+          <div class="footer-col-title">Maschinen</div>
+          <ul class="footer-nav">
+            <li><a href="maschinen/standardmaschinen/hva-serie/index.html">HVA-Serie</a></li>
+            <li><a href="maschinen/standardmaschinen/turbo-serie/index.html">Turbo-Serie</a></li>
+            <li><a href="maschinen/standardmaschinen/pp-serie/index.html">PP-Serie</a></li>
+            <li><a href="maschinen/standardmaschinen/ids-serie/index.html">IDS-Serie</a></li>
+            <li><a href="maschinen/standardmaschinen/alien-serie/index.html">Alien-Serie</a></li>
+            <li><a href="maschinen/standardmaschinen/alps-200.html">ALPS-200</a></li>
+            <li><a href="maschinen/sondermaschinen/index.html">Sondermaschinen</a></li>
+            <li><a href="maschinen/siebdruck/index.html">Siebdruck</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Klischees</div>
+          <ul class="footer-nav">
+            <li><a href="klischees/stahlklischees.html">Stahlklischees</a></li>
+            <li><a href="klischees/bandstahlklischees.html">Bandstahlklischees</a></li>
+            <li><a href="klischees/stahlwalzen.html">Stahlwalzen</a></li>
+            <li><a href="klischees/kunststoffklischees.html">Kunststoffklischees</a></li>
+            <li><a href="klischees/aluminiumlaserklischee.html">Aluminiumlaser</a></li>
+            <li><a href="klischees/laser-repro.html">Laser Repro</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Unternehmen</div>
+          <ul class="footer-nav">
+            <li><a href="unternehmen.html">Über uns</a></li>
+            <li><a href="maschinen/zubehoer/index.html">Zubehör</a></li>
+            <li><a href="schulungen.html">Schulungen</a></li>
+            <li><a href="anfrage.html">Anfrage stellen</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2025 Kent Stuttgart GmbH · Alle Rechte vorbehalten</span>
+        <div class="footer-legal">
+          <a href="#">Impressum</a>
+          <a href="#">Datenschutz</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ── Nav scroll ── */
+    const nav = document.getElementById('nav');
+    const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 20);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    /* ── Reveal on scroll ── */
+    const observer = new IntersectionObserver(
+      entries => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } }),
+      { threshold: 0.12 }
+    );
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    /* ── URL param pre-fill ── */
+    (function () {
+      const params = new URLSearchParams(window.location.search);
+      const maschine = params.get('maschine');
+      const bereich  = params.get('bereich');
+
+      if (maschine) {
+        /* Machine field */
+        const machineInput = document.getElementById('cf-maschine');
+        machineInput.value = maschine;
+        machineInput.classList.add('prefilled');
+
+        /* Hero badge */
+        document.getElementById('heroBadge').classList.add('visible');
+        document.getElementById('heroBadgeName').textContent = maschine;
+
+        /* Form strip */
+        document.getElementById('machineStrip').classList.add('visible');
+        document.getElementById('stripName').textContent = maschine;
+
+        /* "Ändern" clears the field */
+        document.getElementById('stripChange').addEventListener('click', function () {
+          machineInput.value = '';
+          machineInput.classList.remove('prefilled');
+          machineInput.focus();
+          document.getElementById('machineStrip').classList.remove('visible');
+          document.getElementById('heroBadge').classList.remove('visible');
+        });
+
+        /* Update page title */
+        document.title = 'Anfrage: ' + maschine + ' — Kent Stuttgart GmbH';
+      }
+
+      if (bereich) {
+        const sel = document.getElementById('cf-int');
+        for (let opt of sel.options) {
+          if (opt.value === bereich) { opt.selected = true; break; }
+        }
+      }
+    })();
+  </script>
+</body>
+</html>
