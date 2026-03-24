@@ -26,77 +26,45 @@
     .cs{background:var(--bg);text-align:center;padding:7rem 4rem;position:relative;overflow:hidden}.cs::before{content:'';position:absolute;top:-40%;left:50%;transform:translateX(-50%);width:60%;height:200%;background:radial-gradient(ellipse,rgba(200,34,28,.08) 0%,transparent 60%);pointer-events:none}.ct{font-family:var(--font-display);font-weight:800;font-size:clamp(2.5rem,5vw,4.5rem);text-transform:uppercase;position:relative;z-index:1}.csub{color:var(--dim);margin:1rem 0 2.5rem;position:relative;z-index:1}
     footer{background:var(--bg1);border-top:1px solid rgba(96,136,176,.15);padding:3rem 4rem}.fi{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:2rem}.fb2{font-family:var(--font-display);font-size:1.5rem;font-weight:700;color:var(--blue2)}.fl{display:flex;gap:2rem}.fl a{font-size:.85rem;color:var(--muted);text-decoration:none;transition:color .2s}.fl a:hover{color:var(--white)}.fc{font-size:.75rem;color:var(--muted);width:100%}
     .rv{opacity:0;transform:translateY(24px);transition:opacity .6s,transform .6s}.rv.visible{opacity:1;transform:translateY(0)}
-    @media(max-width:900px){.hero{grid-template-columns:1fr}.hero-right{display:none}nav,.breadcrumb,.hero-left,s2,.cs,footer,.pn{padding-left:1.5rem!important;padding-right:1.5rem!important}}
-  
-    /* ═══ NAV ═══ */
+    @media(max-width:900px){.hero{grid-template-columns:1fr}.hero-right{display:none}nav,.breadcrumb,.hero-left,s2,.cs,footer,.pn{padding-left:1.5rem!important;padding-right:1.5rem!important}}    /* NAV-CANONICAL */
     nav#main-nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 999;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 3.5rem;
-      height: 68px;
-      background: rgba(4, 9, 26, 0.97);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      border-bottom: 1px solid rgba(26, 118, 240, 0.18);
+      position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 3.5rem; height: 68px;
+      background: rgba(4,9,26,0.97);
+      backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid rgba(26,118,240,0.18);
     }
-    .nav-logo {
-      display: flex; align-items: center;
-      position: relative; z-index: 1; flex-shrink: 0;
-    }
+    .nav-logo { display: flex; align-items: center; z-index: 1; flex-shrink: 0; }
     .nav-logo img { height: 32px; width: auto; mix-blend-mode: screen; }
-    .nav-links {
-      display: flex; align-items: center;
-      gap: 2rem; list-style: none;
-      position: relative; z-index: 1;
-    }
+    .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; z-index: 1; }
     .nav-links a {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.76rem; font-weight: 600;
+      font-family: Barlow Condensed, sans-serif; font-size: 0.76rem; font-weight: 600;
       letter-spacing: 0.1em; text-transform: uppercase;
-      color: rgba(194, 212, 232, 0.55);
-      transition: color 0.2s;
+      color: rgba(194,212,232,0.55); transition: color 0.2s;
       position: relative; white-space: nowrap;
     }
     .nav-links a::after {
-      content: '';
-      position: absolute; bottom: -3px; left: 0;
-      width: 0; height: 1px;
-      background: #1A76F0;
-      transition: width 0.25s ease;
+      content: ''; position: absolute; bottom: -3px; left: 0;
+      width: 0; height: 1px; background: #1A76F0; transition: width 0.25s;
     }
-    .nav-links a:hover { color: #fff; }
-    .nav-links a:hover::after { width: 100%; }
-    .nav-links a.active { color: #fff; }
-    .nav-links a.active::after { width: 100%; }
-    .nav-right {
-      display: flex; align-items: center;
-      position: relative; z-index: 1; flex-shrink: 0;
-    }
+    .nav-links a:hover, .nav-links a.active { color: #fff; }
+    .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+    .nav-right { display: flex; align-items: center; z-index: 1; flex-shrink: 0; }
     .nav-cta {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.74rem; font-weight: 600;
+      font-family: Barlow Condensed, sans-serif; font-size: 0.74rem; font-weight: 600;
       letter-spacing: 0.12em; text-transform: uppercase;
       color: #fff; padding: 0.55rem 1.5rem;
-      border: 1px solid rgba(26, 118, 240, 0.65);
-      border-radius: 8px; white-space: nowrap;
-      transition: background 0.2s, border-color 0.2s;
+      border: 1px solid rgba(26,118,240,0.65); border-radius: 8px;
+      white-space: nowrap; transition: background 0.2s, border-color 0.2s;
     }
     .nav-cta:hover { background: #1A76F0; border-color: #1A76F0; }
-    @media (max-width: 1100px) {
-      nav#main-nav { padding: 0 2rem; }
-      .nav-links { gap: 1.4rem; }
-    }
-    @media (max-width: 768px) {
-      nav#main-nav { padding: 0 1.5rem; }
-      .nav-links { display: none; }
-    }
+    @media (max-width: 1100px) { nav#main-nav { padding: 0 2rem; } .nav-links { gap: 1.4rem; } }
+    @media (max-width: 768px) { nav#main-nav { padding: 0 1.5rem; } .nav-links { display: none; } }
   </style>
 </head>
 <body>
+
   <nav id="main-nav">
     <a href="../../../index.html" class="nav-logo">
       <img src="../../../Kent-Logo_.png" alt="Kent Stuttgart GmbH">
