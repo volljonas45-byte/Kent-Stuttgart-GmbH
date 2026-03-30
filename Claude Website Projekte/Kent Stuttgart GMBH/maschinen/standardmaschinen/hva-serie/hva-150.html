@@ -844,12 +844,14 @@
       .specs-layout { grid-template-columns: 1fr; gap: 4rem; }
       .specs-heading { font-size: clamp(3rem, 8vw, 5rem); }
     }
+    @media (max-width: 768px) {
       .section { padding: 6rem 2rem; }
       .machine-hero { padding: 9rem 2rem 5rem; }
       .machine-nav-section { padding: 3rem 2rem; }
       .features-grid { grid-template-columns: 1fr; }
       .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; }
     }
+    @media (max-width: 480px) {
       .machine-hero { padding: 8rem 1.5rem 4rem; }
       .machine-name { font-size: clamp(4rem, 18vw, 7rem); }
       .machine-hero-actions { flex-direction: column; align-items: flex-start; }
@@ -896,8 +898,6 @@
       white-space: nowrap; transition: background 0.2s, border-color 0.2s;
     }
     .nav-cta:hover { background: #1A76F0; border-color: #1A76F0; }
- }
- }
   </style>
 </head>
 <body>

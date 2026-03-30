@@ -345,6 +345,7 @@
       .mcard-inner { grid-template-columns: 180px 1fr auto; gap: 2rem; }
       .mcard-img { width: 180px; height: 130px; }
     }
+    @media (max-width: 768px) {
       .hero { padding: 3rem 2rem 4rem; }
       .hero-stats { display: none; }
       .machines { padding: 0 2rem 4rem; }
@@ -356,6 +357,7 @@
       footer { padding: 3rem 2rem 2rem; }
       .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; }
     }
+    @media (max-width: 480px) {
       .hero { padding: 2.5rem 1.5rem 3.5rem; }
       .machines { padding: 0 1.5rem 3rem; }
       .mcard-inner { grid-template-columns: 1fr; gap: 1rem; padding: 1.5rem 0.5rem; }
@@ -400,8 +402,6 @@
       white-space: nowrap; transition: background 0.2s, border-color 0.2s;
     }
     .nav-cta:hover { background: #1A76F0; border-color: #1A76F0; }
- }
- }
   </style>
 </head>
 <body>
