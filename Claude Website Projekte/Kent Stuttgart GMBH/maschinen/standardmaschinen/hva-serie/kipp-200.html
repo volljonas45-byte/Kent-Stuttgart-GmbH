@@ -139,10 +139,7 @@
       </div>
     </div>
     <div class="hero-right">
-      <div class="machine-img">
-        <div class="machine-img-name">Kipp 200</div>
-        <div class="machine-img-sub">PRODUKTBILD FOLGT</div>
-      </div>
+      <img src="../../../Pfds Maschineenspezifisch/KIPP200.png" alt="Kipp 200" style="width:100%;border-radius:16px;object-fit:contain;max-height:520px;display:block;">
     </div>
   </div>
 
@@ -219,7 +216,7 @@
 
   <script>
     const nav=document.getElementById('main-nav');
-    window.addEventListener('scroll',()=>);
+    window.addEventListener('scroll',()=>{});
     const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')}),{threshold:.15});
     document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
   </script>
