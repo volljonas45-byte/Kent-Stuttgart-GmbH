@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alien-Serie — Standardmaschinen — Kent Stuttgart GmbH</title>
+  <meta name="description" content="Die Alien-Serie: Unkonventionell. 3 Maschinen — seitlicher Druckkopf für unmögliche Druckpositionen. Kent Stuttgart GmbH." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700;800&family=Barlow:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --blue:   #1058C0;
+      --blue2:  #1A76F0;
+      --blue3:  #0C469E;
+      --red:    #C8221C;
+      --red2:   #E03530;
+      --bg:     #04091A;
+      --bg1:    #070D20;
+      --bg2:    #0A1228;
+      --surface:#101C3A;
+      --muted:  #374F72;
+      --dim:    #6088B0;
+      --light:  #C2D4E8;
+      --white:  #FFFFFF;
+      --font-display: 'Barlow Condensed', sans-serif;
+      --font-body:    'Barlow', sans-serif;
+      --font-mono:    'Space Mono', monospace;
+      --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--light);
+      font-family: var(--font-body);
+      font-weight: 400;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 200px;
+    }
+
+    .hero {
+      position: relative;
+      min-height: 70vh;
+      display: flex;
+      align-items: flex-end;
+      padding: 0 4rem 5rem;
+      overflow: hidden;
+      padding-top: 72px;
+    }
+    .hero-glow { position: absolute; inset: 0; pointer-events: none; }
+    .hero-glow::before {
+      content: '';
+      position: absolute;
+      top: -10%; left: -5%;
+      width: 60%; height: 80%;
+      background: radial-gradient(ellipse at center, rgba(16,88,192,0.18) 0%, transparent 65%);
+    }
+    .hero-glow::after {
+      content: '';
+      position: absolute;
+      bottom: 0; right: 10%;
+      width: 50%; height: 60%;
+      background: radial-gradient(ellipse at center, rgba(26,118,240,0.08) 0%, transparent 60%);
+    }
+    .hero-ghost {
+      position: absolute;
+      right: 3rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(14rem, 30vw, 26rem);
+      line-height: 1;
+      color: rgba(255,255,255,0.025);
+      letter-spacing: -0.05em;
+      pointer-events: none;
+      user-select: none;
+    }
+    .hero-content { position: relative; z-index: 2; max-width: 900px; }
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--blue2);
+      margin-bottom: 1rem;
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(5rem, 15vw, 13rem);
+      line-height: 0.9;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 1.5rem;
+    }
+    .hero-desc {
+      font-family: var(--font-body);
+      font-size: clamp(1rem, 1.5vw, 1.2rem);
+      color: var(--dim);
+      max-width: 520px;
+      line-height: 1.6;
+    }
+    .hero-divider {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 1px;
+      background: rgba(255,255,255,0.06);
+    }
+
+    .machines-section { padding: 0 4rem 6rem; }
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1.5rem;
+      padding: 4rem 0 3rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .section-count {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--muted);
+      margin-left: auto;
+    }
+
+    .machine-row {
+      display: block;
+      position: relative;
+      padding: 2.4rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      transition: background 0.3s var(--ease-out-expo);
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .machine-row::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: var(--blue2);
+      transform: scaleY(0);
+      transform-origin: bottom;
+      transition: transform 0.4s var(--ease-out-expo);
+    }
+    .machine-row:hover::before { transform: scaleY(1); }
+    .machine-row:hover { background: rgba(26,118,240,0.04); }
+
+    .machine-row-inner {
+      display: grid;
+      grid-template-columns: 4rem 1fr auto;
+      align-items: center;
+      gap: 2rem;
+      padding: 0 1rem;
+    }
+    .machine-num {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.15);
+      letter-spacing: 0.05em;
+      flex-shrink: 0;
+    }
+    .machine-info { min-width: 0; }
+    .machine-name {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      text-transform: uppercase;
+      letter-spacing: 0.01em;
+      color: var(--white);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .machine-desc {
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      color: var(--dim);
+      line-height: 1.5;
+      max-width: 560px;
+    }
+    .machine-meta {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 1rem;
+      flex-shrink: 0;
+    }
+    .machine-badge {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--dim);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 4px;
+      padding: 0.3rem 0.65rem;
+      white-space: nowrap;
+    }
+    .machine-arrow {
+      font-size: 1.2rem;
+      color: var(--blue2);
+      transition: transform 0.3s var(--ease-out-expo);
+      line-height: 1;
+    }
+    .machine-row:hover .machine-arrow { transform: translateX(6px); }
+
+    .series-nav {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      margin: 0 4rem;
+    }
+    .series-nav-item {
+      display: flex;
+      flex-direction: column;
+      padding: 2.5rem 2rem;
+      transition: background 0.2s;
+      gap: 0.4rem;
+    }
+    .series-nav-item:first-child { border-right: 1px solid rgba(255,255,255,0.06); }
+    .series-nav-item:last-child { align-items: flex-end; text-align: right; }
+    .series-nav-item:hover { background: rgba(255,255,255,0.02); }
+    .series-nav-dir {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .series-nav-name {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.4rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--light);
+      transition: color 0.2s;
+    }
+    .series-nav-item:hover .series-nav-name { color: var(--white); }
+
+    .cta-block {
+      margin: 5rem 4rem;
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 16px;
+      padding: 4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+    .cta-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--blue2);
+      margin-bottom: 0.75rem;
+    }
+    .cta-title {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      text-transform: uppercase;
+      color: var(--white);
+      line-height: 1.1;
+    }
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: var(--blue);
+      color: var(--white);
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.9rem 2rem;
+      border-radius: 10px;
+      transition: background 0.2s, transform 0.2s;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .cta-btn:hover { background: var(--blue2); transform: translateY(-2px); }
+
+    footer {
+      background: var(--bg1);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 4rem;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr repeat(3, 1fr);
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+    .footer-brand p {
+      font-size: 0.875rem;
+      color: var(--muted);
+      margin-top: 0.75rem;
+      line-height: 1.6;
+      max-width: 260px;
+    }
+    .footer-col h4 {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--light);
+      margin-bottom: 1rem;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 0.5rem; }
+    .footer-col ul li a { font-size: 0.875rem; color: var(--muted); transition: color 0.2s; }
+    .footer-col ul li a:hover { color: var(--light); }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding-top: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .footer-bottom p { font-size: 0.8rem; color: var(--muted); }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s var(--ease-out-expo), transform 0.7s var(--ease-out-expo);
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+      .hero-ghost { font-size: clamp(10rem, 40vw, 18rem); right: 1rem; }
+      .hero-title { font-size: clamp(4rem, 18vw, 8rem); }
+      .machines-section { padding: 0 1.5rem 4rem; }
+      .machine-row-inner { grid-template-columns: 3rem 1fr auto; gap: 1rem; padding: 0 0.5rem; }
+      .machine-name { font-size: clamp(1.4rem, 5vw, 2rem); }
+      .series-nav { margin: 0 1.5rem; }
+      .cta-block { margin: 3rem 1.5rem; padding: 2.5rem; flex-direction: column; align-items: flex-start; }
+      footer { padding: 3rem 1.5rem; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    }
+    @media (max-width: 600px) {
+      .hero-ghost { display: none; }
+      .machine-row-inner { grid-template-columns: 2.5rem 1fr; }
+      .machine-meta { display: none; }
+      .machine-name { font-size: 1.5rem; }
+      .series-nav { grid-template-columns: 1fr; }
+      .series-nav-item:first-child { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
+      .series-nav-item:last-child { align-items: flex-start; text-align: left; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+    }    /* NAV-CANONICAL */
+    nav#main-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 3.5rem; height: 68px;
+      background: rgba(4,9,26,0.97);
+      backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid rgba(26,118,240,0.18);
+    }
+    .nav-logo { display: flex; align-items: center; z-index: 1; flex-shrink: 0; }
+    .nav-logo img { height: 32px; width: auto; mix-blend-mode: screen; }
+    .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; z-index: 1; }
+    .nav-links a {
+      font-family: Barlow Condensed, sans-serif; font-size: 0.76rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: rgba(194,212,232,0.55); transition: color 0.2s;
+      position: relative; white-space: nowrap;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -3px; left: 0;
+      width: 0; height: 1px; background: #1A76F0; transition: width 0.25s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: #fff; }
+    .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+    .nav-right { display: flex; align-items: center; z-index: 1; flex-shrink: 0; }
+    .nav-cta {
+      font-family: Barlow Condensed, sans-serif; font-size: 0.74rem; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: #fff; padding: 0.55rem 1.5rem;
+      border: 1px solid rgba(26,118,240,0.65); border-radius: 8px;
+      white-space: nowrap; transition: background 0.2s, border-color 0.2s;
+    }
+    .nav-cta:hover { background: #1A76F0; border-color: #1A76F0; }
+ }
+ }
+  </style>
+</head>
+<body>
+
+  <nav id="main-nav">
+    <a href="../../../index.html" class="nav-logo">
+      <img src="../../../Kent-Logo_.png" alt="Kent Stuttgart GmbH">
+    </a>
+    <ul class="nav-links">
+      <li><a href="../../../index.html">Startseite</a></li>
+      <li><a href="../../../maschinen/index.html">Maschinen</a></li>
+      <li><a href="../../../klischees/index.html">Klischees</a></li>
+      <li><a href="../../../farben.html">Farben</a></li>
+      <li><a href="../../../tampons.html">Tampons</a></li>
+      <li><a href="../../../schulungen.html">Schulungen</a></li>
+      <li><a href="../../../ueber-uns.html">Unternehmen</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="../../../anfrage.html" class="nav-cta">Anfrage</a>
+    </div>
+  </nav>
+
+
+  <section class="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-ghost">03</div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Standardmaschinen · Kent Stuttgart GmbH</p>
+      <h1 class="hero-title">Alien-<br>Serie</h1>
+      <p class="hero-desc">Unkonventionell. 3 Maschinen — seitlicher Druckkopf für unmögliche Druckpositionen.</p>
+    </div>
+    <div class="hero-divider"></div>
+  </section>
+
+  <section class="machines-section">
+    <div class="section-header">
+      <span class="section-label">Maschinenübersicht</span>
+      <span class="section-count">3 Modelle</span>
+    </div>
+
+    <a class="machine-row reveal" href="alien-100.html">
+      <div class="machine-row-inner">
+        <span class="machine-num">01</span>
+        <div class="machine-info">
+          <div class="machine-name">Alien 100</div>
+          <div class="machine-desc">Seitlicher Druckkopf, 100mm — druckt dort, wo andere Maschinen versagen.</div>
+        </div>
+        <div class="machine-meta">
+          <span class="machine-badge">Seitlich</span>
+          <span class="machine-arrow">→</span>
+        </div>
+      </div>
+    </a>
+
+    <a class="machine-row reveal" href="alien-100r.html">
+      <div class="machine-row-inner">
+        <span class="machine-num">02</span>
+        <div class="machine-info">
+          <div class="machine-name">Alien 100R</div>
+          <div class="machine-desc">Rotationsvariante — für zylindrische Bedruckflächen.</div>
+        </div>
+        <div class="machine-meta">
+          <span class="machine-badge">Rotation</span>
+          <span class="machine-arrow">→</span>
+        </div>
+      </div>
+    </a>
+
+    <a class="machine-row reveal" href="alf-80-210.html">
+      <div class="machine-row-inner">
+        <span class="machine-num">03</span>
+        <div class="machine-info">
+          <div class="machine-name">Alf 80-210</div>
+          <div class="machine-desc">Variabler Hub 80–210mm — maximale Flexibilität im Alien-Format.</div>
+        </div>
+        <div class="machine-meta">
+          <span class="machine-badge">80–210MM</span>
+          <span class="machine-arrow">→</span>
+        </div>
+      </div>
+    </a>
+  </section>
+
+  <div class="cta-block reveal">
+    <div class="cta-text">
+      <p class="cta-eyebrow">Beratung &amp; Anfrage</p>
+      <h2 class="cta-title">Die richtige Alien-Maschine<br>für Ihre Anforderungen</h2>
+    </div>
+    <a href="../../../anfrage.html" class="cta-btn">Anfrage stellen →</a>
+  </div>
+
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="../../../Kent-Logo_.png" alt="Kent Stuttgart GmbH" style="height:56px;width:auto;margin-bottom:0.75rem;" />
+        <p>Tampondruckmaschinen und Klischees — Qualität und Präzision seit 1987.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Maschinen</h4>
+        <ul>
+          <li><a href="../hva-serie/index.html">HVA-Serie</a></li>
+          <li><a href="../turbo-serie/index.html">Turbo-Serie</a></li>
+          <li><a href="../pp-serie/index.html">PP-Serie</a></li>
+          <li><a href="../ids-serie/index.html">IDS-Serie</a></li>
+          <li><a href="../alien-serie/index.html">Alien-Serie</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Klischees</h4>
+        <ul>
+          <li><a href="../../../klischees/stahlklischees.html">Stahlklischees</a></li>
+          <li><a href="../../../klischees/kunststoffklischees.html">Kunststoffklischees</a></li>
+          <li><a href="../../../klischees/aluminiumlaserklischee.html">Aluminiumklischees</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Unternehmen</h4>
+        <ul>
+          <li><a href="../../../ueber-uns.html">Über uns</a></li>
+          <li><a href="../../../anfrage.html">Anfrage</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Kent Stuttgart GmbH. Alle Rechte vorbehalten.</p>
+    </div>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+    }, { passive: true });
+
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 80);
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

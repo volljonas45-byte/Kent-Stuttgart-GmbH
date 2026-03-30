@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HVA-Serie — Standardmaschinen — Kent Stuttgart GmbH</title>
+  <meta name="description" content="Die HVA-Serie: 3 kompakte Tampondruckmaschinen für höchste Zuverlässigkeit. HVA 150, Kipp 200, HVA Promotor 4. Kent Stuttgart GmbH." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700;800&family=Barlow:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --blue:   #1058C0;
+      --blue2:  #1A76F0;
+      --red:    #C8221C;
+      --red2:   #E03530;
+      --bg:     #07102A;
+      --bg1:    #0B1630;
+      --bg2:    #0F1C38;
+      --surface:#132240;
+      --surface2:#1A2D50;
+      --muted:  #5878A0;
+      --dim:    #84A8CC;
+      --light:  #D4E4F4;
+      --white:  #FFFFFF;
+      --font-display: 'Barlow Condensed', sans-serif;
+      --font-body:    'Barlow', sans-serif;
+      --font-mono:    'Space Mono', monospace;
+      --ease: cubic-bezier(0.19, 1, 0.22, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--light);
+      font-family: var(--font-body);
+      font-weight: 300;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }/* ── BREADCRUMB ── */
+    .breadcrumb {
+      position: relative; z-index: 10;
+      padding: 6rem 4rem 0;
+      display: flex; align-items: center;
+    }
+    .breadcrumb-inner {
+      font-family: var(--font-mono); font-size: 0.58rem;
+      letter-spacing: 0.18em; color: var(--muted);
+      text-transform: uppercase;
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .breadcrumb-inner a { color: var(--muted); transition: color 0.2s; }
+    .breadcrumb-inner a:hover { color: var(--dim); }
+    .breadcrumb-sep { color: rgba(55,79,114,0.5); }
+    .breadcrumb-current { color: var(--dim); }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      padding: 3.5rem 4rem 5rem;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 65% 80% at 10% 60%, rgba(26,118,240,0.10) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 50% at 85% 30%, rgba(200,34,28,0.06) 0%, transparent 55%);
+    }
+    .hero-inner {
+      position: relative; z-index: 2;
+      display: flex; align-items: flex-end;
+      justify-content: space-between; gap: 3rem;
+      max-width: 1280px; margin: 0 auto;
+    }
+    .hero-text { flex: 1; }
+    .hero-eyebrow {
+      font-family: var(--font-mono); font-size: 0.65rem;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--blue2); margin-bottom: 1.2rem;
+      display: flex; align-items: center; gap: 0.8rem;
+    }
+    .hero-eyebrow::before {
+      content: ''; width: 20px; height: 1px; background: var(--blue2);
+    }
+    .hero-title {
+      font-family: var(--font-display); font-weight: 800;
+      font-size: clamp(4.5rem, 10vw, 9rem);
+      line-height: 0.9; letter-spacing: -0.02em;
+      text-transform: uppercase; color: var(--white);
+      margin-bottom: 1.5rem;
+    }
+    .hero-title span {
+      display: block; color: rgba(194,212,232,0.18);
+      font-weight: 300;
+    }
+    .hero-desc {
+      font-size: 1rem; color: var(--dim); max-width: 480px;
+      line-height: 1.75; font-weight: 300;
+    }
+    .hero-stats {
+      display: flex; flex-direction: column;
+      align-items: flex-end; gap: 1.5rem;
+      padding-bottom: 0.5rem;
+    }
+    .hero-stat { text-align: right; }
+    .hero-stat-num {
+      font-family: var(--font-display); font-weight: 800;
+      font-size: 2.8rem; line-height: 1;
+      color: var(--white); letter-spacing: -0.02em;
+    }
+    .hero-stat-num span { color: var(--blue2); }
+    .hero-stat-label {
+      font-family: var(--font-mono); font-size: 0.58rem;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--muted); margin-top: 0.2rem;
+    }
+
+    /* ── MACHINES SECTION ── */
+    .machines {
+      padding: 0 4rem 5rem;
+      max-width: calc(1280px + 8rem);
+      margin: 0 auto;
+    }
+    .machines-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 3rem 0 2.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      margin-bottom: 0;
+    }
+    .machines-header-label {
+      font-family: var(--font-mono); font-size: 0.65rem;
+      letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted);
+    }
+    .machines-header-count {
+      font-family: var(--font-mono); font-size: 0.65rem;
+      letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted);
+    }
+
+    /* ── MACHINE CARD ROW ── */
+    .mcard {
+      display: block;
+      position: relative;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      transition: background 0.35s var(--ease);
+      overflow: hidden;
+    }
+    .mcard::before {
+      content: '';
+      position: absolute; left: 0; top: 0; bottom: 0;
+      width: 3px; background: var(--blue2);
+      transform: scaleY(0); transform-origin: bottom;
+      transition: transform 0.4s var(--ease);
+    }
+    .mcard:hover { background: rgba(26,118,240,0.035); }
+    .mcard:hover::before { transform: scaleY(1); }
+
+    .mcard-inner {
+      display: grid;
+      grid-template-columns: 220px 1fr auto;
+      align-items: center;
+      gap: 2.5rem;
+      padding: 2.2rem 1rem 2.2rem 1.5rem;
+    }
+
+    /* Image placeholder */
+    .mcard-img {
+      width: 220px; height: 155px;
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      position: relative;
+    }
+    .mcard-img img {
+      width: 100%; height: 100%;
+      object-fit: contain; padding: 1rem;
+      transition: transform 0.5s var(--ease);
+    }
+    .mcard:hover .mcard-img img { transform: scale(1.04); }
+    .mcard-img-placeholder {
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 0.6rem; width: 100%; height: 100%;
+      padding: 1rem;
+    }
+    .mcard-img-placeholder svg {
+      opacity: 0.15; width: 48px; height: 48px;
+    }
+    .mcard-img-placeholder span {
+      font-family: var(--font-mono); font-size: 0.55rem;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--muted); text-align: center;
+    }
+
+    /* Machine info */
+    .mcard-body { min-width: 0; }
+    .mcard-num {
+      font-family: var(--font-mono); font-size: 0.62rem;
+      letter-spacing: 0.15em; color: rgba(255,255,255,0.2);
+      margin-bottom: 0.4rem;
+    }
+    .mcard-name {
+      font-family: var(--font-display); font-weight: 800;
+      font-size: clamp(1.9rem, 3vw, 2.8rem);
+      text-transform: uppercase; letter-spacing: 0.01em;
+      color: var(--white); line-height: 1; margin-bottom: 0.8rem;
+      transition: color 0.2s;
+    }
+    .mcard-desc {
+      font-size: 0.92rem; color: var(--dim);
+      line-height: 1.7; max-width: 560px; font-weight: 300;
+      margin-bottom: 1.2rem;
+    }
+    .mcard-features {
+      display: flex; flex-wrap: wrap; gap: 0.5rem;
+    }
+    .mcard-feature {
+      font-family: var(--font-mono); font-size: 0.58rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: rgba(212,228,244,0.75);
+      background: rgba(26,118,240,0.12);
+      border: 1px solid rgba(26,118,240,0.28);
+      border-radius: 4px; padding: 0.25rem 0.6rem;
+    }
+
+    /* Right meta */
+    .mcard-meta {
+      display: flex; flex-direction: column;
+      align-items: flex-end; gap: 1rem; flex-shrink: 0;
+    }
+    .mcard-badge {
+      font-family: var(--font-mono); font-size: 0.62rem;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--blue2);
+      border: 1px solid rgba(26,118,240,0.35);
+      border-radius: 6px; padding: 0.35rem 0.75rem;
+      background: rgba(26,118,240,0.06);
+      white-space: nowrap;
+    }
+    .mcard-arrow {
+      font-size: 1.3rem; color: var(--blue2);
+      transition: transform 0.3s var(--ease); line-height: 1;
+    }
+    .mcard:hover .mcard-arrow { transform: translateX(7px); }
+    .mcard-link {
+      font-family: var(--font-display); font-size: 0.78rem;
+      font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--light); white-space: nowrap;
+      display: flex; align-items: center; gap: 0.4rem;
+    }/* ── CTA BLOCK ── */
+    .cta-block {
+      margin: 4rem 4rem 5rem;
+      background: var(--surface);
+      border: 1px solid rgba(26,118,240,0.15);
+      border-radius: 16px; padding: 3.5rem 4rem;
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 2rem;
+      position: relative; overflow: hidden;
+    }
+    .cta-block::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, var(--blue2), transparent 60%);
+    }
+    .cta-eyebrow {
+      font-family: var(--font-mono); font-size: 0.62rem;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--blue2); margin-bottom: 0.7rem;
+    }
+    .cta-title {
+      font-family: var(--font-display); font-weight: 800;
+      font-size: clamp(1.5rem, 2.5vw, 2rem);
+      text-transform: uppercase; color: var(--white); line-height: 1.1;
+    }
+    .cta-btn {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      background: var(--blue2); color: var(--white);
+      font-family: var(--font-display); font-weight: 700;
+      font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 0.9rem 2.2rem; border-radius: 10px; flex-shrink: 0;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    .cta-btn:hover {
+      background: #1a6fdf; transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(26,118,240,0.35);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--bg1);
+      border-top: 1px solid rgba(255,255,255,0.05);
+      padding: 4rem 4rem 2.5rem;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 4rem; max-width: 1280px; margin: 0 auto;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      margin-bottom: 2rem;
+    }
+    .footer-logo-img {
+      height: 30px; width: auto;
+      mix-blend-mode: screen; margin-bottom: 1.2rem;
+    }
+    .footer-tagline {
+      font-size: 0.82rem; color: var(--muted);
+      line-height: 1.7; max-width: 260px; margin-bottom: 1.2rem;
+    }
+    .footer-col-title {
+      font-family: var(--font-display); font-size: 0.7rem;
+      font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--dim); margin-bottom: 1.2rem;
+    }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
+    .footer-links a { font-size: 0.85rem; color: var(--muted); transition: color 0.2s; }
+    .footer-links a:hover { color: var(--light); }
+    .footer-bottom {
+      max-width: 1280px; margin: 0 auto;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .footer-copy {
+      font-family: var(--font-mono); font-size: 0.65rem;
+      color: var(--muted); letter-spacing: 0.1em;
+    }
+    .footer-legal { display: flex; gap: 2rem; }
+    .footer-legal a { font-size: 0.75rem; color: var(--muted); transition: color 0.2s; }
+    .footer-legal a:hover { color: var(--dim); }
+
+    /* ── REVEAL ── */
+    .reveal {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1100px) {
+      .mcard-inner { grid-template-columns: 180px 1fr auto; gap: 2rem; }
+      .mcard-img { width: 180px; height: 130px; }
+    }
+      .hero { padding: 3rem 2rem 4rem; }
+      .hero-stats { display: none; }
+      .machines { padding: 0 2rem 4rem; }
+      .mcard-inner { grid-template-columns: 150px 1fr; gap: 1.5rem; padding: 2rem 0.5rem; }
+      .mcard-meta { display: none; }
+      .mcard-img { width: 150px; height: 110px; }
+      .series-nav, .cta-block { margin-left: 2rem; margin-right: 2rem; }
+      .cta-block { padding: 2.5rem; flex-direction: column; align-items: flex-start; }
+      footer { padding: 3rem 2rem 2rem; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    }
+      .hero { padding: 2.5rem 1.5rem 3.5rem; }
+      .machines { padding: 0 1.5rem 3rem; }
+      .mcard-inner { grid-template-columns: 1fr; gap: 1rem; padding: 1.5rem 0.5rem; }
+      .mcard-img { width: 100%; height: 180px; }
+      .series-nav { margin: 0 1.5rem; grid-template-columns: 1fr; }
+      .snav-item:first-child { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.07); }
+      .snav-item:last-child { align-items: flex-start; text-align: left; }
+      .cta-block { margin: 2.5rem 1.5rem 3rem; padding: 2rem 1.5rem; }
+      footer { padding: 3rem 1.5rem 2rem; }
+      .footer-top { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+    }    /* NAV-CANONICAL */
+    nav#main-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 3.5rem; height: 68px;
+      background: rgba(4,9,26,0.97);
+      backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid rgba(26,118,240,0.18);
+    }
+    .nav-logo { display: flex; align-items: center; z-index: 1; flex-shrink: 0; }
+    .nav-logo img { height: 32px; width: auto; mix-blend-mode: screen; }
+    .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; z-index: 1; }
+    .nav-links a {
+      font-family: Barlow Condensed, sans-serif; font-size: 0.76rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: rgba(194,212,232,0.55); transition: color 0.2s;
+      position: relative; white-space: nowrap;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -3px; left: 0;
+      width: 0; height: 1px; background: #1A76F0; transition: width 0.25s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: #fff; }
+    .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+    .nav-right { display: flex; align-items: center; z-index: 1; flex-shrink: 0; }
+    .nav-cta {
+      font-family: Barlow Condensed, sans-serif; font-size: 0.74rem; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: #fff; padding: 0.55rem 1.5rem;
+      border: 1px solid rgba(26,118,240,0.65); border-radius: 8px;
+      white-space: nowrap; transition: background 0.2s, border-color 0.2s;
+    }
+    .nav-cta:hover { background: #1A76F0; border-color: #1A76F0; }
+ }
+ }
+  </style>
+</head>
+<body>
+
+  <nav id="main-nav">
+    <a href="../../../index.html" class="nav-logo">
+      <img src="../../../Kent-Logo_.png" alt="Kent Stuttgart GmbH">
+    </a>
+    <ul class="nav-links">
+      <li><a href="../../../index.html">Startseite</a></li>
+      <li><a href="../../../maschinen/index.html">Maschinen</a></li>
+      <li><a href="../../../klischees/index.html">Klischees</a></li>
+      <li><a href="../../../farben.html">Farben</a></li>
+      <li><a href="../../../tampons.html">Tampons</a></li>
+      <li><a href="../../../schulungen.html">Schulungen</a></li>
+      <li><a href="../../../ueber-uns.html">Unternehmen</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="../../../anfrage.html" class="nav-cta">Anfrage</a>
+    </div>
+  </nav>
+
+
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb">
+    <div class="breadcrumb-inner">
+      <a href="../../../index.html">Kent Stuttgart GmbH</a>
+      <span class="breadcrumb-sep">/</span>
+      <a href="../../index.html">Maschinen</a>
+      <span class="breadcrumb-sep">/</span>
+      <a href="../index.html">Standardmaschinen</a>
+      <span class="breadcrumb-sep">/</span>
+      <span class="breadcrumb-current">HVA-Serie</span>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-inner">
+      <div class="hero-text">
+        <p class="hero-eyebrow">Standardmaschinen · Kent Stuttgart GmbH</p>
+        <h1 class="hero-title">
+          <span>HVA</span>
+          Serie.
+        </h1>
+        <p class="hero-desc">
+          Von der kompakten Einfarbmaschine bis zur 4-Farben-Promotor-Linie —
+          die HVA-Serie deckt jeden Bedarf im Tampond­ruck ab.
+          Bewährt seit 1987, entwickelt und gefertigt in Stuttgart.
+        </p>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-num">3<span> Modelle</span></div>
+          <div class="hero-stat-label">Eine Linie</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">1<span>–4</span></div>
+          <div class="hero-stat-label">Druckfarben</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">seit <span>1987</span></div>
+          <div class="hero-stat-label">Bewährt</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MACHINES -->
+  <section class="machines">
+    <div class="machines-header">
+      <span class="machines-header-label">Maschinenübersicht · HVA-Serie</span>
+      <span class="machines-header-count">3 Modelle</span>
+    </div>
+
+    <!-- HVA 150 -->
+    <a class="mcard reveal" href="hva-150.html">
+      <div class="mcard-inner">
+        <div class="mcard-img">
+          <img src="../../../Pfds Maschineenspezifisch/HVA-150.png" alt="HVA 150">
+        </div>
+        <div class="mcard-body">
+          <div class="mcard-num">01 / 03</div>
+          <div class="mcard-name">HVA 150</div>
+          <p class="mcard-desc">
+            Die kompakte Einstiegsmaschine der HVA-Linie — einfarbig, robust und für den täglichen
+            Industrieeinsatz gebaut. Mit einem Tampondurchmesser bis 90&nbsp;mm eignet sie sich ideal
+            für präzise Einzeldrucke auf kleinen bis mittelgroßen Flächen. Minimaler Platzbedarf,
+            maximale Zuverlässigkeit.
+          </p>
+          <div class="mcard-features">
+            <span class="mcard-feature">Einfarbig</span>
+            <span class="mcard-feature">Tampon bis 90 mm</span>
+            <span class="mcard-feature">Kompaktbauweise</span>
+            <span class="mcard-feature">Offenes Farbsystem</span>
+          </div>
+        </div>
+        <div class="mcard-meta">
+          <span class="mcard-badge">Einfarbig</span>
+          <span class="mcard-link">Zur Maschine <span class="mcard-arrow">→</span></span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Kipp 200 -->
+    <a class="mcard reveal" href="kipp-200.html">
+      <div class="mcard-inner">
+        <div class="mcard-img">
+          <img src="../../../Pfds Maschineenspezifisch/KIPP200.png" alt="Kipp 200">
+        </div>
+        <div class="mcard-body">
+          <div class="mcard-num">02 / 03</div>
+          <div class="mcard-name">Kipp 200</div>
+          <p class="mcard-desc">
+            Der entscheidende Unterschied zur HVA&nbsp;150: Der Druckkopf kippt — und ermöglicht damit
+            den Zugang zu schwer erreichbaren Druckflächen, Vertiefungen und Innenkonturen.
+            Mit 200&nbsp;mm Tampondurchmesser bietet die Kipp&nbsp;200 deutlich mehr Druckfläche
+            und ist sowohl im offenen als auch im geschlossenen Farbsystem einsetzbar.
+          </p>
+          <div class="mcard-features">
+            <span class="mcard-feature">Kippkopf-Mechanik</span>
+            <span class="mcard-feature">Tampon bis 200 mm</span>
+            <span class="mcard-feature">Offen &amp; geschlossen</span>
+            <span class="mcard-feature">Schwer zugängliche Flächen</span>
+          </div>
+        </div>
+        <div class="mcard-meta">
+          <span class="mcard-badge">Kippkopf</span>
+          <span class="mcard-link">Zur Maschine <span class="mcard-arrow">→</span></span>
+        </div>
+      </div>
+    </a>
+
+    <!-- HVA Promotor 4 -->
+    <a class="mcard reveal" href="hva-promotor-4.html">
+      <div class="mcard-inner">
+        <div class="mcard-img">
+          <img src="../../../Pfds Maschineenspezifisch/Promotor-4n.png" alt="HVA Promotor 4">
+        </div>
+        <div class="mcard-body">
+          <div class="mcard-num">03 / 03</div>
+          <div class="mcard-name">HVA Promotor 4</div>
+          <p class="mcard-desc">
+            Die leistungsstärkste Maschine der HVA-Linie: vier Druckfarben in einem Durchgang,
+            ohne Umrüstung oder Neuausrichtung. Die Promotor-Linie erlaubt hochwertige Mehrfarbendrucke
+            bei gleichbleibender Präzision — ideal für Serienfertigung mit hohen Qualitätsanforderungen
+            und komplexen Motiven.
+          </p>
+          <div class="mcard-features">
+            <span class="mcard-feature">4-Farben-Inline</span>
+            <span class="mcard-feature">Promotor-Linie</span>
+            <span class="mcard-feature">Hohe Taktleistung</span>
+            <span class="mcard-feature">Mehrfarben ohne Umrüstung</span>
+          </div>
+        </div>
+        <div class="mcard-meta">
+          <span class="mcard-badge">4-Farbig</span>
+          <span class="mcard-link">Zur Maschine <span class="mcard-arrow">→</span></span>
+        </div>
+      </div>
+    </a>
+  </section>
+
+  <div class="series-nav" aria-label="Seriennavigation">
+    <a class="snav-item" href="../index.html">
+      <span class="snav-dir">← Zurück zu</span>
+      <span class="snav-name">Standardmaschinen</span>
+    </a>
+    <a class="snav-item" href="../turbo-serie/index.html">
+      <span class="snav-dir">Weiter zur →</span>
+      <span class="snav-name">Turbo-Serie</span>
+    </a>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-block reveal">
+    <div>
+      <p class="cta-eyebrow">Beratung &amp; Anfrage</p>
+      <h2 class="cta-title">Die richtige HVA-Maschine<br>für Ihre Anforderungen</h2>
+    </div>
+    <a href="../../../anfrage.html" class="cta-btn">Anfrage stellen →</a>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div>
+        <img src="../../../Kent-Logo_.png" alt="Kent Stuttgart GmbH" class="footer-logo-img">
+        <p class="footer-tagline">Tampondruckmaschinen für die internationale Industrie. Entwickelt, gefertigt und gewartet direkt vom Hersteller aus Stuttgart.</p>
+      </div>
+      <div>
+        <p class="footer-col-title">HVA-Serie</p>
+        <ul class="footer-links">
+          <li><a href="hva-150.html">HVA 150</a></li>
+          <li><a href="kipp-200.html">Kipp 200</a></li>
+          <li><a href="hva-promotor-4.html">HVA Promotor 4</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-title">Maschinen</p>
+        <ul class="footer-links">
+          <li><a href="../turbo-serie/index.html">Turbo-Serie</a></li>
+          <li><a href="../pp-serie/index.html">PP-Serie</a></li>
+          <li><a href="../ids-serie/index.html">IDS-Serie</a></li>
+          <li><a href="../alien-serie/index.html">Alien-Serie</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-title">Unternehmen</p>
+        <ul class="footer-links">
+          <li><a href="../../../ueber-uns.html">Über uns</a></li>
+          <li><a href="../../../klischees/index.html">Klischees</a></li>
+          <li><a href="../../../anfrage.html">Anfrage</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2025 Kent Stuttgart GmbH · Benzstraße 2, 71254 Ditzingen</span>
+      <div class="footer-legal">
+        <a href="#">Impressum</a>
+        <a href="#">Datenschutz</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Nav scroll effect
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+    }, { passive: true });
+
+    // Reveal on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 100);
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
